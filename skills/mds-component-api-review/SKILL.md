@@ -77,7 +77,7 @@ Keep components grouped topically:
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
 - `Navigation`: overview, breadcrumbs, links, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
 - `Overlays`: overview, tooltips, popovers, dropdown menus, dialogs, and drawers
-- `Display`: avatar, description list, metadata, records, metrics, text, keyboard hints, and dividers
+- `Display`: avatar, description list, metadata, prose, records, metrics, text, keyboard hints, and dividers
 - `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
 - `Data`: overview, tables, data table, table toolbar, bulk actions, detail panels, and activity feeds
 - `Layout`: stack, cluster, inline, grid, page header, spacer, and page-level arrangement

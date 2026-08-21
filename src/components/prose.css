@@ -1,0 +1,159 @@
+.mds-prose {
+  max-width: var(--mds-prose-max-width);
+  color: var(--mds-text-muted);
+  font-size: var(--mds-prose-body-size);
+  line-height: var(--mds-prose-line-height);
+}
+
+.mds-prose > * {
+  margin-block: 0;
+}
+
+.mds-prose > * + * {
+  margin-block-start: var(--mds-prose-block-gap);
+}
+
+.mds-prose :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--mds-text);
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+.mds-prose > :where(h1, h2, h3, h4, h5, h6) + * {
+  margin-block-start: calc(var(--mds-prose-block-gap) * 0.75);
+}
+
+.mds-prose > * + :where(h1, h2, h3, h4, h5, h6) {
+  margin-block-start: var(--mds-prose-heading-gap);
+}
+
+.mds-prose h1 {
+  font-size: var(--mds-prose-h1-size);
+  line-height: 1;
+}
+
+.mds-prose h2 {
+  font-size: var(--mds-prose-h2-size);
+}
+
+.mds-prose h3 {
+  font-size: var(--mds-prose-h3-size);
+}
+
+.mds-prose :where(h4, h5, h6) {
+  font-size: var(--mds-prose-h4-size);
+}
+
+.mds-prose :where(strong, b) {
+  color: var(--mds-text);
+  font-weight: 850;
+}
+
+.mds-prose a {
+  border-radius: var(--mds-radius-xs);
+  color: var(--mds-accent);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.mds-prose a:hover {
+  text-decoration-color: currentColor;
+}
+
+.mds-prose a:focus-visible {
+  outline: none;
+  box-shadow: var(--mds-focus);
+}
+
+.mds-prose :where(ul, ol) {
+  padding-inline-start: var(--mds-prose-list-indent);
+}
+
+.mds-prose li + li {
+  margin-block-start: calc(var(--mds-prose-block-gap) * 0.4);
+}
+
+.mds-prose li > :where(ul, ol) {
+  margin-block-start: calc(var(--mds-prose-block-gap) * 0.5);
+}
+
+.mds-prose blockquote {
+  padding: var(--mds-panel-padding);
+  border-inline-start: 3px solid var(--mds-accent);
+  border-radius: var(--mds-radius-sm);
+  background: var(--mds-panel);
+  color: var(--mds-text);
+}
+
+.mds-prose code {
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-xs);
+  background: var(--mds-ink);
+  color: var(--mds-accent);
+  padding: 0 calc(var(--mds-control-gap) * 0.75);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.mds-prose pre {
+  overflow: auto;
+  padding: var(--mds-floating-padding);
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  background: var(--mds-ink);
+  color: var(--mds-text);
+}
+
+.mds-prose pre code {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: var(--mds-font-size-sm);
+  line-height: 1.55;
+}
+
+.mds-prose hr {
+  border: 0;
+  border-top: 1px solid var(--mds-line);
+}
+
+.mds-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  font-size: var(--mds-font-size-sm);
+}
+
+.mds-prose th,
+.mds-prose td {
+  padding: var(--mds-table-cell-padding-y) var(--mds-table-cell-padding-x);
+  border-bottom: 1px solid var(--mds-line);
+  text-align: start;
+}
+
+.mds-prose th {
+  color: var(--mds-text);
+  font-weight: 850;
+}
+
+.mds-prose tr:last-child :where(th, td) {
+  border-bottom: 0;
+}
+
+.mds-prose figure {
+  display: grid;
+  gap: var(--mds-field-gap);
+}
+
+.mds-prose figcaption {
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-sm);
+  line-height: 1.45;
+}

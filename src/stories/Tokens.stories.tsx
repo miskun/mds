@@ -33,6 +33,13 @@ const targetRows = [
   ["editorial", "40 / 48 / 56", "15", "24", "Marketing, portfolio, publishing"],
 ];
 
+const proseRows = [
+  ["desktop", "14", "1.6", "620", "28 / 22 / 17"],
+  ["mobile", "16", "1.68", "560", "32 / 25 / 20"],
+  ["admin", "15", "1.62", "680", "30 / 24 / 18"],
+  ["editorial", "18", "1.72", "720", "48 / 34 / 24"],
+];
+
 const spacing = [
   ["Stack gap", "--mds-stack-gap", "Vertical rhythm inside forms, panels, and page sections."],
   ["Inline gap", "--mds-inline-gap", "Horizontal spacing for button rows, badges, and compact groups."],
@@ -102,6 +109,34 @@ export const TargetScale: Story = {
         </thead>
         <tbody>
           {targetRows.map((row) => (
+            <tr key={row[0]}>
+              {row.map((cell) => (
+                <td key={cell}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ),
+};
+
+export const ProseRhythm: Story = {
+  render: () => (
+    <div className="token-doc">
+      <Header title="Prose Rhythm" description="Rich content uses target-aware measure, body size, line height, and heading scale." />
+      <table className="token-doc__table">
+        <thead>
+          <tr>
+            <th>Target</th>
+            <th>Body px</th>
+            <th>Line height</th>
+            <th>Measure px</th>
+            <th>H1 / H2 / H3 px</th>
+          </tr>
+        </thead>
+        <tbody>
+          {proseRows.map((row) => (
             <tr key={row[0]}>
               {row.map((cell) => (
                 <td key={cell}>{cell}</td>

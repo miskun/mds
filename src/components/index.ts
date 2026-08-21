@@ -27,6 +27,7 @@ export * from "./PageHeader";
 export * from "./Pagination";
 export * from "./Panel";
 export * from "./Popover";
+export * from "./Prose";
 export * from "./Progress";
 export * from "./RadioGroup";
 export * from "./SegmentedControl";

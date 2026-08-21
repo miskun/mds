@@ -40,6 +40,16 @@
   --mds-title-max: 780px;
   --mds-title-size: clamp(40px, 6vw, 88px);
   --mds-title-line-height: 0.94;
+  --mds-prose-max-width: var(--mds-readable-width);
+  --mds-prose-body-size: var(--mds-font-size-md);
+  --mds-prose-line-height: 1.65;
+  --mds-prose-block-gap: var(--mds-space-4);
+  --mds-prose-heading-gap: var(--mds-space-8);
+  --mds-prose-list-indent: var(--mds-space-6);
+  --mds-prose-h1-size: var(--mds-font-size-2xl);
+  --mds-prose-h2-size: var(--mds-font-size-xl);
+  --mds-prose-h3-size: var(--mds-font-size-lg);
+  --mds-prose-h4-size: var(--mds-font-size-md);
 }
 
 [data-mds-target="desktop"] {
@@ -84,6 +94,16 @@
   --mds-title-max: 720px;
   --mds-title-size: clamp(36px, 5vw, 72px);
   --mds-title-line-height: 0.96;
+  --mds-prose-max-width: 620px;
+  --mds-prose-body-size: 14px;
+  --mds-prose-line-height: 1.6;
+  --mds-prose-block-gap: 12px;
+  --mds-prose-heading-gap: 24px;
+  --mds-prose-list-indent: 20px;
+  --mds-prose-h1-size: 28px;
+  --mds-prose-h2-size: 22px;
+  --mds-prose-h3-size: 17px;
+  --mds-prose-h4-size: 14px;
 }
 
 [data-mds-target="mobile"] {
@@ -128,6 +148,16 @@
   --mds-title-max: 620px;
   --mds-title-size: clamp(36px, 11vw, 60px);
   --mds-title-line-height: 0.98;
+  --mds-prose-max-width: 560px;
+  --mds-prose-body-size: 16px;
+  --mds-prose-line-height: 1.68;
+  --mds-prose-block-gap: 16px;
+  --mds-prose-heading-gap: 28px;
+  --mds-prose-list-indent: 24px;
+  --mds-prose-h1-size: 32px;
+  --mds-prose-h2-size: 25px;
+  --mds-prose-h3-size: 20px;
+  --mds-prose-h4-size: 16px;
 }
 
 [data-mds-target="admin"] {
@@ -172,6 +202,16 @@
   --mds-title-max: 700px;
   --mds-title-size: clamp(32px, 4vw, 56px);
   --mds-title-line-height: 1;
+  --mds-prose-max-width: 680px;
+  --mds-prose-body-size: 15px;
+  --mds-prose-line-height: 1.62;
+  --mds-prose-block-gap: 14px;
+  --mds-prose-heading-gap: 24px;
+  --mds-prose-list-indent: 22px;
+  --mds-prose-h1-size: 30px;
+  --mds-prose-h2-size: 24px;
+  --mds-prose-h3-size: 18px;
+  --mds-prose-h4-size: 15px;
 }
 
 [data-mds-target="editorial"] {
@@ -216,4 +256,14 @@
   --mds-title-max: 920px;
   --mds-title-size: clamp(46px, 8vw, 104px);
   --mds-title-line-height: 0.92;
+  --mds-prose-max-width: 720px;
+  --mds-prose-body-size: 18px;
+  --mds-prose-line-height: 1.72;
+  --mds-prose-block-gap: 20px;
+  --mds-prose-heading-gap: 40px;
+  --mds-prose-list-indent: 28px;
+  --mds-prose-h1-size: 48px;
+  --mds-prose-h2-size: 34px;
+  --mds-prose-h3-size: 24px;
+  --mds-prose-h4-size: 18px;
 }
