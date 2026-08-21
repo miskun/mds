@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import type { ReactNode } from "react";
+import { forwardRef, useMemo, useState } from "react";
+import type { ForwardedRef, ReactElement, ReactNode, Ref } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { Checkbox } from "./Checkbox";
 import { DropdownMenu, MenuItem } from "./DropdownMenu";
@@ -7,7 +7,7 @@ import { EmptyState } from "./EmptyState";
 import { IconButton } from "./Button";
 import { Skeleton } from "./Skeleton";
 import { SortHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./Table";
-import type { SortDirection } from "./Table";
+import type { SortDirection, TableProps } from "./Table";
 import { getControllableValue } from "./utils";
 import "./data-table.css";
 
@@ -32,7 +32,7 @@ export interface RowAction<T> {
   onSelect?: (row: T) => void;
 }
 
-export interface DataTableProps<T> {
+export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   columns: Array<DataColumn<T>>;
   data: T[];
   getRowId: (row: T) => string;
@@ -52,7 +52,7 @@ export interface DataTableProps<T> {
   emptyDescription?: string;
 }
 
-export function DataTable<T>({
+function DataTableInner<T>({
   columns,
   data,
   getRowId,
@@ -70,7 +70,8 @@ export function DataTable<T>({
   loading,
   emptyTitle = "No rows found",
   emptyDescription = "Adjust filters or add new records.",
-}: DataTableProps<T>) {
+  ...tableProps
+}: DataTableProps<T>, ref: ForwardedRef<HTMLTableElement>) {
   const [uncontrolledSort, setUncontrolledSort] = useState<DataTableSort | null>(defaultSort);
   const [uncontrolledSelectedRowIds, setUncontrolledSelectedRowIds] = useState<string[]>(defaultSelectedRowIds);
   const currentSort = getControllableValue(sort, uncontrolledSort);
@@ -135,8 +136,10 @@ export function DataTable<T>({
     return <EmptyState title={emptyTitle} description={emptyDescription} role="status" aria-label={`${label}: ${emptyTitle}`} />;
   }
 
+  const tableAriaLabel = tableProps["aria-label"] ?? (caption ? undefined : label);
+
   return (
-    <Table aria-label={caption ? undefined : label}>
+    <Table ref={ref} {...tableProps} aria-label={tableAriaLabel}>
       {caption ? <caption className="mds-table__caption">{caption}</caption> : null}
       <TableHead>
         <TableRow>
@@ -201,6 +204,8 @@ export function DataTable<T>({
     </Table>
   );
 }
+
+export const DataTable = forwardRef(DataTableInner) as <T>(props: DataTableProps<T> & { ref?: Ref<HTMLTableElement> }) => ReactElement;
 
 function getNextSort(currentSort: DataTableSort | null, columnId: string): DataTableSort | null {
   if (!currentSort || currentSort.columnId !== columnId) return { columnId, direction: "asc" };

@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useState } from "react";
+import { forwardRef, useEffect, useId, useMemo, useState } from "react";
 import type { HTMLAttributes } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import { Field } from "./Field";
@@ -32,26 +32,29 @@ export interface ComboBoxProps extends Omit<HTMLAttributes<HTMLDivElement>, "def
   clearable?: boolean;
 }
 
-export function ComboBox({
-  label,
-  hint,
-  error,
-  invalid,
-  required,
-  options = [],
-  value,
-  defaultValue,
-  onValueChange,
-  multiple,
-  placeholder = "Search options",
-  emptyMessage = "No options found",
-  loading,
-  clearable = true,
-  id,
-  className,
-  onBlur,
-  ...props
-}: ComboBoxProps) {
+export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function ComboBox(
+  {
+    label,
+    hint,
+    error,
+    invalid,
+    required,
+    options = [],
+    value,
+    defaultValue,
+    onValueChange,
+    multiple,
+    placeholder = "Search options",
+    emptyMessage = "No options found",
+    loading,
+    clearable = true,
+    id,
+    className,
+    onBlur,
+    ...props
+  },
+  ref,
+) {
   const generatedId = useId();
   const comboId = id ?? generatedId;
   const listboxId = `${comboId}-listbox`;
@@ -128,6 +131,7 @@ export function ComboBox({
   return (
     <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={comboId} messageId={messageId}>
       <div
+        ref={ref}
         className={cx("mds-combo", open && "mds-combo--open", invalidState && "mds-combo--invalid", className)}
         onBlur={(event) => {
           onBlur?.(event);
@@ -264,7 +268,7 @@ export function ComboBox({
       </div>
     </Field>
   );
-}
+});
 
 function toArray(value: ComboBoxValue) {
   return Array.isArray(value) ? value : value ? [value] : [];

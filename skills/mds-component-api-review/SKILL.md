@@ -20,12 +20,22 @@ Check exported components for:
 - consistent `className` and native prop passthrough
 - useful ref support on leaf DOM components
 - ref support on structural primitives that users compose, measure, scroll, or focus
+- high-level components that render a stable DOM root should still expose `className`, native props, and a ref unless the public API is intentionally a Radix-style root/content/trigger composition
 - consistent naming for `size`, `variant`, `tone`, `disabled`, `invalid`, `loading`, and selection props
 - consistent form props across text, choice, switch, and grouped controls: `label`, `hint`, `error`, `invalid`, and `required` where relevant
 - controlled and uncontrolled state patterns where users would expect both
 - event names that match React or local component conventions
 - stable exports from `src/components/index.ts` and `src/index.ts`
 - no accidental exposure of internal helper types
+
+For system-wide consistency sweeps, compare component families rather than reviewing files in isolation:
+
+- leaf controls should follow the same native-prop, `className`, and ref pattern
+- field-like controls should use `label`, `hint`, `error`, `invalid`, and `required`
+- controlled values should use `value`, `defaultValue`, and `onValueChange`; controlled open state should use `open`, `defaultOpen`, and `onOpenChange`
+- selection and current-page semantics should use names that match the user-visible state: `selected`, `current`, `active`, or `checked`
+- target-sensitive sizing should remain semantic through `size` or tokens, not hardcoded per component
+- Storybook canonical pages should host autodocs for exported props instead of duplicating API-only pages
 
 ## Accessibility Checklist
 
