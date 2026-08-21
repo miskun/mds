@@ -73,7 +73,7 @@ Keep components grouped topically:
 
 - `Actions`: buttons and action triggers
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
-- `Navigation`: tabs, segmented controls, breadcrumbs, and nav lists
+- `Navigation`: overview, breadcrumbs, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
 - `Overlays`: tooltips, popovers, dropdown menus, dialogs, and drawers
 - `Display`: badges, tags, status dots, keyboard hints, dividers, cards, and records
 - `Feedback`: alerts, toasts, empty states, progress, spinners, and skeletons
@@ -131,6 +131,13 @@ For form docs:
 - document validation close to the affected control
 - preserve native control semantics before adding custom form behavior
 - add numeric, date/time, combobox, and file controls only when the component contract is clear
+
+For navigation docs:
+
+- keep buttons and action triggers under `MDS/Components/Actions`
+- split navigation by purpose: breadcrumbs for hierarchy, tabs for peer sections, pagination for result pages, and nav lists for side navigation
+- document selected or current state with the matching ARIA state
+- keep future side nav, tree view, steps, and context menu work under navigation when they move users through structure
 
 For API docs:
 
