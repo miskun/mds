@@ -1,0 +1,107 @@
+.mds-text,
+.mds-title-text {
+  margin: 0;
+}
+
+.mds-text {
+  max-width: var(--mds-readable-width);
+  line-height: 1.55;
+}
+
+.mds-text--xs {
+  font-size: var(--mds-font-size-xs);
+}
+
+.mds-text--sm {
+  font-size: var(--mds-font-size-sm);
+}
+
+.mds-text--md {
+  font-size: var(--mds-font-size-md);
+}
+
+.mds-text--lg {
+  font-size: var(--mds-font-size-lg);
+}
+
+.mds-text--regular {
+  font-weight: 400;
+}
+
+.mds-text--medium {
+  font-weight: 700;
+}
+
+.mds-text--strong {
+  font-weight: 850;
+}
+
+.mds-text--default {
+  color: var(--mds-text);
+}
+
+.mds-text--muted {
+  color: var(--mds-text-muted);
+}
+
+.mds-text--soft {
+  color: var(--mds-text-soft);
+}
+
+.mds-text--accent {
+  color: var(--mds-accent);
+}
+
+.mds-text--danger {
+  color: var(--mds-danger);
+}
+
+.mds-text--success {
+  color: var(--mds-success);
+}
+
+.mds-title-text {
+  color: var(--mds-text);
+  letter-spacing: 0;
+}
+
+.mds-title-text--page {
+  max-width: var(--mds-title-max);
+  font-size: var(--mds-title-size);
+  line-height: var(--mds-title-line-height);
+}
+
+.mds-title-text--section {
+  font-size: var(--mds-font-size-xl);
+  line-height: 1.08;
+}
+
+.mds-title-text--subsection {
+  font-size: var(--mds-font-size-lg);
+  line-height: 1.15;
+}
+
+.mds-title-text--compact {
+  font-size: var(--mds-font-size-md);
+  line-height: 1.2;
+}
+
+.mds-code {
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-xs);
+  background: var(--mds-ink);
+  color: var(--mds-accent);
+  padding: 0 calc(var(--mds-control-gap) * 0.75);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.mds-code--block {
+  display: block;
+  overflow: auto;
+  padding: var(--mds-floating-padding);
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-sm);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}

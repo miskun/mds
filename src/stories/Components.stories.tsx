@@ -3,7 +3,7 @@ import { Card, Cluster, Grid, Stack, StatusDot } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Overview",
+  title: "MDS/Components",
   parameters: {
     layout: "padded",
     docs: {
@@ -32,13 +32,13 @@ const groups = [
   ["Containers", "Bounded and disclosure surfaces.", "Panel, Card, Popover, Dialog, Drawer"],
   ["Overlays", "Floating layers and modal surfaces.", "Tooltip, Popover, DropdownMenu, Dialog, Drawer"],
   ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Tabs, Pagination, NavList"],
-  ["Display", "Passive information and metadata.", "Metadata, Records, Metrics, Utilities"],
+  ["Display", "Passive information and metadata.", "Metadata, Records, Metrics, Text, Utilities"],
   ["Feedback", "System state, recovery, loading, and confirmations.", "Alerts, Empty states, Loading, Toasts"],
   ["Forms", "Field layouts and input controls.", "Layouts, Text, Selection, Search and filter"],
   ["Data", "Tables and record workflows.", "Tables, Data table, Toolbars, Detail and activity"],
 ];
 
-export const ComponentGroups: Story = {
+export const Overview: Story = {
   parameters: storyDescription("Use this page as the entry point for the MDS component taxonomy."),
   render: () => (
     <Stack>

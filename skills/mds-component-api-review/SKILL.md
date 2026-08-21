@@ -68,6 +68,7 @@ Keep Storybook organized by documentation intent:
 - `MDS/Utilities`: small helpers and utility classes
 - `MDS/Content`: interface copy guidance
 - `MDS/Data Visualization`: charts, palettes, legends, and dashboard visualization guidance
+- `MDS/Components`: component taxonomy overview
 - `MDS/Components/<Group>/<Page>`: component groups should have a stable overview or canonical page
 
 Keep components grouped topically:
@@ -76,7 +77,7 @@ Keep components grouped topically:
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
 - `Navigation`: overview, breadcrumbs, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
 - `Overlays`: overview, tooltips, popovers, dropdown menus, dialogs, and drawers
-- `Display`: metadata, records, metrics, keyboard hints, dividers, and future text or avatar primitives
+- `Display`: metadata, records, metrics, text, keyboard hints, dividers, and future avatar primitives
 - `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
 - `Data`: overview, tables, data table, table toolbar, bulk actions, detail panels, and activity feeds
 - `Layout`: stack, cluster, inline, grid, page header, spacer, and page-level arrangement
@@ -144,7 +145,8 @@ For display docs:
 
 - keep Display focused on passive information, metadata, records, metrics, and small presentational utilities
 - keep system state, recovery, loading, and empty states under Feedback
-- split display docs by purpose: metadata, records, metrics, and utilities
+- split display docs by purpose: metadata, records, metrics, text, and utilities
+- use Text, Title, and Code instead of local typography styles when component examples need copy
 - move bounded surfaces to Containers unless the example is showing display content inside a surface
 
 For feedback docs:
