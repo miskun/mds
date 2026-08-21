@@ -1,5 +1,5 @@
+import { forwardRef, useId } from "react";
 import type { TextareaHTMLAttributes } from "react";
-import { useId } from "react";
 import { Field } from "./Field";
 import { cx } from "./utils";
 import "./textarea.css";
@@ -10,20 +10,27 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   error?: string;
 }
 
-export function Textarea({ label, hint, error, className, id, required, "aria-invalid": ariaInvalid, ...props }: TextareaProps) {
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
+  { label, hint, error, className, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props },
+  ref,
+) {
   const generatedId = useId();
   const textareaId = id ?? generatedId;
   const invalid = Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
+  const messageId = error || hint ? `${textareaId}-message` : undefined;
+  const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
 
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={invalid} htmlFor={textareaId}>
+    <Field label={label} hint={hint} error={error} required={required} invalid={invalid} htmlFor={textareaId} messageId={messageId}>
       <textarea
+        ref={ref}
         id={textareaId}
         className={cx("mds-textarea", className)}
         required={required}
         aria-invalid={invalid || undefined}
+        aria-describedby={describedBy}
         {...props}
       />
     </Field>
   );
-}
+});

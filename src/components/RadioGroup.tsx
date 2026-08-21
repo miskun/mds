@@ -1,3 +1,4 @@
+import { forwardRef, useId } from "react";
 import type { InputHTMLAttributes, ReactNode } from "react";
 import { Field } from "./Field";
 import { cx } from "./utils";
@@ -27,15 +28,26 @@ export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   hint?: string;
 }
 
-export function Radio({ label, hint, className, ...props }: RadioProps) {
+export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
+  { label, hint, className, "aria-describedby": ariaDescribedBy, ...props },
+  ref,
+) {
+  const generatedId = useId();
+  const hintId = hint ? `${generatedId}-hint` : undefined;
+  const describedBy = [ariaDescribedBy, hintId].filter(Boolean).join(" ") || undefined;
+
   return (
     <label className={cx("mds-choice", className)}>
-      <input className="mds-choice__input" type="radio" {...props} />
+      <input ref={ref} className="mds-choice__input" type="radio" aria-describedby={describedBy} {...props} />
       <span className="mds-choice__radio" aria-hidden="true" />
       <span className="mds-choice__content">
         <span className="mds-choice__label">{label}</span>
-        {hint ? <span className="mds-choice__hint">{hint}</span> : null}
+        {hint ? (
+          <span id={hintId} className="mds-choice__hint">
+            {hint}
+          </span>
+        ) : null}
       </span>
     </label>
   );
-}
+});

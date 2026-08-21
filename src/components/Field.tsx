@@ -9,6 +9,7 @@ export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
   required?: boolean;
   invalid?: boolean;
   htmlFor?: string;
+  messageId?: string;
   children: ReactNode;
 }
 
@@ -19,6 +20,7 @@ export function Field({
   required,
   invalid,
   htmlFor,
+  messageId,
   className,
   children,
   ...props
@@ -34,7 +36,15 @@ export function Field({
         </label>
       ) : null}
       {children}
-      {error ? <span className="mds-field__error">{error}</span> : hint ? <span className="mds-field__hint">{hint}</span> : null}
+      {error ? (
+        <span id={messageId} className="mds-field__error">
+          {error}
+        </span>
+      ) : hint ? (
+        <span id={messageId} className="mds-field__hint">
+          {hint}
+        </span>
+      ) : null}
     </div>
   );
 }

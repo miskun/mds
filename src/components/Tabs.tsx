@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./tabs.css";
@@ -19,6 +20,6 @@ export interface TabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
 }
 
-export function Tab({ active, className, ...props }: TabProps) {
-  return <button className={cx("mds-tab", active && "mds-tab--active", className)} role="tab" aria-selected={active} {...props} />;
-}
+export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ active, className, ...props }, ref) {
+  return <button ref={ref} className={cx("mds-tab", active && "mds-tab--active", className)} role="tab" aria-selected={active} {...props} />;
+});

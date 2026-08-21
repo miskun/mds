@@ -107,3 +107,5 @@ Package changes should preserve:
 Use `skills/mds-source-hygiene` before commits or source reviews that touch comments, docs, or written guidance.
 
 Use `skills/mds-commit-hygiene` before creating git commits in this repository.
+
+Use `skills/mds-component-api-review` before changing exported components, adding new components, or preparing releases.
