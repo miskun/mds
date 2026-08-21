@@ -68,13 +68,14 @@ Keep Storybook organized by documentation intent:
 - `MDS/Utilities`: small helpers and utility classes
 - `MDS/Content`: interface copy guidance
 - `MDS/Data Visualization`: charts, palettes, legends, and dashboard visualization guidance
+- `MDS/Components/<Group>/<Page>`: component groups should have a stable overview or canonical page
 
 Keep components grouped topically:
 
 - `Actions`: buttons and action triggers
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
 - `Navigation`: overview, breadcrumbs, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
-- `Overlays`: tooltips, popovers, dropdown menus, dialogs, and drawers
+- `Overlays`: overview, tooltips, popovers, dropdown menus, dialogs, and drawers
 - `Display`: metadata, records, metrics, keyboard hints, dividers, and future text or avatar primitives
 - `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
 - `Data`: overview, tables, data table, table toolbar, bulk actions, detail panels, and activity feeds

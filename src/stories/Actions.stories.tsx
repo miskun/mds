@@ -4,7 +4,7 @@ import { Button, Card, IconButton } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Actions",
+  title: "MDS/Components/Actions/Buttons",
   component: Button,
   subcomponents: { IconButton },
   tags: ["autodocs"],

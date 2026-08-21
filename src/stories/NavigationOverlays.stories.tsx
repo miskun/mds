@@ -23,7 +23,7 @@ import "../showcase.css";
 import "./navigation-overlays.css";
 
 const meta = {
-  title: "MDS/Components/Overlays",
+  title: "MDS/Components/Overlays/Overview",
   component: Popover,
   subcomponents: { DropdownMenu, Dialog, Drawer, Tooltip },
   tags: ["autodocs"],

@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Download, Search } from "lucide-react";
-import { Button, Card, Checkbox, IconButton, Input, Select, Switch } from "../components";
+import { Card, Cluster, Grid, Stack, StatusDot } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Layout",
+  title: "MDS/Components/Overview",
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component:
+          "Component docs are grouped by the job each primitive performs: action, layout, container, navigation, display, feedback, forms, and data.",
+      },
+    },
   },
 } satisfies Meta;
 
@@ -21,42 +26,47 @@ const storyDescription = (story: string) => ({
   },
 });
 
-export const TargetToolbar: Story = {
-  parameters: storyDescription("Use the global MDS Target toolbar to preview the same composition across desktop, mobile, admin, and editorial targets."),
-  render: () => (
-    <Card eyebrow="Target" title="Toolbar-controlled component row">
-      <div className="mds-cluster">
-        <Input aria-label="Search components" placeholder="Find components" />
-        <Button icon={<Download size={16} />}>Export</Button>
-        <IconButton label="Search" icon={<Search size={16} />} />
-        <Checkbox label="Selected" defaultChecked />
-      </div>
-    </Card>
-  ),
-};
+const groups = [
+  ["Actions", "Buttons and action triggers.", "Buttons"],
+  ["Layout", "Spatial primitives and page-level arrangement.", "Flex, Grid, PageHeader"],
+  ["Containers", "Bounded and disclosure surfaces.", "Panel, Card, Popover, Dialog, Drawer"],
+  ["Overlays", "Floating layers and modal surfaces.", "Tooltip, Popover, DropdownMenu, Dialog, Drawer"],
+  ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Tabs, Pagination, NavList"],
+  ["Display", "Passive information and metadata.", "Metadata, Records, Metrics, Utilities"],
+  ["Feedback", "System state, recovery, loading, and confirmations.", "Alerts, Empty states, Loading, Toasts"],
+  ["Forms", "Field layouts and input controls.", "Layouts, Text, Selection, Search and filter"],
+  ["Data", "Tables and record workflows.", "Tables, Data table, Toolbars, Detail and activity"],
+];
 
-export const Panel: Story = {
-  parameters: storyDescription("Cards compose controls without changing their public API or target-aware sizing."),
+export const ComponentGroups: Story = {
+  parameters: storyDescription("Use this page as the entry point for the MDS component taxonomy."),
   render: () => (
-    <Card
-      eyebrow="MDS"
-      title="Component Panel"
-      action={
-        <Button size="sm" variant="secondary" icon={<Search size={14} />}>
-          Search
-        </Button>
-      }
-    >
-      <div className="mds-stack">
-        <Input label="Name" defaultValue="Miskun Design System" />
-        <Select label="Target" defaultValue="admin">
-          <option value="desktop">Desktop</option>
-          <option value="mobile">Mobile</option>
-          <option value="admin">Admin</option>
-          <option value="editorial">Editorial</option>
-        </Select>
-        <Switch label="Published" hint="Visible in component documentation." defaultChecked />
-      </div>
-    </Card>
+    <Stack>
+      <header className="mds-stack">
+        <p className="mds-kicker">Components</p>
+        <h1 className="mds-title">Composable primitives for black-first product surfaces.</h1>
+        <p className="mds-subtitle">
+          Browse by purpose rather than implementation detail. Each group keeps examples, usage guidance, and API docs close to the component contract.
+        </p>
+      </header>
+
+      <Grid minItemWidth="260px">
+        {groups.map(([name, description, examples]) => (
+          <Card key={name} title={name} eyebrow="Group">
+            <Stack gap="sm">
+              <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+                {description}
+              </p>
+              <Cluster gap="xs">
+                <span className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-sm)" }}>
+                  {examples}
+                </span>
+                <StatusDot label="Docs" />
+              </Cluster>
+            </Stack>
+          </Card>
+        ))}
+      </Grid>
+    </Stack>
   ),
 };
