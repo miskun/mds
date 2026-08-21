@@ -38,6 +38,7 @@ export const SortAndSelect: Story = {
 
     return (
       <DataTable
+        caption="Component inventory with sortable columns, row selection, and row actions."
         columns={columns}
         data={rows}
         getRowId={(row) => row.id}
@@ -62,7 +63,14 @@ export const LoadingAndEmpty: Story = {
   render: () => (
     <div className="data-page data-page--plain">
       <DataTable columns={columns} data={[]} getRowId={(row) => row.id} loading />
-      <DataTable columns={columns} data={[]} getRowId={(row) => row.id} emptyTitle="No matching components" emptyDescription="Clear filters or create a new component." />
+      <DataTable
+        label="Filtered component inventory"
+        columns={columns}
+        data={[]}
+        getRowId={(row) => row.id}
+        emptyTitle="No matching components"
+        emptyDescription="Clear filters or create a new component."
+      />
     </div>
   ),
 };

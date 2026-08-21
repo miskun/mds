@@ -46,7 +46,7 @@ For overlays:
 - keep native browser tooltip text disabled when rendering an MDS tooltip
 - include Storybook examples for controlled open state and disabled triggers
 
-Tables with sorting or selection should expose sort state, selection state, and clear accessible labels for header and row controls.
+Tables with sorting or selection should expose table context, sort state, selection state, loading or empty status, and clear accessible labels for header and row controls.
 
 Form controls should connect labels and helper text with native labels, `aria-labelledby`, or `aria-describedby` as appropriate. Error props should set `aria-invalid`, and grouped controls should label the group rather than only the individual items.
 

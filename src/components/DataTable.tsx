@@ -37,6 +37,8 @@ export interface DataTableProps<T> {
   data: T[];
   getRowId: (row: T) => string;
   getRowLabel?: (row: T) => string;
+  label?: string;
+  caption?: string;
   rowActions?: Array<RowAction<T>>;
   selectable?: boolean;
   selectedRowIds?: string[];
@@ -55,6 +57,8 @@ export function DataTable<T>({
   data,
   getRowId,
   getRowLabel,
+  label = "Data table",
+  caption,
   rowActions,
   selectable,
   selectedRowIds,
@@ -121,18 +125,19 @@ export function DataTable<T>({
 
   if (loading) {
     return (
-      <div className="mds-data-table__loading">
+      <div className="mds-data-table__loading" role="status" aria-label={`Loading ${label}`}>
         <Skeleton variant="block" />
       </div>
     );
   }
 
   if (!data.length) {
-    return <EmptyState title={emptyTitle} description={emptyDescription} />;
+    return <EmptyState title={emptyTitle} description={emptyDescription} role="status" aria-label={`${label}: ${emptyTitle}`} />;
   }
 
   return (
-    <Table>
+    <Table aria-label={caption ? undefined : label}>
+      {caption ? <caption className="mds-table__caption">{caption}</caption> : null}
       <TableHead>
         <TableRow>
           {selectable ? (
