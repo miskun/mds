@@ -35,6 +35,15 @@ Segmented controls should support arrow navigation, `Home`, `End`, roving focus,
 
 Menus, popovers, dialogs, drawers, and tooltips should use Radix primitives unless there is a strong reason not to.
 
+For overlays:
+
+- support controlled and uncontrolled open state when the overlay can be opened or closed
+- keep trigger behavior consistent through `asChild`
+- preserve Radix focus management instead of reimplementing it locally
+- expose small styling hooks for content or overlay surfaces when consumers need layout integration
+- keep native browser tooltip text disabled when rendering an MDS tooltip
+- include Storybook examples for controlled open state and disabled triggers
+
 Tables with sorting or selection should expose sort state, selection state, and clear accessible labels for header and row controls.
 
 For selectable tables:

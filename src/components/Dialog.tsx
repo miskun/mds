@@ -11,15 +11,31 @@ export interface DialogProps {
   description?: string;
   children: ReactNode;
   footer?: ReactNode;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  className?: string;
+  overlayClassName?: string;
 }
 
-export function Dialog({ trigger, title, description, children, footer }: DialogProps) {
+export function Dialog({
+  trigger,
+  title,
+  description,
+  children,
+  footer,
+  open,
+  defaultOpen,
+  onOpenChange,
+  className,
+  overlayClassName,
+}: DialogProps) {
   return (
-    <DialogPrimitive.Root>
+    <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="mds-dialog__overlay" />
-        <DialogPrimitive.Content className="mds-dialog">
+        <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
+        <DialogPrimitive.Content className={cx("mds-dialog", className)}>
           <DialogHeader title={title} description={description} />
           <div className="mds-dialog__body">{children}</div>
           {footer ? <footer className="mds-dialog__footer">{footer}</footer> : null}
@@ -37,13 +53,25 @@ export interface DrawerProps extends Omit<DialogProps, "trigger"> {
   side?: "left" | "right";
 }
 
-export function Drawer({ trigger, title, description, children, footer, side = "right" }: DrawerProps) {
+export function Drawer({
+  trigger,
+  title,
+  description,
+  children,
+  footer,
+  side = "right",
+  open,
+  defaultOpen,
+  onOpenChange,
+  className,
+  overlayClassName,
+}: DrawerProps) {
   return (
-    <DialogPrimitive.Root>
+    <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="mds-dialog__overlay" />
-        <DialogPrimitive.Content className={cx("mds-drawer", `mds-drawer--${side}`)}>
+        <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
+        <DialogPrimitive.Content className={cx("mds-drawer", `mds-drawer--${side}`, className)}>
           <DialogHeader title={title} description={description} />
           <div className="mds-dialog__body">{children}</div>
           {footer ? <footer className="mds-dialog__footer">{footer}</footer> : null}

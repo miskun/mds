@@ -11,14 +11,19 @@ export interface DropdownMenuProps {
   trigger: ReactNode;
   children: ReactNode;
   align?: DropdownPrimitive.DropdownMenuContentProps["align"];
+  side?: DropdownPrimitive.DropdownMenuContentProps["side"];
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  className?: string;
 }
 
-export function DropdownMenu({ trigger, children, align = "start" }: DropdownMenuProps) {
+export function DropdownMenu({ trigger, children, align = "start", side = "bottom", open, defaultOpen, onOpenChange, className }: DropdownMenuProps) {
   return (
-    <DropdownPrimitive.Root>
+    <DropdownPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DropdownPrimitive.Trigger asChild>{trigger}</DropdownPrimitive.Trigger>
       <DropdownPrimitive.Portal>
-        <DropdownPrimitive.Content className="mds-menu" align={align} sideOffset={8}>
+        <DropdownPrimitive.Content className={cx("mds-menu", className)} side={side} align={align} sideOffset={8}>
           {children}
         </DropdownPrimitive.Content>
       </DropdownPrimitive.Portal>
@@ -53,23 +58,36 @@ export function MenuCheckboxItem({ className, children, ...props }: DropdownPrim
   );
 }
 
-export function MenuSeparator() {
-  return <DropdownPrimitive.Separator className="mds-menu__separator" />;
+export function MenuSeparator({ className, ...props }: DropdownPrimitive.DropdownMenuSeparatorProps) {
+  return <DropdownPrimitive.Separator className={cx("mds-menu__separator", className)} {...props} />;
 }
 
-export function MenuLabel({ children }: { children: ReactNode }) {
-  return <DropdownPrimitive.Label className="mds-menu__label">{children}</DropdownPrimitive.Label>;
-}
-
-export function MenuSub({ trigger, children }: { trigger: ReactNode; children: ReactNode }) {
+export function MenuLabel({ className, children, ...props }: DropdownPrimitive.DropdownMenuLabelProps) {
   return (
-    <DropdownPrimitive.Sub>
+    <DropdownPrimitive.Label className={cx("mds-menu__label", className)} {...props}>
+      {children}
+    </DropdownPrimitive.Label>
+  );
+}
+
+export interface MenuSubProps {
+  trigger: ReactNode;
+  children: ReactNode;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  className?: string;
+}
+
+export function MenuSub({ trigger, children, open, defaultOpen, onOpenChange, className }: MenuSubProps) {
+  return (
+    <DropdownPrimitive.Sub open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DropdownPrimitive.SubTrigger className="mds-menu__item">
         <span>{trigger}</span>
         <ChevronRight className="mds-menu__chevron" size={14} />
       </DropdownPrimitive.SubTrigger>
       <DropdownPrimitive.Portal>
-        <DropdownPrimitive.SubContent className="mds-menu" sideOffset={8}>
+        <DropdownPrimitive.SubContent className={cx("mds-menu", className)} sideOffset={8}>
           {children}
         </DropdownPrimitive.SubContent>
       </DropdownPrimitive.Portal>
