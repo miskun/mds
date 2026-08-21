@@ -75,8 +75,8 @@ Keep components grouped topically:
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
 - `Navigation`: overview, breadcrumbs, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
 - `Overlays`: tooltips, popovers, dropdown menus, dialogs, and drawers
-- `Display`: badges, tags, status dots, keyboard hints, dividers, cards, and records
-- `Feedback`: alerts, toasts, empty states, progress, spinners, and skeletons
+- `Display`: metadata, records, metrics, keyboard hints, dividers, and future text or avatar primitives
+- `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
 - `Data`: tables, data tables, pagination, toolbars, metrics, bulk actions, and detail surfaces
 - `Layout`: stack, cluster, inline, grid, page header, spacer, and page-level arrangement
 - `Containers`: panel, card, popover, dialog, drawer, accordion, bottom bar, and resizable container
@@ -138,6 +138,13 @@ For navigation docs:
 - split navigation by purpose: breadcrumbs for hierarchy, tabs for peer sections, pagination for result pages, and nav lists for side navigation
 - document selected or current state with the matching ARIA state
 - keep future side nav, tree view, steps, and context menu work under navigation when they move users through structure
+
+For display docs:
+
+- keep Display focused on passive information, metadata, records, metrics, and small presentational utilities
+- keep system state, recovery, loading, and empty states under Feedback
+- split display docs by purpose: metadata, records, metrics, and utilities
+- move bounded surfaces to Containers unless the example is showing display content inside a surface
 
 For API docs:
 
