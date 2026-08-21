@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Badge, Button, Card, Cluster, Grid, Inline, MetricCard, Stack, StatusDot, Tag } from "../components";
+import { Badge, Button, Card, Cluster, Inline, Stack, StatusDot, Tag } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Layout",
+  title: "MDS/Components/Layout/Flex",
   component: Stack,
-  subcomponents: { Cluster, Inline, Grid },
+  subcomponents: { Cluster, Inline },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
     docs: {
       description: {
         component:
-          "Layout primitives arrange children with target-aware spacing. Use them before adding local layout CSS.",
+          "Flex layout primitives arrange children with target-aware spacing. Use them before adding local layout CSS.",
       },
     },
   },
@@ -44,8 +44,7 @@ export const StackSpacing: Story = {
           </Inline>
         </Stack>
       </Card>
-
-      <Grid columns={3}>
+      <Stack gap="lg">
         <Card title="xs">
           <Stack gap="xs">
             <Tag>Label</Tag>
@@ -60,14 +59,7 @@ export const StackSpacing: Story = {
             <Tag>Action</Tag>
           </Stack>
         </Card>
-        <Card title="lg">
-          <Stack gap="lg">
-            <Tag>Block</Tag>
-            <Tag>Group</Tag>
-            <Tag>Footer</Tag>
-          </Stack>
-        </Card>
-      </Grid>
+      </Stack>
     </Stack>
   ),
 };
@@ -88,39 +80,6 @@ export const ClusterActions: Story = {
         </Inline>
       </Cluster>
     </Card>
-  ),
-};
-
-export const ResponsiveGrid: Story = {
-  parameters: storyDescription("Grid uses auto-fit columns by default and keeps gaps aligned with the target scale."),
-  render: () => (
-    <Stack>
-      <Grid minItemWidth="180px">
-        <MetricCard label="Revenue" value="$128k" delta="+18%" />
-        <MetricCard label="Activation" value="42%" delta="+7%" />
-        <MetricCard label="Incidents" value="3" delta="-2" />
-        <MetricCard label="Latency" value="84ms" delta="-11%" />
-      </Grid>
-
-      <Grid minItemWidth="260px">
-        <Card title="Admin portals">
-          <Stack gap="sm">
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
-              Favor scannable rows, filters, tables, and compact summaries.
-            </p>
-            <Button variant="secondary">Open example</Button>
-          </Stack>
-        </Card>
-        <Card title="Editorial">
-          <Stack gap="sm">
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
-              Use wider rhythm, readable text measure, and clear calls to action.
-            </p>
-            <Button variant="secondary">Open example</Button>
-          </Stack>
-        </Card>
-      </Grid>
-    </Stack>
   ),
 };
 

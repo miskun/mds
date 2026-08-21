@@ -1,0 +1,34 @@
+.mds-panel {
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  color: var(--mds-text);
+}
+
+.mds-panel--default {
+  background: var(--mds-panel);
+}
+
+.mds-panel--raised {
+  border-color: var(--mds-line-strong);
+  background: var(--mds-panel-raised);
+}
+
+.mds-panel--ghost {
+  background: transparent;
+}
+
+.mds-panel--padding-none {
+  padding: 0;
+}
+
+.mds-panel--padding-sm {
+  padding: var(--mds-floating-padding);
+}
+
+.mds-panel--padding-md {
+  padding: var(--mds-panel-padding);
+}
+
+.mds-panel--padding-lg {
+  padding: var(--mds-section-padding);
+}

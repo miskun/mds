@@ -78,7 +78,8 @@ Keep components grouped topically:
 - `Display`: badges, tags, status dots, keyboard hints, dividers, cards, and records
 - `Feedback`: alerts, toasts, empty states, progress, spinners, and skeletons
 - `Data`: tables, data tables, pagination, toolbars, metrics, bulk actions, and detail surfaces
-- `Layout`: layout compositions and containers
+- `Layout`: stack, cluster, inline, grid, page header, spacer, and page-level arrangement
+- `Containers`: panel, card, popover, dialog, drawer, accordion, bottom bar, and resizable container
 
 For foundation docs:
 
@@ -115,6 +116,13 @@ For layout components:
 - derive gaps from target-aware spacing tokens
 - prefer semantic layout props over one-off local layout CSS
 - keep primitives low on visual styling so composed components own surface, border, and copy treatment
+
+For container components:
+
+- keep bounded and disclosure surfaces under `MDS/Components/Containers`
+- distinguish low-level `Panel` surfaces from structured `Card` surfaces
+- keep floating, modal, and drawer examples clear about controlled open state
+- avoid moving navigation primitives into containers unless they frame content rather than navigate
 
 For API docs:
 
