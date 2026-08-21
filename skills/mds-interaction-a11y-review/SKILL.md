@@ -1,0 +1,60 @@
+---
+name: mds-interaction-a11y-review
+description: Review MDS interactive components for keyboard behavior, focus management, ARIA state, and disabled interaction handling.
+---
+
+# MDS Interaction Accessibility Review
+
+Use this skill when changing MDS components that respond to keyboard, pointer, focus, selection, opening, closing, sorting, or disclosure.
+
+## Scope
+
+Review interaction behavior, not visual taste. Pair this with `skills/mds-component-api-review` when the public API also changes.
+
+## Checklist
+
+Check that interactive components:
+
+- use native elements when possible
+- have a clear accessible name
+- expose correct ARIA roles, states, and relationships
+- support expected keyboard keys for the pattern
+- keep focus visible through MDS focus tokens
+- move focus predictably after keyboard actions
+- skip disabled items during keyboard movement
+- prevent disabled items from changing state
+- keep pointer and keyboard activation paths consistent
+- support controlled and uncontrolled state where expected
+- preserve user-provided event handlers
+
+## Pattern Expectations
+
+Tabs should support arrow navigation, `Home`, `End`, roving focus, `role="tablist"`, `role="tab"`, and `aria-selected`.
+
+Segmented controls should support arrow navigation, `Home`, `End`, roving focus, and selected state through `aria-pressed`.
+
+Menus, popovers, dialogs, drawers, and tooltips should use Radix primitives unless there is a strong reason not to.
+
+Tables with sorting or selection should expose sort state, selection state, and clear accessible labels for header and row controls.
+
+## Storybook
+
+Stories for changed interactions should include:
+
+- selected or active state
+- disabled state
+- controlled state when the component supports it
+- open or expanded state when relevant
+- enough items to test keyboard movement
+
+## Verification
+
+Run the relevant checks for the changed surface:
+
+```sh
+npm run typecheck
+npm run build
+npm run build-storybook
+```
+
+When practical, manually exercise keyboard behavior in Storybook before release.
