@@ -94,6 +94,13 @@ For pattern docs:
 - show controlled state for selection, sorting, dialogs, drawers, or filters when relevant
 - keep workflow copy action-oriented and reusable across product surfaces
 
+For content docs:
+
+- cover labels, actions, hints, errors, empty states, confirmations, and status text
+- prefer specific product language over implementation language
+- show both recommended and avoided wording when that makes the rule clearer
+- keep examples aligned with component and pattern copy already used in Storybook
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`
