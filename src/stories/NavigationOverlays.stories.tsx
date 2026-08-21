@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Bell, Bolt, ChevronDown, FileText, Home, LayoutDashboard, MoreHorizontal, PanelRight, Settings, User } from "lucide-react";
+import { Bell, Bolt, ChevronDown, FileText, MoreHorizontal, PanelRight } from "lucide-react";
 import {
-  BreadcrumbItem,
-  Breadcrumbs,
   Button,
   Card,
   Checkbox,
@@ -17,30 +15,24 @@ import {
   MenuLabel,
   MenuSeparator,
   MenuSub,
-  NavItem,
-  NavList,
   Popover,
-  Segment,
-  SegmentedControl,
   Select,
-  Tab,
-  Tabs,
   Tooltip,
 } from "../components";
 import "../showcase.css";
 import "./navigation-overlays.css";
 
 const meta = {
-  title: "MDS/Components/Navigation + Overlays",
-  component: SegmentedControl,
-  subcomponents: { Segment, Tabs, Tab, NavList, NavItem, Breadcrumbs, BreadcrumbItem, Popover, DropdownMenu, Dialog, Drawer, Tooltip },
+  title: "MDS/Components/Overlays",
+  component: Popover,
+  subcomponents: { DropdownMenu, Dialog, Drawer, Tooltip },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
     docs: {
       description: {
         component:
-          "Navigation and overlay primitives expose controlled state where selection or open state matters and use keyboard behavior that matches the component pattern.",
+          "Overlay primitives expose controlled open state, trigger composition, focus management, and target-aware floating surfaces.",
       },
     },
   },
@@ -114,64 +106,6 @@ export const FloatingLayer: Story = {
             </Popover>
           </div>
         </Card>
-      </div>
-    );
-  },
-};
-
-export const Navigation: Story = {
-  parameters: storyDescription("Navigation primitives cover breadcrumbs, nav lists, segmented controls, active state, disabled state, and keyboard-focused search."),
-  render: () => {
-    const [target, setTarget] = useState("admin");
-
-    return (
-      <div className="nav-layout">
-        <aside className="nav-layout__sidebar">
-          <NavList>
-            <NavItem href="#" active icon={<LayoutDashboard size={16} />}>
-              Overview
-            </NavItem>
-            <NavItem href="#" icon={<FileText size={16} />}>
-              Components
-            </NavItem>
-            <NavItem href="#" icon={<Settings size={16} />}>
-              Tokens
-            </NavItem>
-            <NavItem href="#" icon={<User size={16} />}>
-              Team
-            </NavItem>
-          </NavList>
-        </aside>
-        <section className="nav-layout__main">
-          <Breadcrumbs>
-            <BreadcrumbItem href="#">
-              <Home size={14} />
-            </BreadcrumbItem>
-            <BreadcrumbItem href="#">MDS</BreadcrumbItem>
-            <BreadcrumbItem current href="#">
-              Components
-            </BreadcrumbItem>
-          </Breadcrumbs>
-          <div className="mds-cluster">
-            <Tabs label="Sections" defaultValue="overview">
-              <Tab value="overview">Overview</Tab>
-              <Tab value="components">Components</Tab>
-              <Tab value="tokens">Tokens</Tab>
-              <Tab value="changelog" disabled>
-                Changelog
-              </Tab>
-            </Tabs>
-            <SegmentedControl label="Target" value={target} onValueChange={setTarget}>
-              <Segment value="admin">Admin</Segment>
-              <Segment value="desktop">Desktop</Segment>
-              <Segment value="mobile">Mobile</Segment>
-              <Segment value="editorial" disabled>
-                Editorial
-              </Segment>
-            </SegmentedControl>
-            <Input aria-label="Search" placeholder={`Search ${target}`} />
-          </div>
-        </section>
       </div>
     );
   },

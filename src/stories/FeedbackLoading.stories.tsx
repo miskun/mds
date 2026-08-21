@@ -4,22 +4,18 @@ import {
   Alert,
   Button,
   Card,
-  Divider,
   EmptyState,
-  Kbd,
   Progress,
   Skeleton,
   Spinner,
-  StatusDot,
-  Tag,
   Toast,
 } from "../components";
 import "./feedback-loading.css";
 
 const meta = {
-  title: "MDS/Components/Feedback + Loading",
+  title: "MDS/Components/Feedback",
   component: Alert,
-  subcomponents: { EmptyState, Progress, Skeleton, Spinner, StatusDot, Tag, Toast },
+  subcomponents: { EmptyState, Progress, Skeleton, Spinner, Toast },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -98,33 +94,5 @@ export const EmptyAndToast: Story = {
         Component settings updated.
       </Toast>
     </div>
-  ),
-};
-
-export const InlineStatus: Story = {
-  parameters: storyDescription("Inline primitives keep status, removable tags, dividers, and keyboard hints aligned with the active target."),
-  render: () => (
-    <Card eyebrow="Inline" title="Small feedback primitives">
-      <div className="mds-stack">
-        <div className="mds-cluster">
-          <StatusDot tone="success" label="Online" />
-          <StatusDot tone="warning" label="Review" />
-          <StatusDot tone="danger" label="Blocked" />
-          <StatusDot label="Draft" />
-        </div>
-        <Divider />
-        <div className="mds-cluster">
-          <Tag>admin</Tag>
-          <Tag removable onRemove={() => undefined}>desktop</Tag>
-          <Tag>editorial</Tag>
-        </div>
-        <Divider />
-        <div className="mds-cluster">
-          <span className="feedback-copy">Open command menu</span>
-          <Kbd>⌘</Kbd>
-          <Kbd>K</Kbd>
-        </div>
-      </div>
-    </Card>
   ),
 };

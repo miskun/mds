@@ -3,7 +3,7 @@ import { Checkbox, Input, Radio, RadioGroup, Select, Switch, Textarea } from "..
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Form Controls",
+  title: "MDS/Components/Forms",
   component: Input,
   subcomponents: { Textarea, Select, Checkbox, RadioGroup, Radio, Switch },
   tags: ["autodocs"],

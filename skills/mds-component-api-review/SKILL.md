@@ -69,6 +69,17 @@ Keep Storybook organized by documentation intent:
 - `MDS/Content`: interface copy guidance
 - `MDS/Data Visualization`: charts, palettes, legends, and dashboard visualization guidance
 
+Keep components grouped topically:
+
+- `Actions`: buttons and action triggers
+- `Forms`: fields, text inputs, selects, checkboxes, radios, and switches
+- `Navigation`: tabs, segmented controls, breadcrumbs, and nav lists
+- `Overlays`: tooltips, popovers, dropdown menus, dialogs, and drawers
+- `Display`: badges, tags, status dots, keyboard hints, dividers, cards, and records
+- `Feedback`: alerts, toasts, empty states, progress, spinners, and skeletons
+- `Data`: tables, data tables, pagination, toolbars, metrics, bulk actions, and detail surfaces
+- `Layout`: layout compositions and containers
+
 For foundation docs:
 
 - document token values with intended use, not only visual samples

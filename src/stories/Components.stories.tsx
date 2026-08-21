@@ -4,7 +4,7 @@ import { Button, Card, Checkbox, IconButton, Input, Select, Switch } from "../co
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Compositions",
+  title: "MDS/Components/Layout",
   parameters: {
     layout: "padded",
   },
