@@ -17,10 +17,9 @@ export const Usage: Story = {
     <div className="provider-doc">
       <header className="provider-doc__header">
         <p className="mds-kicker">MDS Provider</p>
-        <h1>Use target for product intent, viewport for screen size.</h1>
+        <h1>Wrap an app or subtree with the selected target.</h1>
         <p>
-          Storybook's viewport menu changes the canvas dimensions. The MDS Target toolbar maps to
-          <code> data-mds-target</code> and changes component ergonomics.
+          MDSProvider writes <code>data-mds-target</code> so component tokens resolve for desktop, mobile, admin, or editorial surfaces.
         </p>
       </header>
       <Card eyebrow="Provider" title="Application root">
@@ -29,6 +28,11 @@ import "@miskun/design-system/styles.css";
 
 <MDSProvider target="admin">
   <App />
+</MDSProvider>`}</pre>
+      </Card>
+      <Card eyebrow="Subtree" title="Scoped target">
+        <pre>{`<MDSProvider target="editorial">
+  <MarketingPreview />
 </MDSProvider>`}</pre>
       </Card>
     </div>
