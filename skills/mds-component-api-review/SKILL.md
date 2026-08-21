@@ -87,6 +87,13 @@ For foundation docs:
 - keep token naming rules visible: base tokens, semantic aliases, component tokens, and state tokens
 - prefer semantic target-aware aliases in component examples
 
+For pattern docs:
+
+- document workflows that combine components, not standalone primitive states
+- include success, blocked, empty, loading, or recovery states when the workflow needs them
+- show controlled state for selection, sorting, dialogs, drawers, or filters when relevant
+- keep workflow copy action-oriented and reusable across product surfaces
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`
