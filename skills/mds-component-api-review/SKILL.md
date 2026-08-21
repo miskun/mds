@@ -69,6 +69,13 @@ Keep Storybook organized by documentation intent:
 - `MDS/Content`: interface copy guidance
 - `MDS/Data Visualization`: charts, palettes, legends, and dashboard visualization guidance
 
+For foundation docs:
+
+- document token values with intended use, not only visual samples
+- include target baseline values and explain how semantic sizes resolve by target
+- keep token naming rules visible: base tokens, semantic aliases, component tokens, and state tokens
+- prefer semantic target-aware aliases in component examples
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`

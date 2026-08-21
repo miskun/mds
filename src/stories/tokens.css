@@ -54,6 +54,13 @@
   color: var(--mds-text);
 }
 
+.token-doc span,
+.token-doc small {
+  color: var(--mds-text-muted);
+  font-size: var(--mds-font-size-sm);
+  line-height: 1.45;
+}
+
 .token-doc code,
 .token-doc td,
 .token-doc th {
@@ -66,6 +73,7 @@
   border: 1px solid var(--mds-line);
   border-collapse: collapse;
   background: var(--mds-panel);
+  table-layout: fixed;
 }
 
 .token-doc__table th,
@@ -109,11 +117,12 @@
 }
 
 .token-doc__radii span {
+  display: grid;
+  gap: var(--mds-field-gap);
   border: 1px solid var(--mds-line);
   background: var(--mds-panel);
   color: var(--mds-text-muted);
   padding: var(--mds-panel-padding);
-  text-align: center;
 }
 
 .token-doc__focus-grid {
