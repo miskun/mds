@@ -23,6 +23,12 @@
   color: var(--mds-text);
 }
 
+.mds-segment:disabled {
+  color: var(--mds-text-muted);
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
 .mds-segment:focus-visible {
   outline: none;
   box-shadow: var(--mds-focus);

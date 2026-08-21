@@ -120,7 +120,9 @@ export const Navigation: Story = {
               <Segment value="admin">Admin</Segment>
               <Segment value="desktop">Desktop</Segment>
               <Segment value="mobile">Mobile</Segment>
-              <Segment value="editorial">Editorial</Segment>
+              <Segment value="editorial" disabled>
+                Editorial
+              </Segment>
             </SegmentedControl>
             <Input aria-label="Search" placeholder={`Search ${target}`} />
           </div>

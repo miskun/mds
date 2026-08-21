@@ -1,7 +1,6 @@
 import { createContext, forwardRef, useContext, useState } from "react";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
-import { cx } from "./utils";
-import { getControllableValue } from "./utils";
+import type { ButtonHTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import { cx, getControllableValue, moveFocusWithin } from "./utils";
 import "./tabs.css";
 
 export interface TabsProps {
@@ -30,7 +29,7 @@ export function Tabs({ children, label = "Sections", value, defaultValue, onValu
 
   return (
     <TabsContext.Provider value={{ value: currentValue, setValue }}>
-      <div className="mds-tabs" role="tablist" aria-label={label}>
+      <div className="mds-tabs" role="tablist" aria-label={label} onKeyDown={handleTabListKeyDown}>
         {children}
       </div>
     </TabsContext.Provider>
@@ -42,9 +41,13 @@ export interface TabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
 }
 
-export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ value, active, className, onClick, type = "button", ...props }, ref) {
+export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab(
+  { value, active, className, onClick, type = "button", tabIndex, ...props },
+  ref,
+) {
   const context = useContext(TabsContext);
   const selected = value !== undefined && context?.value !== undefined ? context.value === value : active;
+  const controlledTabIndex = value !== undefined && context?.value !== undefined ? (selected ? 0 : -1) : tabIndex;
 
   return (
     <button
@@ -53,6 +56,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ value,
       className={cx("mds-tab", selected && "mds-tab--active", className)}
       role="tab"
       aria-selected={selected}
+      tabIndex={controlledTabIndex}
       onClick={(event) => {
         if (value !== undefined) context?.setValue(value);
         onClick?.(event);
@@ -61,3 +65,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ value,
     />
   );
 });
+
+function handleTabListKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+  moveFocusWithin(event, '[role="tab"]:not(:disabled)');
+}

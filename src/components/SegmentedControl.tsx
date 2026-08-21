@@ -1,7 +1,6 @@
 import { createContext, forwardRef, useContext, useState } from "react";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
-import { cx } from "./utils";
-import { getControllableValue } from "./utils";
+import type { ButtonHTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import { cx, getControllableValue, moveFocusWithin } from "./utils";
 import "./segmented-control.css";
 
 export interface SegmentedControlProps {
@@ -30,7 +29,7 @@ export function SegmentedControl({ children, label = "Options", value, defaultVa
 
   return (
     <SegmentedControlContext.Provider value={{ value: currentValue, setValue }}>
-      <div className="mds-segmented" role="group" aria-label={label}>
+      <div className="mds-segmented" role="group" aria-label={label} onKeyDown={handleSegmentedKeyDown}>
         {children}
       </div>
     </SegmentedControlContext.Provider>
@@ -43,11 +42,12 @@ export interface SegmentProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Segment = forwardRef<HTMLButtonElement, SegmentProps>(function Segment(
-  { value, active, className, onClick, type = "button", ...props },
+  { value, active, className, onClick, type = "button", tabIndex, ...props },
   ref,
 ) {
   const context = useContext(SegmentedControlContext);
   const selected = value !== undefined && context?.value !== undefined ? context.value === value : active;
+  const controlledTabIndex = value !== undefined && context?.value !== undefined ? (selected ? 0 : -1) : tabIndex;
 
   return (
     <button
@@ -55,6 +55,7 @@ export const Segment = forwardRef<HTMLButtonElement, SegmentProps>(function Segm
       type={type}
       className={cx("mds-segment", selected && "mds-segment--active", className)}
       aria-pressed={selected}
+      tabIndex={controlledTabIndex}
       onClick={(event) => {
         if (value !== undefined) context?.setValue(value);
         onClick?.(event);
@@ -63,3 +64,7 @@ export const Segment = forwardRef<HTMLButtonElement, SegmentProps>(function Segm
     />
   );
 });
+
+function handleSegmentedKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+  moveFocusWithin(event, ".mds-segment:not(:disabled)");
+}

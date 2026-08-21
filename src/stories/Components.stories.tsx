@@ -120,6 +120,9 @@ export const Navigation: Story = {
       <Tabs value={tab} onValueChange={setTab}>
         <Tab value="overview">Overview</Tab>
         <Tab value="components">Components</Tab>
+        <Tab value="changelog" disabled>
+          Changelog
+        </Tab>
         <Tab value="tokens">Tokens</Tab>
       </Tabs>
     );
