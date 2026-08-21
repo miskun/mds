@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ArrowRight, Copy } from "lucide-react";
-import { Button, IconButton } from "../components";
+import { ArrowRight, Copy, Settings } from "lucide-react";
+import { Button, Card, IconButton } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/API/Actions",
+  title: "MDS/Components/Actions",
   component: Button,
   subcomponents: { IconButton },
   tags: ["autodocs"],
@@ -42,7 +42,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ButtonProps: Story = {
+const storyDescription = (story: string) => ({
+  docs: {
+    description: {
+      story,
+    },
+  },
+});
+
+export const Playground: Story = {
   args: {
     children: "Continue",
     variant: "primary",
@@ -52,17 +60,38 @@ export const ButtonProps: Story = {
 };
 
 export const Variants: Story = {
+  parameters: storyDescription("Button variants share the same target-aware height, padding, font, and focus behavior."),
   render: () => (
     <div className="mds-cluster">
-      <Button>Primary</Button>
+      <Button icon={<ArrowRight size={16} />}>Primary</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
       <Button variant="danger">Danger</Button>
       <Button disabled>Disabled</Button>
+      <IconButton label="Copy" icon={<Copy size={16} />} />
+      <IconButton label="Settings" variant="ghost" icon={<Settings size={16} />} />
     </div>
   ),
 };
 
-export const IconOnly: Story = {
-  render: () => <IconButton label="Copy" icon={<Copy size={16} />} />,
+export const Sizes: Story = {
+  parameters: storyDescription("Semantic sizes stay relative to the active MDS target selected in the toolbar."),
+  render: () => (
+    <Card eyebrow="Semantic size" title="sm / md / lg adapt to the selected MDS target">
+      <div className="mds-cluster">
+        <Button size="sm">Small</Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
+        <Button size="sm" variant="secondary" icon={<ArrowRight size={14} />}>
+          Small icon
+        </Button>
+        <Button size="md" variant="secondary" icon={<ArrowRight size={16} />}>
+          Medium icon
+        </Button>
+        <Button size="lg" variant="secondary" icon={<ArrowRight size={18} />}>
+          Large icon
+        </Button>
+      </div>
+    </Card>
+  ),
 };

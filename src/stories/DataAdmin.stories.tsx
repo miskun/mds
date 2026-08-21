@@ -24,9 +24,18 @@ import {
 import "./data-admin.css";
 
 const meta = {
-  title: "MDS/Data + Admin",
+  title: "MDS/Components/Data + Admin",
+  component: DataTable,
+  subcomponents: { TableToolbar, BulkActionBar, Pagination, MetricCard, ListItem, DetailPanel, ActivityFeed, ActivityItem },
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
+    docs: {
+      description: {
+        component:
+          "Data and admin primitives cover sortable tables, controlled selection, toolbar filters, metrics, bulk actions, pagination, and detail surfaces.",
+      },
+    },
   },
 } satisfies Meta;
 

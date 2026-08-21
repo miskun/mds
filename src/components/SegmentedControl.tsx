@@ -4,9 +4,13 @@ import { cx, getControllableValue, moveFocusWithin } from "./utils";
 import "./segmented-control.css";
 
 export interface SegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
+  /** Accessible label for the option group. */
   label?: string;
+  /** Controlled selected segment value. */
   value?: string;
+  /** Initial selected segment value. */
   defaultValue?: string;
+  /** Called when a segment with a value is selected. */
   onValueChange?: (value: string) => void;
 }
 
@@ -49,7 +53,9 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
 });
 
 export interface SegmentProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Value used by controlled or uncontrolled segmented controls. */
   value?: string;
+  /** Manual active state when SegmentedControl does not control value. */
   active?: boolean;
 }
 

@@ -23,15 +23,26 @@ import {
   Segment,
   SegmentedControl,
   Select,
+  Tab,
+  Tabs,
   Tooltip,
 } from "../components";
 import "../showcase.css";
 import "./navigation-overlays.css";
 
 const meta = {
-  title: "MDS/Navigation + Overlays",
+  title: "MDS/Components/Navigation + Overlays",
+  component: SegmentedControl,
+  subcomponents: { Segment, Tabs, Tab, NavList, NavItem, Breadcrumbs, BreadcrumbItem, Popover, DropdownMenu, Dialog, Drawer, Tooltip },
+  tags: ["autodocs"],
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component:
+          "Navigation and overlay primitives expose controlled state where selection or open state matters and use keyboard behavior that matches the component pattern.",
+      },
+    },
   },
 } satisfies Meta;
 
@@ -142,6 +153,14 @@ export const Navigation: Story = {
             </BreadcrumbItem>
           </Breadcrumbs>
           <div className="mds-cluster">
+            <Tabs label="Sections" defaultValue="overview">
+              <Tab value="overview">Overview</Tab>
+              <Tab value="components">Components</Tab>
+              <Tab value="tokens">Tokens</Tab>
+              <Tab value="changelog" disabled>
+                Changelog
+              </Tab>
+            </Tabs>
             <SegmentedControl label="Target" value={target} onValueChange={setTarget}>
               <Segment value="admin">Admin</Segment>
               <Segment value="desktop">Desktop</Segment>

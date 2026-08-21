@@ -4,9 +4,13 @@ import { cx, getControllableValue, moveFocusWithin } from "./utils";
 import "./tabs.css";
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
+  /** Accessible label for the tab list. */
   label?: string;
+  /** Controlled selected tab value. */
   value?: string;
+  /** Initial selected tab value. */
   defaultValue?: string;
+  /** Called when a tab with a value is selected. */
   onValueChange?: (value: string) => void;
 }
 
@@ -49,7 +53,9 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
 });
 
 export interface TabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Value used by controlled or uncontrolled tabs. */
   value?: string;
+  /** Manual active state when Tabs does not control value. */
   active?: boolean;
 }
 

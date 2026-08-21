@@ -17,9 +17,18 @@ import {
 import "./feedback-loading.css";
 
 const meta = {
-  title: "MDS/Feedback + Loading",
+  title: "MDS/Components/Feedback + Loading",
+  component: Alert,
+  subcomponents: { EmptyState, Progress, Skeleton, Spinner, StatusDot, Tag, Toast },
+  tags: ["autodocs"],
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component:
+          "Feedback primitives communicate state, progress, and compact metadata while keeping spacing and typography aligned with the active MDS target.",
+      },
+    },
   },
 } satisfies Meta;
 

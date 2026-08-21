@@ -57,7 +57,7 @@ For each changed component, check that stories cover meaningful states:
 - loading or empty, when relevant
 - selected, checked, active, or open, when relevant
 - representative target behavior through the toolbar
-- API docs through `MDS/API/...` autodocs stories when exported props change
+- API docs on the canonical `MDS/Components/...` story when exported props change
 
 For API docs:
 
@@ -65,6 +65,7 @@ For API docs:
 - include closely related primitives as `subcomponents`
 - keep TypeScript prop comments short and product-neutral
 - document defaults and native prop passthrough in story args or descriptions
+- avoid separate API-only stories when the component examples can host the prop tables
 
 ## Output Format
 
