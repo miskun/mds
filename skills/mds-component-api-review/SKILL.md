@@ -77,7 +77,7 @@ Keep components grouped topically:
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
 - `Navigation`: overview, breadcrumbs, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
 - `Overlays`: overview, tooltips, popovers, dropdown menus, dialogs, and drawers
-- `Display`: metadata, records, metrics, text, keyboard hints, dividers, and future avatar primitives
+- `Display`: avatar, metadata, records, metrics, text, keyboard hints, and dividers
 - `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
 - `Data`: overview, tables, data table, table toolbar, bulk actions, detail panels, and activity feeds
 - `Layout`: stack, cluster, inline, grid, page header, spacer, and page-level arrangement
@@ -143,9 +143,9 @@ For navigation docs:
 
 For display docs:
 
-- keep Display focused on passive information, metadata, records, metrics, and small presentational utilities
+- keep Display focused on passive information, avatars, metadata, records, metrics, and small presentational utilities
 - keep system state, recovery, loading, and empty states under Feedback
-- split display docs by purpose: metadata, records, metrics, text, and utilities
+- split display docs by purpose: avatar, metadata, records, metrics, text, and utilities
 - use Text, Title, and Code instead of local typography styles when component examples need copy
 - move bounded surfaces to Containers unless the example is showing display content inside a surface
 

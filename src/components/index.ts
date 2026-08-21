@@ -1,5 +1,6 @@
 export * from "./Alert";
 export * from "./ActivityFeed";
+export * from "./Avatar";
 export * from "./Badge";
 export * from "./Breadcrumbs";
 export * from "./Button";

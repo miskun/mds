@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Settings } from "lucide-react";
-import { Badge, IconButton, ListItem, Stack, StatusDot } from "../components";
+import { Avatar, Badge, IconButton, ListItem, Stack, StatusDot } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -37,7 +37,7 @@ export const ComponentRecords: Story = {
         title="DataTable"
         description="Admin target maintained by Miskun"
         meta={<StatusDot tone="warning" label="review" />}
-        media={<Badge tone="accent">4</Badge>}
+        media={<Avatar name="Miskun" status="online" />}
         action={<IconButton label="Configure DataTable" icon={<Settings size={14} />} />}
       />
       <ListItem
