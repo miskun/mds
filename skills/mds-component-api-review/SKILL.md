@@ -109,6 +109,13 @@ For data visualization docs:
 - document chart loading, empty, and error states before adding chart components
 - pair charts with metrics, filters, tables, or export paths when exact values matter
 
+For layout components:
+
+- keep layout primitives under `MDS/Components/Layout`
+- derive gaps from target-aware spacing tokens
+- prefer semantic layout props over one-off local layout CSS
+- keep primitives low on visual styling so composed components own surface, border, and copy treatment
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`
