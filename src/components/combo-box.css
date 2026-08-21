@@ -48,6 +48,12 @@
   color: var(--mds-text);
 }
 
+.mds-combo__tag button:disabled,
+.mds-combo__clear:disabled,
+.mds-combo__toggle:disabled {
+  cursor: not-allowed;
+}
+
 .mds-combo__tag button:focus-visible,
 .mds-combo__clear:focus-visible,
 .mds-combo__toggle:focus-visible {
@@ -76,6 +82,15 @@
 
 .mds-combo--invalid .mds-combo__control {
   border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
+}
+
+.mds-combo--disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.mds-combo--disabled .mds-combo__control {
+  background: color-mix(in srgb, var(--mds-ink) 72%, transparent);
 }
 
 .mds-combo__search-icon {

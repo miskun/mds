@@ -29,6 +29,7 @@ export interface ComboBoxProps extends Omit<HTMLAttributes<HTMLDivElement>, "def
   placeholder?: string;
   emptyMessage?: string;
   loading?: boolean;
+  disabled?: boolean;
   clearable?: boolean;
 }
 
@@ -47,10 +48,13 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
     placeholder = "Search options",
     emptyMessage = "No options found",
     loading,
+    disabled,
     clearable = true,
     id,
     className,
     onBlur,
+    "aria-invalid": ariaInvalid,
+    "aria-describedby": ariaDescribedBy,
     ...props
   },
   ref,
@@ -59,7 +63,8 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   const comboId = id ?? generatedId;
   const listboxId = `${comboId}-listbox`;
   const messageId = error || hint ? `${comboId}-message` : undefined;
-  const invalidState = invalid || Boolean(error);
+  const invalidState = invalid || Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
+  const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -75,6 +80,11 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   const activeOption = activeIndex >= 0 ? visibleOptions[activeIndex] : undefined;
 
   useEffect(() => {
+    if (disabled) {
+      setOpen(false);
+      return;
+    }
+
     if (!open) {
       setActiveIndex(-1);
       return;
@@ -87,7 +97,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
 
       return findNextOptionIndex(visibleOptions, -1, 1);
     });
-  }, [open, visibleOptions]);
+  }, [disabled, open, visibleOptions]);
 
   function commitValue(nextValue: ComboBoxValue) {
     setInternalValue(nextValue);
@@ -95,7 +105,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   }
 
   function selectOption(option: ComboBoxOption) {
-    if (option.disabled) {
+    if (disabled || option.disabled) {
       return;
     }
 
@@ -116,10 +126,18 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   }
 
   function removeValue(valueToRemove: string) {
+    if (disabled) {
+      return;
+    }
+
     commitValue(selectedValues.filter((selectedValue) => selectedValue !== valueToRemove));
   }
 
   function clearSelection() {
+    if (disabled) {
+      return;
+    }
+
     commitValue(multiple ? [] : "");
     setQuery("");
   }
@@ -132,7 +150,13 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
     <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={comboId} messageId={messageId}>
       <div
         ref={ref}
-        className={cx("mds-combo", open && "mds-combo--open", invalidState && "mds-combo--invalid", className)}
+        className={cx(
+          "mds-combo",
+          open && "mds-combo--open",
+          invalidState && "mds-combo--invalid",
+          disabled && "mds-combo--disabled",
+          className,
+        )}
         onBlur={(event) => {
           onBlur?.(event);
           if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -140,13 +164,14 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
           }
         }}
         {...props}
+        aria-disabled={disabled || undefined}
       >
         {multiple && selectedOptions.length > 0 ? (
           <div className="mds-combo__tags" aria-label="Selected options">
             {selectedOptions.map((option) => (
               <span className="mds-combo__tag" key={option.value}>
                 <span>{option.label}</span>
-                <button type="button" aria-label={`Remove ${option.label}`} onClick={() => removeValue(option.value)}>
+                <button type="button" aria-label={`Remove ${option.label}`} disabled={disabled} onClick={() => removeValue(option.value)}>
                   <X size={12} aria-hidden="true" />
                 </button>
               </span>
@@ -166,8 +191,9 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
             aria-expanded={open}
             aria-activedescendant={open && activeIndex >= 0 ? optionId(activeIndex) : undefined}
             aria-invalid={invalidState || undefined}
-            aria-describedby={messageId}
+            aria-describedby={describedBy}
             aria-required={required || undefined}
+            disabled={disabled}
             placeholder={placeholder}
             value={inputValue}
             onChange={(event) => {
@@ -181,6 +207,10 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
               setOpen(true);
             }}
             onKeyDown={(event) => {
+              if (disabled) {
+                return;
+              }
+
               if (event.key === "Escape") {
                 setOpen(false);
                 event.preventDefault();
@@ -208,11 +238,17 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
             }}
           />
           {clearable && hasSelection ? (
-            <button className="mds-combo__clear" type="button" aria-label="Clear selection" onClick={clearSelection}>
+            <button className="mds-combo__clear" type="button" aria-label="Clear selection" disabled={disabled} onClick={clearSelection}>
               <X size={14} aria-hidden="true" />
             </button>
           ) : null}
-          <button className="mds-combo__toggle" type="button" aria-label="Toggle options" onClick={() => setOpen((nextOpen) => !nextOpen)}>
+          <button
+            className="mds-combo__toggle"
+            type="button"
+            aria-label="Toggle options"
+            disabled={disabled}
+            onClick={() => setOpen((nextOpen) => !nextOpen)}
+          >
             <ChevronDown size={16} aria-hidden="true" />
           </button>
         </div>

@@ -103,6 +103,13 @@ export const States: Story = {
       <ComboBox label="Required component" error="Choose at least one component." options={componentOptions} />
       <ComboBox label="Loading" hint="Use while remote options are resolving." options={[]} loading />
       <ComboBox label="No matches" options={componentOptions} placeholder="Type zzz" emptyMessage="No matching components" />
+      <ComboBox
+        label="Deprecated package"
+        hint="Disabled fields keep their message relationship."
+        options={componentOptions}
+        defaultValue="deprecated-menu"
+        disabled
+      />
     </Grid>
   ),
 };

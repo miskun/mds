@@ -48,7 +48,7 @@ For overlays:
 
 Tables with sorting or selection should expose table context, sort state, selection state, loading or empty status, and clear accessible labels for header and row controls.
 
-Form controls should connect labels and helper text with native labels, `aria-labelledby`, or `aria-describedby` as appropriate. Error props should set `aria-invalid`, and grouped controls should label the group rather than only the individual items.
+Form controls should connect labels and helper text with native labels, `aria-labelledby`, or `aria-describedby` as appropriate. Error props should set `aria-invalid`, and grouped controls should label the group rather than only the individual items. Custom controls should compose consumer-provided `aria-describedby` and `aria-invalid` onto the actual focusable control.
 
 Comboboxes should keep focus on the input, expose `aria-controls`, `aria-expanded`, and `aria-activedescendant`, support `ArrowUp`, `ArrowDown`, `Home`, `End`, `Enter`, and `Escape`, skip disabled options during keyboard movement, and keep pointer selection consistent with keyboard selection.
 
