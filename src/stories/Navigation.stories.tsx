@@ -19,7 +19,7 @@ import "../showcase.css";
 import "./navigation-overlays.css";
 
 const meta = {
-  title: "MDS/Components/Navigation/Overview",
+  title: "MDS/Components/Navigation",
   component: Tabs,
   subcomponents: { Tab, SegmentedControl, Segment, SideNav, SideNavSection, SideNavItem, NavList, NavItem, Breadcrumbs, BreadcrumbItem },
   tags: ["autodocs"],

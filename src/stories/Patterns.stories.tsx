@@ -30,7 +30,7 @@ import "../showcase.css";
 import "./data-admin.css";
 
 const meta = {
-  title: "MDS/Patterns/Overview",
+  title: "MDS/Patterns",
   parameters: {
     layout: "padded",
   },

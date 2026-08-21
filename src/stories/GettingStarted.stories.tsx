@@ -4,7 +4,7 @@ import { Badge, Button, Card, Checkbox, Input, MDSProvider, Select, Switch } fro
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Getting Started/Overview",
+  title: "MDS/Getting Started",
   parameters: {
     layout: "padded",
   },

@@ -28,14 +28,14 @@ const storyDescription = (story: string) => ({
 
 const groups = [
   ["Actions", "Buttons and action triggers.", "Buttons"],
-  ["Layout", "Spatial primitives and page-level arrangement.", "Flex, Grid, PageHeader"],
-  ["Containers", "Bounded and disclosure surfaces.", "Panel, Card, Popover, Dialog, Drawer"],
-  ["Overlays", "Floating layers and modal surfaces.", "Tooltip, Popover, DropdownMenu, Dialog, Drawer"],
+  ["Forms", "Field layouts and input controls.", "Layouts, Text, Selects, Selection, Search and filter"],
   ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Link, Tabs, Pagination, NavList, SideNav, TreeView"],
+  ["Overlays", "Floating layers and modal surfaces.", "Tooltip, Popover, DropdownMenu, Dialog, Drawer"],
   ["Display", "Passive information and metadata.", "Avatar, Description list, Metadata, Prose, Records, Metrics, Text, Utilities"],
   ["Feedback", "System state, recovery, loading, and confirmations.", "Alerts, Empty states, Loading, Toasts"],
-  ["Forms", "Field layouts and input controls.", "Layouts, Text, Selects, Selection, Search and filter"],
   ["Data", "Tables and record workflows.", "Tables, Data table, Toolbars, Detail and activity"],
+  ["Layout", "Spatial primitives and page-level arrangement.", "Flex, Grid, PageHeader"],
+  ["Containers", "Bounded and disclosure surfaces.", "Panel, Card, Popover, Dialog, Drawer"],
 ];
 
 export const Overview: Story = {

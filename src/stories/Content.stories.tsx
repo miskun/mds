@@ -4,7 +4,7 @@ import { Alert, Badge, Button, Card, Checkbox, Dialog, EmptyState, Input, Select
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Content/Overview",
+  title: "MDS/Content",
   parameters: {
     layout: "padded",
   },

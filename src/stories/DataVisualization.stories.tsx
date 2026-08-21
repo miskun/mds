@@ -4,7 +4,7 @@ import "../showcase.css";
 import "./data-visualization.css";
 
 const meta = {
-  title: "MDS/Data Visualization/Overview",
+  title: "MDS/Data Visualization",
   parameters: {
     layout: "padded",
   },

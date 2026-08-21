@@ -3,7 +3,7 @@ import { Card, Kbd, Tag } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Utilities/Overview",
+  title: "MDS/Utilities",
   parameters: {
     layout: "padded",
   },
