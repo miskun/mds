@@ -8,7 +8,13 @@ import { IconButton } from "./Button";
 import { Skeleton } from "./Skeleton";
 import { SortHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./Table";
 import type { SortDirection } from "./Table";
+import { getControllableValue } from "./utils";
 import "./data-table.css";
+
+export interface DataTableSort {
+  columnId: string;
+  direction: Exclude<SortDirection, null>;
+}
 
 export interface DataColumn<T> {
   id: string;
@@ -31,6 +37,12 @@ export interface DataTableProps<T> {
   getRowId: (row: T) => string;
   rowActions?: Array<RowAction<T>>;
   selectable?: boolean;
+  selectedRowIds?: string[];
+  defaultSelectedRowIds?: string[];
+  onSelectedRowIdsChange?: (selectedRowIds: string[]) => void;
+  sort?: DataTableSort | null;
+  defaultSort?: DataTableSort | null;
+  onSortChange?: (sort: DataTableSort | null) => void;
   loading?: boolean;
   emptyTitle?: string;
   emptyDescription?: string;
@@ -42,47 +54,57 @@ export function DataTable<T>({
   getRowId,
   rowActions,
   selectable,
+  selectedRowIds,
+  defaultSelectedRowIds = [],
+  onSelectedRowIdsChange,
+  sort,
+  defaultSort = null,
+  onSortChange,
   loading,
   emptyTitle = "No rows found",
   emptyDescription = "Adjust filters or add new records.",
 }: DataTableProps<T>) {
-  const [sort, setSort] = useState<{ columnId: string; direction: Exclude<SortDirection, null> } | null>(null);
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
+  const [uncontrolledSort, setUncontrolledSort] = useState<DataTableSort | null>(defaultSort);
+  const [uncontrolledSelectedRowIds, setUncontrolledSelectedRowIds] = useState<string[]>(defaultSelectedRowIds);
+  const currentSort = getControllableValue(sort, uncontrolledSort);
+  const currentSelectedRowIds = getControllableValue(selectedRowIds, uncontrolledSelectedRowIds);
+  const selectedIdSet = useMemo(() => new Set(currentSelectedRowIds), [currentSelectedRowIds]);
 
   const sortedData = useMemo(() => {
-    if (!sort) return data;
-    const column = columns.find((candidate) => candidate.id === sort.columnId);
+    if (!currentSort) return data;
+    const column = columns.find((candidate) => candidate.id === currentSort.columnId);
     if (!column) return data;
 
     return [...data].sort((a, b) => {
       const aValue = getSortValue(column, a);
       const bValue = getSortValue(column, b);
       const result = String(aValue).localeCompare(String(bValue), undefined, { numeric: true, sensitivity: "base" });
-      return sort.direction === "asc" ? result : -result;
+      return currentSort.direction === "asc" ? result : -result;
     });
-  }, [columns, data, sort]);
+  }, [columns, data, currentSort]);
 
-  const allSelected = data.length > 0 && data.every((row) => selectedIds.has(getRowId(row)));
+  const allSelected = data.length > 0 && data.every((row) => selectedIdSet.has(getRowId(row)));
 
   function toggleAll() {
-    setSelectedIds(allSelected ? new Set() : new Set(data.map(getRowId)));
+    setSelectedRows(allSelected ? [] : data.map(getRowId));
   }
 
   function toggleRow(id: string) {
-    setSelectedIds((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    const next = new Set(selectedIdSet);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setSelectedRows(Array.from(next));
   }
 
   function toggleSort(columnId: string) {
-    setSort((current) => {
-      if (!current || current.columnId !== columnId) return { columnId, direction: "asc" };
-      if (current.direction === "asc") return { columnId, direction: "desc" };
-      return null;
-    });
+    const nextSort = getNextSort(currentSort, columnId);
+    setUncontrolledSort(nextSort);
+    onSortChange?.(nextSort);
+  }
+
+  function setSelectedRows(nextSelectedRowIds: string[]) {
+    setUncontrolledSelectedRowIds(nextSelectedRowIds);
+    onSelectedRowIdsChange?.(nextSelectedRowIds);
   }
 
   if (loading) {
@@ -110,8 +132,8 @@ export function DataTable<T>({
             column.sortable ? (
               <SortHeader
                 key={column.id}
-                active={sort?.columnId === column.id}
-                direction={sort?.columnId === column.id ? sort.direction : null}
+                active={currentSort?.columnId === column.id}
+                direction={currentSort?.columnId === column.id ? currentSort.direction : null}
                 onSort={() => toggleSort(column.id)}
                 className={column.align === "right" ? "mds-table__header--numeric" : undefined}
               >
@@ -133,7 +155,7 @@ export function DataTable<T>({
             <TableRow key={rowId}>
               {selectable ? (
                 <TableCell className="mds-table__cell--select">
-                  <Checkbox aria-label={`Select row ${rowId}`} checked={selectedIds.has(rowId)} onChange={() => toggleRow(rowId)} />
+                  <Checkbox aria-label={`Select row ${rowId}`} checked={selectedIdSet.has(rowId)} onChange={() => toggleRow(rowId)} />
                 </TableCell>
               ) : null}
               {columns.map((column) => (
@@ -158,6 +180,12 @@ export function DataTable<T>({
       </TableBody>
     </Table>
   );
+}
+
+function getNextSort(currentSort: DataTableSort | null, columnId: string): DataTableSort | null {
+  if (!currentSort || currentSort.columnId !== columnId) return { columnId, direction: "asc" };
+  if (currentSort.direction === "asc") return { columnId, direction: "desc" };
+  return null;
 }
 
 function renderCell<T>(column: DataColumn<T>, row: T) {

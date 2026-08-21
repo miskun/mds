@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { ArrowRight, Copy, Download, Search, Settings } from "lucide-react";
 import {
   Badge,
@@ -112,13 +113,17 @@ export const Status: Story = {
 };
 
 export const Navigation: Story = {
-  render: () => (
-    <Tabs>
-      <Tab active>Overview</Tab>
-      <Tab>Components</Tab>
-      <Tab>Tokens</Tab>
-    </Tabs>
-  ),
+  render: () => {
+    const [tab, setTab] = useState("overview");
+
+    return (
+      <Tabs value={tab} onValueChange={setTab}>
+        <Tab value="overview">Overview</Tab>
+        <Tab value="components">Components</Tab>
+        <Tab value="tokens">Tokens</Tab>
+      </Tabs>
+    );
+  },
 };
 
 export const Panel: Story = {

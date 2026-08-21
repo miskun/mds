@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { Bell, Bolt, ChevronDown, FileText, Home, LayoutDashboard, MoreHorizontal, PanelRight, Settings, User } from "lucide-react";
 import {
   BreadcrumbItem,
@@ -83,46 +84,50 @@ export const FloatingLayer: Story = {
 };
 
 export const Navigation: Story = {
-  render: () => (
-    <div className="nav-layout">
-      <aside className="nav-layout__sidebar">
-        <NavList>
-          <NavItem href="#" active icon={<LayoutDashboard size={16} />}>
-            Overview
-          </NavItem>
-          <NavItem href="#" icon={<FileText size={16} />}>
-            Components
-          </NavItem>
-          <NavItem href="#" icon={<Settings size={16} />}>
-            Tokens
-          </NavItem>
-          <NavItem href="#" icon={<User size={16} />}>
-            Team
-          </NavItem>
-        </NavList>
-      </aside>
-      <section className="nav-layout__main">
-        <Breadcrumbs>
-          <BreadcrumbItem href="#">
-            <Home size={14} />
-          </BreadcrumbItem>
-          <BreadcrumbItem href="#">MDS</BreadcrumbItem>
-          <BreadcrumbItem current href="#">
-            Components
-          </BreadcrumbItem>
-        </Breadcrumbs>
-        <div className="mds-cluster">
-          <SegmentedControl label="Target">
-            <Segment active>Admin</Segment>
-            <Segment>Desktop</Segment>
-            <Segment>Mobile</Segment>
-            <Segment>Editorial</Segment>
-          </SegmentedControl>
-          <Input aria-label="Search" placeholder="Search navigation" />
-        </div>
-      </section>
-    </div>
-  ),
+  render: () => {
+    const [target, setTarget] = useState("admin");
+
+    return (
+      <div className="nav-layout">
+        <aside className="nav-layout__sidebar">
+          <NavList>
+            <NavItem href="#" active icon={<LayoutDashboard size={16} />}>
+              Overview
+            </NavItem>
+            <NavItem href="#" icon={<FileText size={16} />}>
+              Components
+            </NavItem>
+            <NavItem href="#" icon={<Settings size={16} />}>
+              Tokens
+            </NavItem>
+            <NavItem href="#" icon={<User size={16} />}>
+              Team
+            </NavItem>
+          </NavList>
+        </aside>
+        <section className="nav-layout__main">
+          <Breadcrumbs>
+            <BreadcrumbItem href="#">
+              <Home size={14} />
+            </BreadcrumbItem>
+            <BreadcrumbItem href="#">MDS</BreadcrumbItem>
+            <BreadcrumbItem current href="#">
+              Components
+            </BreadcrumbItem>
+          </Breadcrumbs>
+          <div className="mds-cluster">
+            <SegmentedControl label="Target" value={target} onValueChange={setTarget}>
+              <Segment value="admin">Admin</Segment>
+              <Segment value="desktop">Desktop</Segment>
+              <Segment value="mobile">Mobile</Segment>
+              <Segment value="editorial">Editorial</Segment>
+            </SegmentedControl>
+            <Input aria-label="Search" placeholder={`Search ${target}`} />
+          </div>
+        </section>
+      </div>
+    );
+  },
 };
 
 export const ModalSurfaces: Story = {

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { Clock, FileText, Plus, Settings } from "lucide-react";
 import {
   ActivityFeed,
@@ -8,6 +9,7 @@ import {
   Button,
   Card,
   DataColumn,
+  DataTableSort,
   DataTable,
   DetailPanel,
   IconButton,
@@ -80,47 +82,56 @@ const columns: Array<DataColumn<ComponentRow>> = [
 ];
 
 export const AdminTable: Story = {
-  render: () => (
-    <div className="data-page">
-      <div className="data-metrics">
-        <MetricCard label="Components" value="42" delta="+8 this week" />
-        <MetricCard label="Stable" value="26" delta="+4 shipped" />
-        <MetricCard label="Coverage" value="78%" delta="+12%" />
-      </div>
-      <Card>
-        <div className="mds-stack">
-          <TableToolbar
-            title="Component inventory"
-            description="Sortable, selectable records for admin surfaces."
-            actions={<Button icon={<Plus size={14} />}>New component</Button>}
-          >
-            <Input aria-label="Search components" placeholder="Search" />
-            <Select aria-label="Target filter" defaultValue="all">
-              <option value="all">All targets</option>
-              <option value="admin">Admin</option>
-              <option value="desktop">Desktop</option>
-            </Select>
-          </TableToolbar>
-          <BulkActionBar selectedCount={2} actions={<Button size="sm" variant="secondary">Archive</Button>} />
-          <DataTable
-            columns={columns}
-            data={rows}
-            getRowId={(row) => row.id}
-            selectable
-            rowActions={[
-              { label: "Open" },
-              { label: "Duplicate" },
-              { label: "Archive" },
-            ]}
-          />
-          <div className="data-footer">
-            <span>Showing 1-5 of 42</span>
-            <Pagination page={2} pageCount={8} />
-          </div>
+  render: () => {
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>(["cmp-001", "cmp-002"]);
+    const [sort, setSort] = useState<DataTableSort | null>({ columnId: "name", direction: "asc" });
+
+    return (
+      <div className="data-page">
+        <div className="data-metrics">
+          <MetricCard label="Components" value="42" delta="+8 this week" />
+          <MetricCard label="Stable" value="26" delta="+4 shipped" />
+          <MetricCard label="Coverage" value="78%" delta="+12%" />
         </div>
-      </Card>
-    </div>
-  ),
+        <Card>
+          <div className="mds-stack">
+            <TableToolbar
+              title="Component inventory"
+              description="Sortable, selectable records for admin surfaces."
+              actions={<Button icon={<Plus size={14} />}>New component</Button>}
+            >
+              <Input aria-label="Search components" placeholder="Search" />
+              <Select aria-label="Target filter" defaultValue="all">
+                <option value="all">All targets</option>
+                <option value="admin">Admin</option>
+                <option value="desktop">Desktop</option>
+              </Select>
+            </TableToolbar>
+            <BulkActionBar selectedCount={selectedRowIds.length} actions={<Button size="sm" variant="secondary">Archive</Button>} />
+            <DataTable
+              columns={columns}
+              data={rows}
+              getRowId={(row) => row.id}
+              selectable
+              selectedRowIds={selectedRowIds}
+              onSelectedRowIdsChange={setSelectedRowIds}
+              sort={sort}
+              onSortChange={setSort}
+              rowActions={[
+                { label: "Open" },
+                { label: "Duplicate" },
+                { label: "Archive" },
+              ]}
+            />
+            <div className="data-footer">
+              <span>Showing 1-5 of 42</span>
+              <Pagination page={2} pageCount={8} />
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  },
 };
 
 export const LoadingAndEmpty: Story = {
