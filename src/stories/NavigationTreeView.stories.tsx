@@ -31,7 +31,7 @@ const storyDescription = (story: string) => ({
 });
 
 export const DocumentationTree: Story = {
-  parameters: storyDescription("Use branches for expandable hierarchy and leaf links for final destinations."),
+  parameters: storyDescription("Use branches for expandable hierarchy and leaf links for final destinations. Arrow keys move through visible tree items."),
   render: () => (
     <Grid minItemWidth="280px" style={{ maxWidth: 980 }}>
       <Panel padding="sm">

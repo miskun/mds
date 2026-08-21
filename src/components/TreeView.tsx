@@ -1,5 +1,5 @@
 import { forwardRef, useState } from "react";
-import type { AnchorHTMLAttributes, CSSProperties, HTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, CSSProperties, HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { cx } from "./utils";
 import "./tree-view.css";
@@ -9,9 +9,22 @@ export interface TreeViewProps extends HTMLAttributes<HTMLUListElement> {
   label?: string;
 }
 
-export const TreeView = forwardRef<HTMLUListElement, TreeViewProps>(function TreeView({ label = "Tree navigation", className, children, ...props }, ref) {
+export const TreeView = forwardRef<HTMLUListElement, TreeViewProps>(function TreeView(
+  { label = "Tree navigation", className, children, onKeyDown, ...props },
+  ref,
+) {
   return (
-    <ul ref={ref} className={cx("mds-tree", className)} role="tree" aria-label={label} {...props}>
+    <ul
+      ref={ref}
+      className={cx("mds-tree", className)}
+      role="tree"
+      aria-label={label}
+      onKeyDown={(event) => {
+        handleTreeKeyDown(event);
+        onKeyDown?.(event);
+      }}
+      {...props}
+    >
       {children}
     </ul>
   );
@@ -59,6 +72,7 @@ export const TreeItem = forwardRef<HTMLAnchorElement, TreeItemProps>(function Tr
           role="treeitem"
           aria-expanded={isExpanded}
           aria-selected={current || undefined}
+          aria-level={level}
           style={itemStyle}
           onClick={toggleExpanded}
         >
@@ -76,6 +90,7 @@ export const TreeItem = forwardRef<HTMLAnchorElement, TreeItemProps>(function Tr
           role="treeitem"
           aria-selected={current || undefined}
           aria-current={current ? "page" : undefined}
+          aria-level={level}
           style={itemStyle}
           onClick={onClick}
           {...props}
@@ -93,3 +108,70 @@ export const TreeItem = forwardRef<HTMLAnchorElement, TreeItemProps>(function Tr
     </li>
   );
 });
+
+function handleTreeKeyDown(event: KeyboardEvent<HTMLUListElement>) {
+  if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) {
+    return;
+  }
+
+  const currentItem = document.activeElement instanceof HTMLElement ? document.activeElement.closest<HTMLElement>('[role="treeitem"]') : null;
+  if (!currentItem || !event.currentTarget.contains(currentItem)) {
+    return;
+  }
+
+  const items = getVisibleTreeItems(event.currentTarget);
+  const currentIndex = items.indexOf(currentItem);
+  if (currentIndex < 0) {
+    return;
+  }
+
+  event.preventDefault();
+
+  if (event.key === "Home") {
+    items[0]?.focus();
+    return;
+  }
+
+  if (event.key === "End") {
+    items[items.length - 1]?.focus();
+    return;
+  }
+
+  if (event.key === "ArrowDown") {
+    items[Math.min(currentIndex + 1, items.length - 1)]?.focus();
+    return;
+  }
+
+  if (event.key === "ArrowUp") {
+    items[Math.max(currentIndex - 1, 0)]?.focus();
+    return;
+  }
+
+  if (event.key === "ArrowRight") {
+    if (currentItem.getAttribute("aria-expanded") === "false") {
+      currentItem.click();
+      return;
+    }
+
+    items[Math.min(currentIndex + 1, items.length - 1)]?.focus();
+    return;
+  }
+
+  if (event.key === "ArrowLeft") {
+    if (currentItem.getAttribute("aria-expanded") === "true") {
+      currentItem.click();
+      return;
+    }
+
+    findParentTreeItem(currentItem)?.focus();
+  }
+}
+
+function getVisibleTreeItems(tree: HTMLElement) {
+  return Array.from(tree.querySelectorAll<HTMLElement>('[role="treeitem"]')).filter((item) => item.offsetParent !== null);
+}
+
+function findParentTreeItem(item: HTMLElement) {
+  const parentNode = item.closest(".mds-tree__group")?.closest(".mds-tree__node");
+  return parentNode?.querySelector<HTMLElement>(':scope > [role="treeitem"]');
+}

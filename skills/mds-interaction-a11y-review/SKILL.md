@@ -33,6 +33,8 @@ Tabs should support arrow navigation, `Home`, `End`, roving focus, `role="tablis
 
 Segmented controls should support arrow navigation, `Home`, `End`, roving focus, and selected state through `aria-pressed`.
 
+Tree views should expose `role="tree"`, `role="treeitem"`, `aria-level`, `aria-expanded` for branches, and support `ArrowUp`, `ArrowDown`, `ArrowRight`, `ArrowLeft`, `Home`, and `End` for visible tree items.
+
 Menus, popovers, dialogs, drawers, and tooltips should use Radix primitives unless there is a strong reason not to.
 
 For overlays:
