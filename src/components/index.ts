@@ -8,6 +8,7 @@ export * from "./Card";
 export * from "./Checkbox";
 export * from "./BulkActionBar";
 export * from "./DataTable";
+export * from "./DescriptionList";
 export * from "./DetailPanel";
 export * from "./Dialog";
 export * from "./Divider";

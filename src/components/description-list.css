@@ -1,0 +1,54 @@
+.mds-description-list {
+  display: grid;
+  grid-template-columns: repeat(var(--mds-description-list-columns, 1), minmax(0, 1fr));
+  gap: var(--mds-stack-gap);
+  margin: 0;
+}
+
+.mds-description-list--cols-2 {
+  --mds-description-list-columns: 2;
+}
+
+.mds-description-list--cols-3 {
+  --mds-description-list-columns: 3;
+}
+
+.mds-description-item {
+  display: grid;
+  gap: calc(var(--mds-field-gap) * 0.5);
+  min-width: 0;
+}
+
+.mds-description-list--inline .mds-description-item {
+  grid-template-columns: minmax(96px, 0.42fr) minmax(0, 1fr);
+  gap: var(--mds-inline-gap);
+  align-items: baseline;
+}
+
+.mds-description-item__term,
+.mds-description-item__description {
+  margin: 0;
+}
+
+.mds-description-item__term {
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.mds-description-item__description {
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-sm);
+  line-height: 1.45;
+}
+
+@media (max-width: 720px) {
+  .mds-description-list {
+    --mds-description-list-columns: 1;
+  }
+
+  .mds-description-list--inline .mds-description-item {
+    grid-template-columns: 1fr;
+  }
+}

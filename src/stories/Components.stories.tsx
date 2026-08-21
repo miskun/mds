@@ -32,7 +32,7 @@ const groups = [
   ["Containers", "Bounded and disclosure surfaces.", "Panel, Card, Popover, Dialog, Drawer"],
   ["Overlays", "Floating layers and modal surfaces.", "Tooltip, Popover, DropdownMenu, Dialog, Drawer"],
   ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Tabs, Pagination, NavList"],
-  ["Display", "Passive information and metadata.", "Avatar, Metadata, Records, Metrics, Text, Utilities"],
+  ["Display", "Passive information and metadata.", "Avatar, Description list, Metadata, Records, Metrics, Text, Utilities"],
   ["Feedback", "System state, recovery, loading, and confirmations.", "Alerts, Empty states, Loading, Toasts"],
   ["Forms", "Field layouts and input controls.", "Layouts, Text, Selection, Search and filter"],
   ["Data", "Tables and record workflows.", "Tables, Data table, Toolbars, Detail and activity"],

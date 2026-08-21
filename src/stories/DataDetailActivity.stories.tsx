@@ -1,6 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Clock, FileText, Settings } from "lucide-react";
-import { ActivityFeed, ActivityItem, Badge, Button, DetailPanel, Grid, IconButton, ListItem, Stack, StatusDot } from "../components";
+import {
+  ActivityFeed,
+  ActivityItem,
+  Badge,
+  Button,
+  DescriptionItem,
+  DescriptionList,
+  DetailPanel,
+  Grid,
+  IconButton,
+  ListItem,
+  Stack,
+  StatusDot,
+} from "../components";
 import "./data-admin.css";
 import { rows } from "./data-admin-data";
 
@@ -48,14 +61,21 @@ export const ListAndDetail: Story = {
         ))}
       </Stack>
       <DetailPanel title="DataTable" meta="Admin target · review" actions={<Button size="sm">Open</Button>}>
-        <ActivityFeed>
-          <ActivityItem title="Story added" meta="2h" icon={<FileText size={13} />}>
-            Added selectable rows and row actions.
-          </ActivityItem>
-          <ActivityItem title="Review requested" meta="1d" icon={<Clock size={13} />}>
-            Waiting for target pass on mobile.
-          </ActivityItem>
-        </ActivityFeed>
+        <Stack>
+          <DescriptionList orientation="inline">
+            <DescriptionItem term="Owner">Miskun</DescriptionItem>
+            <DescriptionItem term="Stories">4</DescriptionItem>
+            <DescriptionItem term="Status">Review</DescriptionItem>
+          </DescriptionList>
+          <ActivityFeed>
+            <ActivityItem title="Story added" meta="2h" icon={<FileText size={13} />}>
+              Added selectable rows and row actions.
+            </ActivityItem>
+            <ActivityItem title="Review requested" meta="1d" icon={<Clock size={13} />}>
+              Waiting for target pass on mobile.
+            </ActivityItem>
+          </ActivityFeed>
+        </Stack>
       </DetailPanel>
     </Grid>
   ),
