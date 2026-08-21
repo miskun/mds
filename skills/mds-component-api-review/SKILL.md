@@ -101,6 +101,14 @@ For content docs:
 - show both recommended and avoided wording when that makes the rule clearer
 - keep examples aligned with component and pattern copy already used in Storybook
 
+For data visualization docs:
+
+- use uPlot as the intended low-level chart engine
+- keep MDS responsible for React wrappers, target-aware layout, palettes, legends, states, and accessibility
+- separate categorical series colors from semantic status colors
+- document chart loading, empty, and error states before adding chart components
+- pair charts with metrics, filters, tables, or export paths when exact values matter
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`
