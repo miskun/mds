@@ -77,7 +77,7 @@ Keep components grouped topically:
 - `Overlays`: tooltips, popovers, dropdown menus, dialogs, and drawers
 - `Display`: metadata, records, metrics, keyboard hints, dividers, and future text or avatar primitives
 - `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
-- `Data`: tables, data tables, pagination, toolbars, metrics, bulk actions, and detail surfaces
+- `Data`: overview, tables, data table, table toolbar, bulk actions, detail panels, and activity feeds
 - `Layout`: stack, cluster, inline, grid, page header, spacer, and page-level arrangement
 - `Containers`: panel, card, popover, dialog, drawer, accordion, bottom bar, and resizable container
 
@@ -153,6 +153,14 @@ For feedback docs:
 - keep empty states specific about why content is absent and what action is available
 - keep loading examples distinct from empty and error states
 - keep temporary action confirmations under toasts
+
+For data docs:
+
+- split data docs by responsibility: basic tables, DataTable behavior, toolbars and bulk actions, detail panels, and activity feeds
+- keep metrics under Display unless they are part of a composed data workflow
+- keep pagination under Navigation unless it is shown as part of a table workflow
+- use shared story fixtures for rows and columns when multiple data pages need the same dataset
+- document loading and empty table states with DataTable, not basic Table primitives
 
 For API docs:
 
