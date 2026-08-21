@@ -6,10 +6,15 @@ import "./checkbox.css";
 import "./radio.css";
 
 export interface RadioGroupProps extends HTMLAttributes<HTMLDivElement> {
+  /** Group label announced for the radio set. */
   label?: string;
+  /** Helper text announced for the group. */
   hint?: string;
+  /** Error text announced for the group. */
   error?: string;
+  /** Marks the group invalid without requiring error text. */
   invalid?: boolean;
+  /** Shows the required marker in the field label. */
   required?: boolean;
   children: ReactNode;
 }
@@ -54,7 +59,9 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
 });
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+  /** Label rendered next to the radio. */
   label: ReactNode;
+  /** Helper text shown below the label. */
   hint?: string;
 }
 

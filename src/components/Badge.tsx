@@ -6,6 +6,7 @@ import "./badge.css";
 export type BadgeTone = "neutral" | "accent" | "success" | "danger";
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  /** Semantic color treatment. */
   tone?: BadgeTone;
 }
 

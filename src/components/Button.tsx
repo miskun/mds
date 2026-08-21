@@ -7,8 +7,11 @@ export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual treatment for the action. */
   variant?: ButtonVariant;
+  /** Semantic size within the active MDS target. */
   size?: ButtonSize;
+  /** Leading icon rendered before the label. */
   icon?: ReactNode;
 }
 
@@ -25,9 +28,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 });
 
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual treatment for the action. */
   variant?: ButtonVariant;
+  /** Semantic size within the active MDS target. */
   size?: ButtonSize;
+  /** Accessible name for the icon-only button. */
   label: string;
+  /** Icon rendered as the button content. */
   icon: ReactNode;
 }
 

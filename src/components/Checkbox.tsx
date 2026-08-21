@@ -4,10 +4,15 @@ import { cx } from "./utils";
 import "./checkbox.css";
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+  /** Label rendered next to the checkbox. */
   label?: ReactNode;
+  /** Helper text shown below the label. */
   hint?: string;
+  /** Error text shown below the label. */
   error?: string;
+  /** Marks the checkbox invalid without requiring error text. */
   invalid?: boolean;
+  /** Renders the native mixed checkbox state. */
   indeterminate?: boolean;
 }
 

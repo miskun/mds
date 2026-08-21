@@ -7,8 +7,11 @@ import "./alert.css";
 export type AlertTone = "info" | "success" | "warning" | "danger";
 
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+  /** Semantic alert tone. */
   tone?: AlertTone;
+  /** Optional heading for the alert. */
   title?: string;
+  /** Custom icon. Defaults to the tone icon. */
   icon?: ReactNode;
 }
 

@@ -5,9 +5,13 @@ import { cx } from "./utils";
 import "./input.css";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  /** Field label associated with the input. */
   label?: string;
+  /** Helper text shown below the control. */
   hint?: string;
+  /** Error text shown below the control. */
   error?: string;
+  /** Marks the field invalid without requiring error text. */
   invalid?: boolean;
 }
 

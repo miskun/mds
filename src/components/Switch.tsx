@@ -4,9 +4,13 @@ import { cx } from "./utils";
 import "./switch.css";
 
 export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+  /** Label rendered next to the switch. */
   label?: ReactNode;
+  /** Helper text shown below the label. */
   hint?: string;
+  /** Error text shown below the label. */
   error?: string;
+  /** Marks the switch invalid without requiring error text. */
   invalid?: boolean;
 }
 

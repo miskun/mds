@@ -6,9 +6,13 @@ import { cx } from "./utils";
 import "./select.css";
 
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  /** Field label associated with the select. */
   label?: string;
+  /** Helper text shown below the control. */
   hint?: string;
+  /** Error text shown below the control. */
   error?: string;
+  /** Marks the field invalid without requiring error text. */
   invalid?: boolean;
 }
 

@@ -57,6 +57,14 @@ For each changed component, check that stories cover meaningful states:
 - loading or empty, when relevant
 - selected, checked, active, or open, when relevant
 - representative target behavior through the toolbar
+- API docs through `MDS/API/...` autodocs stories when exported props change
+
+For API docs:
+
+- use `tags: ["autodocs"]` with the exported component as `component`
+- include closely related primitives as `subcomponents`
+- keep TypeScript prop comments short and product-neutral
+- document defaults and native prop passthrough in story args or descriptions
 
 ## Output Format
 

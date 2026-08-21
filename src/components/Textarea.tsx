@@ -5,9 +5,13 @@ import { cx } from "./utils";
 import "./textarea.css";
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Field label associated with the textarea. */
   label?: string;
+  /** Helper text shown below the control. */
   hint?: string;
+  /** Error text shown below the control. */
   error?: string;
+  /** Marks the field invalid without requiring error text. */
   invalid?: boolean;
 }
 
