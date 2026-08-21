@@ -146,6 +146,14 @@ For display docs:
 - split display docs by purpose: metadata, records, metrics, and utilities
 - move bounded surfaces to Containers unless the example is showing display content inside a surface
 
+For feedback docs:
+
+- split feedback docs by state type: alerts, empty states, loading, and toasts
+- keep alerts focused on semantic state and recovery guidance
+- keep empty states specific about why content is absent and what action is available
+- keep loading examples distinct from empty and error states
+- keep temporary action confirmations under toasts
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`
