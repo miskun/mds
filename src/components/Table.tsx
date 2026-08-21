@@ -40,17 +40,25 @@ export function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCel
 export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> {
   active?: boolean;
   direction?: SortDirection;
+  sortLabel?: string;
   onSort?: () => void;
   children: ReactNode;
 }
 
-export function SortHeader({ active, direction, onSort, className, children, ...props }: SortHeaderProps) {
+export function SortHeader({ active, direction, sortLabel, onSort, className, children, ...props }: SortHeaderProps) {
   const Icon = active && direction === "asc" ? ArrowUp : active && direction === "desc" ? ArrowDown : ChevronsUpDown;
   const ariaSort = active ? (direction === "asc" ? "ascending" : direction === "desc" ? "descending" : "none") : undefined;
+  const label = sortLabel ?? "column";
+  const actionLabel =
+    active && direction === "asc"
+      ? `Sort ${label} descending`
+      : active && direction === "desc"
+        ? `Clear ${label} sorting`
+        : `Sort ${label} ascending`;
 
   return (
     <TableHeader className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} {...props}>
-      <button className="mds-table__sort" type="button" onClick={onSort}>
+      <button className="mds-table__sort" type="button" aria-label={actionLabel} onClick={onSort}>
         <span>{children}</span>
         <Icon size={14} aria-hidden="true" />
       </button>

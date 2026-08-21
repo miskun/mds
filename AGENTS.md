@@ -111,3 +111,5 @@ Use `skills/mds-commit-hygiene` before creating git commits in this repository.
 Use `skills/mds-component-api-review` before changing exported components, adding new components, or preparing releases.
 
 Use `skills/mds-interaction-a11y-review` when changing keyboard, focus, selection, sorting, overlay, or disclosure behavior.
+
+When a repeated review pattern emerges during MDS work, update the relevant project skill in the same change.

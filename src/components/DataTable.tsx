@@ -19,6 +19,7 @@ export interface DataTableSort {
 export interface DataColumn<T> {
   id: string;
   header: ReactNode;
+  sortLabel?: string;
   accessor?: keyof T | ((row: T) => ReactNode);
   sortValue?: keyof T | ((row: T) => string | number);
   cell?: (row: T) => ReactNode;
@@ -35,6 +36,7 @@ export interface DataTableProps<T> {
   columns: Array<DataColumn<T>>;
   data: T[];
   getRowId: (row: T) => string;
+  getRowLabel?: (row: T) => string;
   rowActions?: Array<RowAction<T>>;
   selectable?: boolean;
   selectedRowIds?: string[];
@@ -52,6 +54,7 @@ export function DataTable<T>({
   columns,
   data,
   getRowId,
+  getRowLabel,
   rowActions,
   selectable,
   selectedRowIds,
@@ -83,10 +86,19 @@ export function DataTable<T>({
     });
   }, [columns, data, currentSort]);
 
-  const allSelected = data.length > 0 && data.every((row) => selectedIdSet.has(getRowId(row)));
+  const visibleRowIds = useMemo(() => data.map(getRowId), [data, getRowId]);
+  const visibleRowIdSet = useMemo(() => new Set(visibleRowIds), [visibleRowIds]);
+  const allSelected = visibleRowIds.length > 0 && visibleRowIds.every((rowId) => selectedIdSet.has(rowId));
+  const someSelected = visibleRowIds.some((rowId) => selectedIdSet.has(rowId)) && !allSelected;
+  const selectAllLabel = allSelected ? "Clear row selection" : someSelected ? "Select remaining rows" : "Select all rows";
 
   function toggleAll() {
-    setSelectedRows(allSelected ? [] : data.map(getRowId));
+    if (allSelected) {
+      setSelectedRows(currentSelectedRowIds.filter((rowId) => !visibleRowIdSet.has(rowId)));
+      return;
+    }
+
+    setSelectedRows(Array.from(new Set([...currentSelectedRowIds, ...visibleRowIds])));
   }
 
   function toggleRow(id: string) {
@@ -125,7 +137,7 @@ export function DataTable<T>({
         <TableRow>
           {selectable ? (
             <TableHeader className="mds-table__header--select">
-              <Checkbox aria-label="Select all rows" checked={allSelected} onChange={toggleAll} />
+              <Checkbox aria-label={selectAllLabel} checked={allSelected} indeterminate={someSelected} onChange={toggleAll} />
             </TableHeader>
           ) : null}
           {columns.map((column) =>
@@ -134,6 +146,7 @@ export function DataTable<T>({
                 key={column.id}
                 active={currentSort?.columnId === column.id}
                 direction={currentSort?.columnId === column.id ? currentSort.direction : null}
+                sortLabel={column.sortLabel ?? (typeof column.header === "string" ? column.header : column.id)}
                 onSort={() => toggleSort(column.id)}
                 className={column.align === "right" ? "mds-table__header--numeric" : undefined}
               >
@@ -151,11 +164,13 @@ export function DataTable<T>({
       <TableBody>
         {sortedData.map((row) => {
           const rowId = getRowId(row);
+          const rowLabel = getRowLabel?.(row) ?? rowId;
+          const selected = selectedIdSet.has(rowId);
           return (
-            <TableRow key={rowId}>
+            <TableRow key={rowId} aria-selected={selectable ? selected : undefined}>
               {selectable ? (
                 <TableCell className="mds-table__cell--select">
-                  <Checkbox aria-label={`Select row ${rowId}`} checked={selectedIdSet.has(rowId)} onChange={() => toggleRow(rowId)} />
+                  <Checkbox aria-label={`Select ${rowLabel}`} checked={selected} onChange={() => toggleRow(rowId)} />
                 </TableCell>
               ) : null}
               {columns.map((column) => (
@@ -165,7 +180,7 @@ export function DataTable<T>({
               ))}
               {rowActions?.length ? (
                 <TableCell className="mds-table__cell--actions">
-                  <DropdownMenu trigger={<IconButton label={`Actions for row ${rowId}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+                  <DropdownMenu trigger={<IconButton label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
                     {rowActions.map((action) => (
                       <MenuItem key={action.label} onSelect={() => action.onSelect?.(row)}>
                         {action.label}

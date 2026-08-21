@@ -37,6 +37,18 @@ Menus, popovers, dialogs, drawers, and tooltips should use Radix primitives unle
 
 Tables with sorting or selection should expose sort state, selection state, and clear accessible labels for header and row controls.
 
+For selectable tables:
+
+- use an indeterminate select-all control when only some visible rows are selected
+- expose selected row state with `aria-selected`
+- prefer human row labels over internal IDs in checkbox and action labels
+- keep select-all behavior scoped to the visible rows shown by the table
+
+For sortable tables:
+
+- label sort controls by the column name
+- announce the next sort action, such as ascending, descending, or clearing sort
+
 ## Storybook
 
 Stories for changed interactions should include:

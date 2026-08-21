@@ -112,6 +112,7 @@ export const AdminTable: Story = {
               columns={columns}
               data={rows}
               getRowId={(row) => row.id}
+              getRowLabel={(row) => row.name}
               selectable
               selectedRowIds={selectedRowIds}
               onSelectedRowIdsChange={setSelectedRowIds}

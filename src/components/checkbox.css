@@ -50,6 +50,19 @@
   opacity: 1;
 }
 
+.mds-choice__input:indeterminate + .mds-choice__box {
+  border-color: var(--mds-accent);
+  background: var(--mds-accent);
+}
+
+.mds-choice__input:indeterminate + .mds-choice__box::after {
+  width: calc(var(--mds-choice-size) * 0.5);
+  height: 0;
+  border-width: 0 0 2px;
+  opacity: 1;
+  transform: none;
+}
+
 .mds-choice__input:focus-visible + .mds-choice__box,
 .mds-choice__input:focus-visible + .mds-choice__radio {
   box-shadow: var(--mds-focus);
