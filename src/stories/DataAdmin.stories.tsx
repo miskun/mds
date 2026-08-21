@@ -33,6 +33,14 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
+const storyDescription = (story: string) => ({
+  docs: {
+    description: {
+      story,
+    },
+  },
+});
+
 interface ComponentRow {
   id: string;
   name: string;
@@ -82,6 +90,7 @@ const columns: Array<DataColumn<ComponentRow>> = [
 ];
 
 export const AdminTable: Story = {
+  parameters: storyDescription("Admin tables cover controlled sorting, controlled selection, row actions, filtering controls, metrics, bulk actions, and pagination."),
   render: () => {
     const [selectedRowIds, setSelectedRowIds] = useState<string[]>(["cmp-001", "cmp-002"]);
     const [sort, setSort] = useState<DataTableSort | null>({ columnId: "name", direction: "asc" });
@@ -136,6 +145,7 @@ export const AdminTable: Story = {
 };
 
 export const LoadingAndEmpty: Story = {
+  parameters: storyDescription("Data states should preserve column structure while clearly communicating loading or empty results."),
   render: () => (
     <div className="data-page">
       <DataTable columns={columns} data={[]} getRowId={(row) => row.id} loading />
@@ -145,6 +155,7 @@ export const LoadingAndEmpty: Story = {
 };
 
 export const ListAndDetail: Story = {
+  parameters: storyDescription("List and detail patterns combine compact records, status metadata, contextual actions, and activity history."),
   render: () => (
     <div className="data-page">
       <div className="data-split">

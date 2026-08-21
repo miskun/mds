@@ -38,7 +38,16 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
+const storyDescription = (story: string) => ({
+  docs: {
+    description: {
+      story,
+    },
+  },
+});
+
 export const FloatingLayer: Story = {
+  parameters: storyDescription("Floating layers use controlled open state examples, disabled trigger coverage, and the MDS target scale from the toolbar."),
   render: () => {
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -100,6 +109,7 @@ export const FloatingLayer: Story = {
 };
 
 export const Navigation: Story = {
+  parameters: storyDescription("Navigation primitives cover breadcrumbs, nav lists, segmented controls, active state, disabled state, and keyboard-focused search."),
   render: () => {
     const [target, setTarget] = useState("admin");
 
@@ -149,6 +159,7 @@ export const Navigation: Story = {
 };
 
 export const ModalSurfaces: Story = {
+  parameters: storyDescription("Dialog and drawer examples show controlled open state, trigger composition, form content, and footer actions."),
   render: () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);

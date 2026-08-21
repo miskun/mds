@@ -26,7 +26,16 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
+const storyDescription = (story: string) => ({
+  docs: {
+    description: {
+      story,
+    },
+  },
+});
+
 export const Alerts: Story = {
+  parameters: storyDescription("Alerts cover informational, success, warning, and danger tones with role behavior handled by the component."),
   render: () => (
     <div className="feedback-grid">
       <Alert tone="info" title="Component indexed">
@@ -46,6 +55,7 @@ export const Alerts: Story = {
 };
 
 export const Loading: Story = {
+  parameters: storyDescription("Loading primitives cover determinate progress, spinner sizes, and skeleton placeholders."),
   render: () => (
     <Card eyebrow="Loading" title="Progress, spinner, skeleton">
       <div className="mds-stack">
@@ -66,6 +76,7 @@ export const Loading: Story = {
 };
 
 export const EmptyAndToast: Story = {
+  parameters: storyDescription("Empty states and toasts show recovery actions, optional dismissal, and compact feedback copy."),
   render: () => (
     <div className="feedback-grid">
       <EmptyState
@@ -82,6 +93,7 @@ export const EmptyAndToast: Story = {
 };
 
 export const InlineStatus: Story = {
+  parameters: storyDescription("Inline primitives keep status, removable tags, dividers, and keyboard hints aligned with the active target."),
   render: () => (
     <Card eyebrow="Inline" title="Small feedback primitives">
       <div className="mds-stack">
