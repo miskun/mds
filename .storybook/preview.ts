@@ -42,6 +42,7 @@ const preview: Preview = {
             "Foundations",
             "Components",
             [
+              "Overview",
               "Actions",
               "Forms",
               "Navigation",

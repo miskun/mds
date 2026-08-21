@@ -4,7 +4,7 @@ import { Alert, Badge, Button, Card, Checkbox, Dialog, EmptyState, Input, Select
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Content",
+  title: "MDS/Content/Overview",
   parameters: {
     layout: "padded",
   },
@@ -43,6 +43,7 @@ const statusRows = [
 ];
 
 export const Overview: Story = {
+  name: "Introduction",
   parameters: storyDescription("Content guidelines keep labels, hints, errors, and state copy consistent across MDS examples and products."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>

@@ -3,7 +3,7 @@ import { Card, Kbd, Tag } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Utilities",
+  title: "MDS/Utilities/Overview",
   parameters: {
     layout: "padded",
   },
@@ -21,6 +21,7 @@ const utilities = [
 ];
 
 export const Overview: Story = {
+  name: "Available helpers",
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>
       <header className="mds-stack">

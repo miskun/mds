@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Foundations",
+  title: "MDS/Foundations/Overview",
   parameters: {
     layout: "padded",
   },
@@ -10,6 +10,19 @@ const meta = {
 
 export default meta;
 type Story = StoryObj;
+
+export const Overview: Story = {
+  name: "Introduction",
+  render: () => (
+    <div className="mds-stack">
+      <p className="mds-kicker">Foundations</p>
+      <h1 className="mds-title">The system rules behind every component.</h1>
+      <p className="mds-subtitle">
+        Foundations document the tokens, target scale, typography, spacing, color, radius, and focus behavior that keep MDS coherent across product surfaces.
+      </p>
+    </div>
+  ),
+};
 
 export const Tokens: Story = {
   render: () => (

@@ -30,7 +30,7 @@ import "../showcase.css";
 import "./data-admin.css";
 
 const meta = {
-  title: "MDS/Patterns",
+  title: "MDS/Patterns/Overview",
   parameters: {
     layout: "padded",
   },
@@ -93,6 +93,7 @@ const storyDescription = (story: string) => ({
 });
 
 export const Overview: Story = {
+  name: "Introduction",
   parameters: storyDescription("Patterns document repeatable workflows that combine multiple components into product behavior."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 920 }}>

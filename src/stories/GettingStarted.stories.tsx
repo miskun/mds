@@ -4,7 +4,7 @@ import { Badge, Button, Card, Checkbox, Input, MDSProvider, Select, Switch } fro
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Getting Started",
+  title: "MDS/Getting Started/Overview",
   parameters: {
     layout: "padded",
   },
@@ -21,6 +21,7 @@ const targets = [
 ];
 
 export const Overview: Story = {
+  name: "Introduction",
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 880 }}>
       <header className="mds-stack">

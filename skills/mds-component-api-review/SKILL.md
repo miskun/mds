@@ -81,7 +81,7 @@ Keep Storybook organized by documentation intent:
 - `MDS/Components`: component taxonomy overview
 - `MDS/Components/<Group>/<Page>`: component groups should have a stable overview or canonical page
 
-Keep overview stories directly under their section title. Use `MDS/Getting Started` with an `Overview` story instead of `MDS/Getting Started/Overview` with another `Overview` story. Apply the same rule to component group overview pages such as `MDS/Components/Data`.
+Give every top-level Storybook section and component group folder an `Overview` page. Use labels like `Introduction` or `Component groups` for the first story inside that page so the sidebar does not read as repeated `Overview` labels.
 
 Keep components grouped topically:
 

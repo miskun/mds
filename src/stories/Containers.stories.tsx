@@ -5,7 +5,7 @@ import { Button, Card, Dialog, Drawer, Grid, Panel, Popover, Stack, StatusDot } 
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Containers",
+  title: "MDS/Components/Containers/Overview",
   component: Panel,
   subcomponents: { Card, Popover, Dialog, Drawer },
   tags: ["autodocs"],

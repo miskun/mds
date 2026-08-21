@@ -4,7 +4,7 @@ import "../showcase.css";
 import "./data-visualization.css";
 
 const meta = {
-  title: "MDS/Data Visualization",
+  title: "MDS/Data Visualization/Overview",
   parameters: {
     layout: "padded",
   },
@@ -43,6 +43,7 @@ const storyDescription = (story: string) => ({
 });
 
 export const Overview: Story = {
+  name: "Introduction",
   parameters: storyDescription("Data visualization guidance defines chart scope, uPlot usage, palettes, states, and dashboard composition before chart components are added."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 920 }}>

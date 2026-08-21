@@ -24,7 +24,7 @@ import "./data-admin.css";
 import { columns, rows } from "./data-admin-data";
 
 const meta = {
-  title: "MDS/Components/Data",
+  title: "MDS/Components/Data/Overview",
   component: DataTable,
   subcomponents: { TableToolbar, BulkActionBar, Pagination, MetricCard, ListItem, DetailPanel, ActivityFeed, ActivityItem },
   tags: ["autodocs"],
