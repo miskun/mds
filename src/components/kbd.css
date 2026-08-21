@@ -1,0 +1,17 @@
+.mds-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--mds-kbd-height);
+  height: var(--mds-kbd-height);
+  border: 1px solid var(--mds-line-strong);
+  border-bottom-color: color-mix(in srgb, var(--mds-line-strong) 74%, #000000);
+  border-radius: var(--mds-radius-xs);
+  background: var(--mds-panel-raised);
+  color: var(--mds-text-muted);
+  padding: 0 var(--mds-control-gap);
+  font-family: inherit;
+  font-size: var(--mds-control-font-size-sm);
+  font-weight: 900;
+  line-height: 1;
+}

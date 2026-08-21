@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "dist/types",
+    "noEmit": false
+  },
+  "include": ["src/components", "src/index.ts", "src/styles/vite-env.d.ts", "src/vite-env.d.ts"],
+  "exclude": ["src/**/*.stories.tsx", "src/stories", "src/main.tsx", "src/showcase.css"]
+}

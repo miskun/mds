@@ -1,0 +1,29 @@
+.mds-progress {
+  display: grid;
+  gap: var(--mds-field-gap);
+  min-width: 180px;
+}
+
+.mds-progress__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mds-inline-gap);
+  color: var(--mds-text-muted);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 800;
+}
+
+.mds-progress__track {
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid var(--mds-line);
+  border-radius: 999px;
+  background: var(--mds-ink);
+}
+
+.mds-progress__bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mds-accent);
+}

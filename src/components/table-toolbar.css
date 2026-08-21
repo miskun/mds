@@ -1,0 +1,42 @@
+.mds-table-toolbar {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto auto;
+  gap: var(--mds-toolbar-gap);
+  align-items: end;
+}
+
+.mds-table-toolbar__intro {
+  display: grid;
+  gap: calc(var(--mds-field-gap) * 0.5);
+}
+
+.mds-table-toolbar__title,
+.mds-table-toolbar__description {
+  margin: 0;
+}
+
+.mds-table-toolbar__title {
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-lg);
+  line-height: 1.2;
+}
+
+.mds-table-toolbar__description {
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-sm);
+}
+
+.mds-table-toolbar__filters,
+.mds-table-toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mds-control-gap);
+  align-items: center;
+}
+
+@media (max-width: 840px) {
+  .mds-table-toolbar {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}

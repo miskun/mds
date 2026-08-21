@@ -1,0 +1,37 @@
+.mds-field {
+  display: grid;
+  gap: var(--mds-field-gap);
+  min-width: 220px;
+}
+
+.mds-field__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mds-inline-gap);
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-sm);
+  font-weight: 700;
+}
+
+.mds-field__required,
+.mds-field__hint,
+.mds-field__error {
+  font-size: var(--mds-font-size-xs);
+  line-height: 1.4;
+}
+
+.mds-field__required {
+  color: var(--mds-text-soft);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mds-field__hint {
+  color: var(--mds-text-soft);
+}
+
+.mds-field__error {
+  color: var(--mds-danger);
+  font-weight: 700;
+}

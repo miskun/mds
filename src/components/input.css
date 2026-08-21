@@ -1,0 +1,31 @@
+.mds-input {
+  width: 100%;
+  height: var(--mds-control-height-md);
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-sm);
+  background: var(--mds-ink);
+  color: var(--mds-text);
+  font-size: var(--mds-control-font-size-md);
+  padding: 0 var(--mds-control-padding-x-md);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.mds-input::placeholder {
+  color: var(--mds-text-soft);
+}
+
+.mds-input:focus {
+  border-color: color-mix(in srgb, var(--mds-accent) 72%, var(--mds-line));
+  box-shadow: var(--mds-focus);
+}
+
+.mds-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mds-input[aria-invalid="true"],
+.mds-field--invalid .mds-input {
+  border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
+}

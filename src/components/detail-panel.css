@@ -1,0 +1,34 @@
+.mds-detail {
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  background: var(--mds-panel);
+}
+
+.mds-detail__header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mds-space-4);
+  border-bottom: 1px solid var(--mds-line);
+  padding: var(--mds-panel-padding);
+}
+
+.mds-detail__title {
+  margin: 0;
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-lg);
+  line-height: 1.2;
+}
+
+.mds-detail__meta {
+  margin-top: var(--mds-space-2);
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-sm);
+}
+
+.mds-detail__actions {
+  flex: 0 0 auto;
+}
+
+.mds-detail__body {
+  padding: var(--mds-panel-padding);
+}

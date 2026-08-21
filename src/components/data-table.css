@@ -1,0 +1,17 @@
+.mds-data-table__loading {
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  background: var(--mds-panel);
+  padding: var(--mds-panel-padding);
+}
+
+.mds-table .mds-choice {
+  display: inline-grid;
+  width: var(--mds-choice-size);
+  height: var(--mds-choice-size);
+  vertical-align: middle;
+}
+
+.mds-table .mds-choice__content {
+  display: none;
+}

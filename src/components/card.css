@@ -1,0 +1,41 @@
+.mds-card {
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), var(--mds-panel);
+}
+
+.mds-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--mds-toolbar-gap);
+  padding: var(--mds-panel-padding);
+  border-bottom: 1px solid var(--mds-line);
+}
+
+.mds-card__eyebrow,
+.mds-card__title {
+  margin: 0;
+}
+
+.mds-card__eyebrow {
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mds-card__title {
+  margin-top: var(--mds-space-1);
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-lg);
+  line-height: 1.15;
+}
+
+.mds-card__body {
+  padding: var(--mds-panel-padding);
+}
+
+.mds-card__action {
+  flex: 0 0 auto;
+}

@@ -1,0 +1,34 @@
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import type { ReactNode } from "react";
+import { X } from "lucide-react";
+import { IconButton } from "./Button";
+import "./popover.css";
+
+export interface PopoverProps {
+  trigger: ReactNode;
+  title?: string;
+  children: ReactNode;
+  side?: PopoverPrimitive.PopoverContentProps["side"];
+  align?: PopoverPrimitive.PopoverContentProps["align"];
+}
+
+export function Popover({ trigger, title, children, side = "bottom", align = "start" }: PopoverProps) {
+  return (
+    <PopoverPrimitive.Root>
+      <PopoverPrimitive.Trigger asChild>{trigger}</PopoverPrimitive.Trigger>
+      <PopoverPrimitive.Portal>
+        <PopoverPrimitive.Content className="mds-popover" side={side} align={align} sideOffset={8}>
+          {title ? (
+            <header className="mds-popover__header">
+              <h3 className="mds-popover__title">{title}</h3>
+              <PopoverPrimitive.Close asChild>
+                <IconButton size="sm" variant="ghost" label="Close popover" icon={<X size={14} />} />
+              </PopoverPrimitive.Close>
+            </header>
+          ) : null}
+          <div className="mds-popover__body">{children}</div>
+        </PopoverPrimitive.Content>
+      </PopoverPrimitive.Portal>
+    </PopoverPrimitive.Root>
+  );
+}

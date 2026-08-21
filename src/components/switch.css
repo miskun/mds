@@ -1,0 +1,52 @@
+.mds-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mds-inline-gap);
+  cursor: pointer;
+  color: var(--mds-text-muted);
+  font-size: var(--mds-font-size-sm);
+  font-weight: 700;
+}
+
+.mds-switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.mds-switch__track {
+  position: relative;
+  --mds-switch-offset: calc((var(--mds-switch-height) - var(--mds-switch-thumb-size)) / 2 - 1px);
+  width: var(--mds-switch-width);
+  height: var(--mds-switch-height);
+  border: 1px solid var(--mds-line-strong);
+  border-radius: 999px;
+  background: var(--mds-panel-raised);
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.mds-switch__thumb {
+  position: absolute;
+  top: var(--mds-switch-offset);
+  left: var(--mds-switch-offset);
+  width: var(--mds-switch-thumb-size);
+  height: var(--mds-switch-thumb-size);
+  border-radius: 50%;
+  background: var(--mds-text-muted);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.mds-switch__input:checked + .mds-switch__track {
+  border-color: var(--mds-accent);
+  background: color-mix(in srgb, var(--mds-accent) 24%, var(--mds-panel));
+}
+
+.mds-switch__input:checked + .mds-switch__track .mds-switch__thumb {
+  transform: translateX(calc(var(--mds-switch-width) - var(--mds-switch-thumb-size) - (var(--mds-switch-offset) * 2)));
+  background: var(--mds-accent);
+}
+
+.mds-switch__input:focus-visible + .mds-switch__track {
+  box-shadow: var(--mds-focus);
+}

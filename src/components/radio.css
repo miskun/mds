@@ -1,0 +1,26 @@
+.mds-radio-group {
+  display: grid;
+  gap: var(--mds-field-gap);
+}
+
+.mds-choice__radio {
+  border-radius: 50%;
+}
+
+.mds-choice__radio::after {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mds-accent-ink);
+  content: "";
+  opacity: 0;
+}
+
+.mds-choice__input:checked + .mds-choice__radio {
+  border-color: var(--mds-accent);
+  background: var(--mds-accent);
+}
+
+.mds-choice__input:checked + .mds-choice__radio::after {
+  opacity: 1;
+}

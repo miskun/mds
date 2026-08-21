@@ -1,0 +1,33 @@
+.mds-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--mds-badge-height);
+  border: 1px solid var(--mds-line);
+  border-radius: 999px;
+  padding: 0 var(--mds-control-padding-x-sm);
+  font-size: var(--mds-control-font-size-sm);
+  font-weight: 800;
+}
+
+.mds-badge--neutral {
+  background: var(--mds-panel-raised);
+  color: var(--mds-text-muted);
+}
+
+.mds-badge--accent {
+  background: color-mix(in srgb, var(--mds-accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--mds-accent) 42%, var(--mds-line));
+  color: var(--mds-accent);
+}
+
+.mds-badge--success {
+  background: color-mix(in srgb, var(--mds-success) 16%, transparent);
+  border-color: color-mix(in srgb, var(--mds-success) 40%, var(--mds-line));
+  color: var(--mds-success);
+}
+
+.mds-badge--danger {
+  background: color-mix(in srgb, var(--mds-danger) 16%, transparent);
+  border-color: color-mix(in srgb, var(--mds-danger) 40%, var(--mds-line));
+  color: var(--mds-danger);
+}

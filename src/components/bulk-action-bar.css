@@ -1,0 +1,19 @@
+.mds-bulk-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--mds-inline-gap);
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--mds-accent) 38%, var(--mds-line));
+  border-radius: var(--mds-radius-md);
+  background: color-mix(in srgb, var(--mds-accent) 10%, var(--mds-panel));
+  color: var(--mds-accent);
+  padding: var(--mds-floating-padding) var(--mds-panel-padding);
+  font-size: var(--mds-font-size-sm);
+  font-weight: 900;
+}
+
+.mds-bulk-bar__actions {
+  display: inline-flex;
+  gap: var(--mds-control-gap);
+}

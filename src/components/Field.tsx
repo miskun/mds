@@ -1,0 +1,40 @@
+import type { HTMLAttributes, ReactNode } from "react";
+import { cx } from "./utils";
+import "./field.css";
+
+export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
+  label?: string;
+  hint?: string;
+  error?: string;
+  required?: boolean;
+  invalid?: boolean;
+  htmlFor?: string;
+  children: ReactNode;
+}
+
+export function Field({
+  label,
+  hint,
+  error,
+  required,
+  invalid,
+  htmlFor,
+  className,
+  children,
+  ...props
+}: FieldProps) {
+  const hasError = invalid || Boolean(error);
+
+  return (
+    <div className={cx("mds-field", hasError && "mds-field--invalid", className)} data-invalid={hasError || undefined} {...props}>
+      {label ? (
+        <label className="mds-field__label" htmlFor={htmlFor}>
+          <span>{label}</span>
+          {required ? <span className="mds-field__required">Required</span> : null}
+        </label>
+      ) : null}
+      {children}
+      {error ? <span className="mds-field__error">{error}</span> : hint ? <span className="mds-field__hint">{hint}</span> : null}
+    </div>
+  );
+}

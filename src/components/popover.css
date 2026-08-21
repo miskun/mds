@@ -1,0 +1,33 @@
+.mds-popover {
+  z-index: 50;
+  width: min(360px, calc(100vw - 24px));
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  background: var(--mds-panel);
+  color: var(--mds-text);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+}
+
+.mds-popover:focus-visible {
+  outline: none;
+  box-shadow: var(--mds-focus), 0 24px 70px rgba(0, 0, 0, 0.46);
+}
+
+.mds-popover__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mds-toolbar-gap);
+  border-bottom: 1px solid var(--mds-line);
+  padding: var(--mds-floating-padding) var(--mds-panel-padding);
+}
+
+.mds-popover__title {
+  margin: 0;
+  font-size: var(--mds-font-size-sm);
+  line-height: 1.2;
+}
+
+.mds-popover__body {
+  padding: var(--mds-panel-padding);
+}

@@ -1,0 +1,17 @@
+.mds-tooltip {
+  z-index: 60;
+  max-width: 260px;
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-sm);
+  background: var(--mds-panel-raised);
+  color: var(--mds-text);
+  padding: calc(var(--mds-floating-padding) * 0.65) var(--mds-floating-padding);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.42);
+}
+
+.mds-tooltip__arrow {
+  fill: var(--mds-panel-raised);
+}

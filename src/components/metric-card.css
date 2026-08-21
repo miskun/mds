@@ -1,0 +1,27 @@
+.mds-metric {
+  display: grid;
+  gap: var(--mds-field-gap);
+  border: 1px solid var(--mds-line);
+  border-radius: var(--mds-radius-md);
+  background: var(--mds-panel);
+  padding: var(--mds-panel-padding);
+}
+
+.mds-metric__label {
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.mds-metric__value {
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-xl);
+  line-height: 1;
+}
+
+.mds-metric__delta {
+  color: var(--mds-success);
+  font-size: var(--mds-font-size-sm);
+  font-weight: 800;
+}

@@ -1,0 +1,94 @@
+.mds-choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--mds-inline-gap);
+  align-items: start;
+  color: var(--mds-text);
+  cursor: pointer;
+}
+
+.mds-choice__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.mds-choice__box,
+.mds-choice__radio {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--mds-choice-size);
+  height: var(--mds-choice-size);
+  margin-top: 1px;
+  border: 1px solid var(--mds-line-strong);
+  background: var(--mds-ink);
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.mds-choice__box {
+  border-radius: var(--mds-radius-xs);
+}
+
+.mds-choice__box::after {
+  width: calc(var(--mds-choice-size) * 0.5);
+  height: calc(var(--mds-choice-size) * 0.28);
+  border: solid var(--mds-accent-ink);
+  border-width: 0 0 2px 2px;
+  content: "";
+  opacity: 0;
+  transform: rotate(-45deg) translateY(-1px);
+}
+
+.mds-choice__input:checked + .mds-choice__box {
+  border-color: var(--mds-accent);
+  background: var(--mds-accent);
+}
+
+.mds-choice__input:checked + .mds-choice__box::after {
+  opacity: 1;
+}
+
+.mds-choice__input:focus-visible + .mds-choice__box,
+.mds-choice__input:focus-visible + .mds-choice__radio {
+  box-shadow: var(--mds-focus);
+}
+
+.mds-choice__input:disabled + .mds-choice__box,
+.mds-choice__input:disabled + .mds-choice__radio,
+.mds-choice__input:disabled ~ .mds-choice__content {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mds-choice__content {
+  display: grid;
+  gap: calc(var(--mds-field-gap) * 0.5);
+}
+
+.mds-choice__label {
+  font-size: var(--mds-font-size-sm);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.mds-choice__hint,
+.mds-choice__error {
+  font-size: var(--mds-font-size-xs);
+  line-height: 1.4;
+}
+
+.mds-choice__hint {
+  color: var(--mds-text-soft);
+}
+
+.mds-choice__error {
+  color: var(--mds-danger);
+  font-weight: 700;
+}
+
+.mds-choice--invalid .mds-choice__box,
+.mds-choice--invalid .mds-choice__radio {
+  border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
+}
