@@ -4,7 +4,7 @@ import { Badge, Button, Card, Input, Tab, Tabs } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Target",
+  title: "MDS/Getting Started/Targets",
   parameters: {
     layout: "fullscreen",
   },

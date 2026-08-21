@@ -3,7 +3,7 @@ import { Button, Card, Input, MDSProvider, Select, Tab, Tabs } from "../componen
 import "./provider.css";
 
 const meta = {
-  title: "MDS/Provider",
+  title: "MDS/Getting Started/Provider",
   parameters: {
     layout: "padded",
   },

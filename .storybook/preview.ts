@@ -33,6 +33,22 @@ const preview: Preview = {
       ),
   ],
   parameters: {
+    options: {
+      storySort: {
+        order: [
+          "MDS",
+          [
+            "Getting Started",
+            "Foundations",
+            "Components",
+            "Patterns",
+            "Utilities",
+            "Content",
+            "Data Visualization",
+          ],
+        ],
+      },
+    },
     backgrounds: {
       default: "MDS Black",
       values: [

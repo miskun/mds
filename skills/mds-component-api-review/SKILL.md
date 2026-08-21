@@ -59,6 +59,16 @@ For each changed component, check that stories cover meaningful states:
 - representative target behavior through the toolbar
 - API docs on the canonical `MDS/Components/...` story when exported props change
 
+Keep Storybook organized by documentation intent:
+
+- `MDS/Getting Started`: setup, provider, target model, first usage
+- `MDS/Foundations`: tokens, typography, spacing, color, focus, target scale
+- `MDS/Components`: component examples, usage guidance, and prop tables
+- `MDS/Patterns`: repeated workflows that combine multiple components
+- `MDS/Utilities`: small helpers and utility classes
+- `MDS/Content`: interface copy guidance
+- `MDS/Data Visualization`: charts, palettes, legends, and dashboard visualization guidance
+
 For API docs:
 
 - use `tags: ["autodocs"]` with the exported component as `component`

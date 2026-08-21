@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Foundation",
+  title: "MDS/Foundations/Overview",
   parameters: {
     layout: "padded",
   },

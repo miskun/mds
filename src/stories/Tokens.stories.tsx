@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "./tokens.css";
 
 const meta = {
-  title: "MDS/Tokens",
+  title: "MDS/Foundations/Tokens",
   parameters: {
     layout: "padded",
   },
