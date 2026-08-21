@@ -1,5 +1,6 @@
 import * as DropdownPrimitive from "@radix-ui/react-dropdown-menu";
-import type { ReactNode } from "react";
+import { forwardRef } from "react";
+import type { ElementRef, ReactNode } from "react";
 import { Check, ChevronRight } from "lucide-react";
 import { cx } from "./utils";
 import "./dropdown-menu.css";
@@ -36,18 +37,24 @@ export interface MenuItemProps extends DropdownPrimitive.DropdownMenuItemProps {
   inset?: boolean;
 }
 
-export function MenuItem({ icon, inset, className, children, ...props }: MenuItemProps) {
+export const MenuItem = forwardRef<ElementRef<typeof DropdownPrimitive.Item>, MenuItemProps>(function MenuItem(
+  { icon, inset, className, children, ...props },
+  ref,
+) {
   return (
-    <DropdownPrimitive.Item className={cx("mds-menu__item", inset && "mds-menu__item--inset", className)} {...props}>
+    <DropdownPrimitive.Item ref={ref} className={cx("mds-menu__item", inset && "mds-menu__item--inset", className)} {...props}>
       {icon ? <span className="mds-menu__icon">{icon}</span> : null}
       <span>{children}</span>
     </DropdownPrimitive.Item>
   );
-}
+});
 
-export function MenuCheckboxItem({ className, children, ...props }: DropdownPrimitive.DropdownMenuCheckboxItemProps) {
+export const MenuCheckboxItem = forwardRef<
+  ElementRef<typeof DropdownPrimitive.CheckboxItem>,
+  DropdownPrimitive.DropdownMenuCheckboxItemProps
+>(function MenuCheckboxItem({ className, children, ...props }, ref) {
   return (
-    <DropdownPrimitive.CheckboxItem className={cx("mds-menu__item", className)} {...props}>
+    <DropdownPrimitive.CheckboxItem ref={ref} className={cx("mds-menu__item", className)} {...props}>
       <span className="mds-menu__icon">
         <DropdownPrimitive.ItemIndicator>
           <Check size={14} />
@@ -56,19 +63,25 @@ export function MenuCheckboxItem({ className, children, ...props }: DropdownPrim
       <span>{children}</span>
     </DropdownPrimitive.CheckboxItem>
   );
-}
+});
 
-export function MenuSeparator({ className, ...props }: DropdownPrimitive.DropdownMenuSeparatorProps) {
-  return <DropdownPrimitive.Separator className={cx("mds-menu__separator", className)} {...props} />;
-}
+export const MenuSeparator = forwardRef<
+  ElementRef<typeof DropdownPrimitive.Separator>,
+  DropdownPrimitive.DropdownMenuSeparatorProps
+>(function MenuSeparator({ className, ...props }, ref) {
+  return <DropdownPrimitive.Separator ref={ref} className={cx("mds-menu__separator", className)} {...props} />;
+});
 
-export function MenuLabel({ className, children, ...props }: DropdownPrimitive.DropdownMenuLabelProps) {
+export const MenuLabel = forwardRef<ElementRef<typeof DropdownPrimitive.Label>, DropdownPrimitive.DropdownMenuLabelProps>(function MenuLabel(
+  { className, children, ...props },
+  ref,
+) {
   return (
-    <DropdownPrimitive.Label className={cx("mds-menu__label", className)} {...props}>
+    <DropdownPrimitive.Label ref={ref} className={cx("mds-menu__label", className)} {...props}>
       {children}
     </DropdownPrimitive.Label>
   );
-}
+});
 
 export interface MenuSubProps {
   trigger: ReactNode;

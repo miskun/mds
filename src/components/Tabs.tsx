@@ -1,10 +1,9 @@
 import { createContext, forwardRef, useContext, useState } from "react";
-import type { ButtonHTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import type { ButtonHTMLAttributes, HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { cx, getControllableValue, moveFocusWithin } from "./utils";
 import "./tabs.css";
 
-export interface TabsProps {
-  children: ReactNode;
+export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
   value?: string;
   defaultValue?: string;
@@ -18,7 +17,10 @@ interface TabsContextValue {
 
 const TabsContext = createContext<TabsContextValue | null>(null);
 
-export function Tabs({ children, label = "Sections", value, defaultValue, onValueChange }: TabsProps) {
+export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
+  { children, label = "Sections", value, defaultValue, onValueChange, className, onKeyDown, ...props },
+  ref,
+) {
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   const currentValue = getControllableValue(value, uncontrolledValue);
 
@@ -29,12 +31,22 @@ export function Tabs({ children, label = "Sections", value, defaultValue, onValu
 
   return (
     <TabsContext.Provider value={{ value: currentValue, setValue }}>
-      <div className="mds-tabs" role="tablist" aria-label={label} onKeyDown={handleTabListKeyDown}>
+      <div
+        ref={ref}
+        className={cx("mds-tabs", className)}
+        role="tablist"
+        aria-label={label}
+        onKeyDown={(event) => {
+          handleTabListKeyDown(event);
+          onKeyDown?.(event);
+        }}
+        {...props}
+      >
         {children}
       </div>
     </TabsContext.Provider>
   );
-}
+});
 
 export interface TabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   value?: string;

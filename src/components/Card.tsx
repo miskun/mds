@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./card.css";
@@ -8,9 +9,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode;
 }
 
-export function Card({ title, eyebrow, action, className, children, ...props }: CardProps) {
+export const Card = forwardRef<HTMLElement, CardProps>(function Card({ title, eyebrow, action, className, children, ...props }, ref) {
   return (
-    <section className={cx("mds-card", className)} {...props}>
+    <section ref={ref} className={cx("mds-card", className)} {...props}>
       {(title || eyebrow || action) && (
         <header className="mds-card__header">
           <div>
@@ -23,4 +24,4 @@ export function Card({ title, eyebrow, action, className, children, ...props }: 
       <div className="mds-card__body">{children}</div>
     </section>
   );
-}
+});

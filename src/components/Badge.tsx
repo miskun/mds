@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes } from "react";
 import { cx } from "./utils";
 import "./badge.css";
@@ -8,6 +9,6 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: BadgeTone;
 }
 
-export function Badge({ tone = "neutral", className, ...props }: BadgeProps) {
-  return <span className={cx("mds-badge", `mds-badge--${tone}`, className)} {...props} />;
-}
+export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge({ tone = "neutral", className, ...props }, ref) {
+  return <span ref={ref} className={cx("mds-badge", `mds-badge--${tone}`, className)} {...props} />;
+});

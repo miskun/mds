@@ -1,10 +1,11 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./activity-feed.css";
 
-export function ActivityFeed({ className, ...props }: HTMLAttributes<HTMLOListElement>) {
-  return <ol className={cx("mds-activity", className)} {...props} />;
-}
+export const ActivityFeed = forwardRef<HTMLOListElement, HTMLAttributes<HTMLOListElement>>(function ActivityFeed({ className, ...props }, ref) {
+  return <ol ref={ref} className={cx("mds-activity", className)} {...props} />;
+});
 
 export interface ActivityItemProps extends HTMLAttributes<HTMLLIElement> {
   title: string;
@@ -12,9 +13,12 @@ export interface ActivityItemProps extends HTMLAttributes<HTMLLIElement> {
   icon?: ReactNode;
 }
 
-export function ActivityItem({ title, meta, icon, className, children, ...props }: ActivityItemProps) {
+export const ActivityItem = forwardRef<HTMLLIElement, ActivityItemProps>(function ActivityItem(
+  { title, meta, icon, className, children, ...props },
+  ref,
+) {
   return (
-    <li className={cx("mds-activity__item", className)} {...props}>
+    <li ref={ref} className={cx("mds-activity__item", className)} {...props}>
       <span className="mds-activity__marker" aria-hidden="true">
         {icon}
       </span>
@@ -27,4 +31,4 @@ export function ActivityItem({ title, meta, icon, className, children, ...props 
       </div>
     </li>
   );
-}
+});

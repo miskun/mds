@@ -1,11 +1,11 @@
 import { forwardRef, useId } from "react";
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { Field } from "./Field";
 import { cx } from "./utils";
 import "./checkbox.css";
 import "./radio.css";
 
-export interface RadioGroupProps {
+export interface RadioGroupProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
   hint?: string;
   error?: string;
@@ -13,15 +13,18 @@ export interface RadioGroupProps {
   children: ReactNode;
 }
 
-export function RadioGroup({ label, hint, error, required, children }: RadioGroupProps) {
+export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(
+  { label, hint, error, required, className, children, ...props },
+  ref,
+) {
   return (
     <Field label={label} hint={hint} error={error} required={required} invalid={Boolean(error)}>
-      <div className="mds-radio-group" role="radiogroup" aria-invalid={Boolean(error) || undefined}>
+      <div ref={ref} className={cx("mds-radio-group", className)} role="radiogroup" aria-invalid={Boolean(error) || undefined} {...props}>
         {children}
       </div>
     </Field>
   );
-}
+});
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
   label: ReactNode;

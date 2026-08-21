@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./detail-panel.css";
@@ -8,9 +9,12 @@ export interface DetailPanelProps extends HTMLAttributes<HTMLElement> {
   actions?: ReactNode;
 }
 
-export function DetailPanel({ title, meta, actions, className, children, ...props }: DetailPanelProps) {
+export const DetailPanel = forwardRef<HTMLElement, DetailPanelProps>(function DetailPanel(
+  { title, meta, actions, className, children, ...props },
+  ref,
+) {
   return (
-    <aside className={cx("mds-detail", className)} {...props}>
+    <aside ref={ref} className={cx("mds-detail", className)} {...props}>
       <header className="mds-detail__header">
         <div>
           <h3 className="mds-detail__title">{title}</h3>
@@ -21,4 +25,4 @@ export function DetailPanel({ title, meta, actions, className, children, ...prop
       <div className="mds-detail__body">{children}</div>
     </aside>
   );
-}
+});

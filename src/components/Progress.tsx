@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes } from "react";
 import { cx } from "./utils";
 import "./progress.css";
@@ -7,11 +8,11 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
 }
 
-export function Progress({ value, label, className, ...props }: ProgressProps) {
+export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progress({ value, label, className, ...props }, ref) {
   const normalized = Math.min(100, Math.max(0, value));
 
   return (
-    <div className={cx("mds-progress", className)} {...props}>
+    <div ref={ref} className={cx("mds-progress", className)} {...props}>
       {label ? (
         <div className="mds-progress__meta">
           <span>{label}</span>
@@ -23,4 +24,4 @@ export function Progress({ value, label, className, ...props }: ProgressProps) {
       </div>
     </div>
   );
-}
+});

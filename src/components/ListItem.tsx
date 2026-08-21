@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./list-item.css";
@@ -10,9 +11,12 @@ export interface ListItemProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode;
 }
 
-export function ListItem({ title, description, media, meta, action, className, ...props }: ListItemProps) {
+export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(function ListItem(
+  { title, description, media, meta, action, className, ...props },
+  ref,
+) {
   return (
-    <div className={cx("mds-list-item", className)} {...props}>
+    <div ref={ref} className={cx("mds-list-item", className)} {...props}>
       {media ? <div className="mds-list-item__media">{media}</div> : null}
       <div className="mds-list-item__content">
         <div className="mds-list-item__topline">
@@ -24,4 +28,4 @@ export function ListItem({ title, description, media, meta, action, className, .
       {action ? <div className="mds-list-item__action">{action}</div> : null}
     </div>
   );
-}
+});

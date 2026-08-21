@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { X } from "lucide-react";
 import { cx } from "./utils";
@@ -9,9 +10,9 @@ export interface TagProps extends HTMLAttributes<HTMLSpanElement> {
   children: ReactNode;
 }
 
-export function Tag({ removable, onRemove, className, children, ...props }: TagProps) {
+export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag({ removable, onRemove, className, children, ...props }, ref) {
   return (
-    <span className={cx("mds-tag", className)} {...props}>
+    <span ref={ref} className={cx("mds-tag", className)} {...props}>
       <span>{children}</span>
       {removable ? (
         <button className="mds-tag__remove" type="button" aria-label={`Remove ${children}`} onClick={onRemove}>
@@ -20,4 +21,4 @@ export function Tag({ removable, onRemove, className, children, ...props }: TagP
       ) : null}
     </span>
   );
-}
+});

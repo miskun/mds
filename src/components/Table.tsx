@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { cx } from "./utils";
@@ -9,33 +10,33 @@ export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   containerClassName?: string;
 }
 
-export function Table({ containerClassName, className, ...props }: TableProps) {
+export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ containerClassName, className, ...props }, ref) {
   return (
     <div className={cx("mds-table-wrap", containerClassName)}>
-      <table className={cx("mds-table", className)} {...props} />
+      <table ref={ref} className={cx("mds-table", className)} {...props} />
     </div>
   );
-}
+});
 
-export function TableHead(props: HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead {...props} />;
-}
+export const TableHead = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(function TableHead(props, ref) {
+  return <thead ref={ref} {...props} />;
+});
 
-export function TableBody(props: HTMLAttributes<HTMLTableSectionElement>) {
-  return <tbody {...props} />;
-}
+export const TableBody = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(function TableBody(props, ref) {
+  return <tbody ref={ref} {...props} />;
+});
 
-export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) {
-  return <tr className={cx("mds-table__row", className)} {...props} />;
-}
+export const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement>>(function TableRow({ className, ...props }, ref) {
+  return <tr ref={ref} className={cx("mds-table__row", className)} {...props} />;
+});
 
-export function TableHeader({ className, ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
-  return <th className={cx("mds-table__header", className)} {...props} />;
-}
+export const TableHeader = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement>>(function TableHeader({ className, ...props }, ref) {
+  return <th ref={ref} className={cx("mds-table__header", className)} {...props} />;
+});
 
-export function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
-  return <td className={cx("mds-table__cell", className)} {...props} />;
-}
+export const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLTableCellElement>>(function TableCell({ className, ...props }, ref) {
+  return <td ref={ref} className={cx("mds-table__cell", className)} {...props} />;
+});
 
 export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> {
   active?: boolean;
@@ -45,7 +46,10 @@ export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> 
   children: ReactNode;
 }
 
-export function SortHeader({ active, direction, sortLabel, onSort, className, children, ...props }: SortHeaderProps) {
+export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(function SortHeader(
+  { active, direction, sortLabel, onSort, className, children, ...props },
+  ref,
+) {
   const Icon = active && direction === "asc" ? ArrowUp : active && direction === "desc" ? ArrowDown : ChevronsUpDown;
   const ariaSort = active ? (direction === "asc" ? "ascending" : direction === "desc" ? "descending" : "none") : undefined;
   const label = sortLabel ?? "column";
@@ -57,11 +61,11 @@ export function SortHeader({ active, direction, sortLabel, onSort, className, ch
         : `Sort ${label} ascending`;
 
   return (
-    <TableHeader className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} {...props}>
+    <TableHeader ref={ref} className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} {...props}>
       <button className="mds-table__sort" type="button" aria-label={actionLabel} onClick={onSort}>
         <span>{children}</span>
         <Icon size={14} aria-hidden="true" />
       </button>
     </TableHeader>
   );
-}
+});

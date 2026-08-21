@@ -1,7 +1,8 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes } from "react";
 import { cx } from "./utils";
 import "./kbd.css";
 
-export function Kbd({ className, ...props }: HTMLAttributes<HTMLElement>) {
-  return <kbd className={cx("mds-kbd", className)} {...props} />;
-}
+export const Kbd = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Kbd({ className, ...props }, ref) {
+  return <kbd ref={ref} className={cx("mds-kbd", className)} {...props} />;
+});

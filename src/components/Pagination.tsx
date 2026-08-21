@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button, IconButton } from "./Button";
@@ -10,13 +11,13 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   onPageChange?: (page: number) => void;
 }
 
-export function Pagination({ page, pageCount, onPageChange, className, ...props }: PaginationProps) {
+export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination({ page, pageCount, onPageChange, className, ...props }, ref) {
   const pages = Array.from({ length: pageCount }, (_, index) => index + 1).filter(
     (candidate) => candidate === 1 || candidate === pageCount || Math.abs(candidate - page) <= 1,
   );
 
   return (
-    <nav className={cx("mds-pagination", className)} aria-label="Pagination" {...props}>
+    <nav ref={ref} className={cx("mds-pagination", className)} aria-label="Pagination" {...props}>
       <IconButton label="Previous page" size="sm" variant="secondary" icon={<ChevronLeft size={14} />} disabled={page <= 1} onClick={() => onPageChange?.(page - 1)} />
       <div className="mds-pagination__pages">
         {pages.map((candidate, index) => {
@@ -34,4 +35,4 @@ export function Pagination({ page, pageCount, onPageChange, className, ...props 
       <IconButton label="Next page" size="sm" variant="secondary" icon={<ChevronRight size={14} />} disabled={page >= pageCount} onClick={() => onPageChange?.(page + 1)} />
     </nav>
   );
-}
+});

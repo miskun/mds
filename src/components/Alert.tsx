@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { AlertCircle, CheckCircle2, Info, TriangleAlert } from "lucide-react";
 import { cx } from "./utils";
@@ -18,9 +19,9 @@ const alertIcons: Record<AlertTone, ReactNode> = {
   danger: <AlertCircle size={16} />,
 };
 
-export function Alert({ tone = "info", title, icon, className, children, ...props }: AlertProps) {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert({ tone = "info", title, icon, className, children, ...props }, ref) {
   return (
-    <div className={cx("mds-alert", `mds-alert--${tone}`, className)} role={tone === "danger" ? "alert" : "status"} {...props}>
+    <div ref={ref} className={cx("mds-alert", `mds-alert--${tone}`, className)} role={tone === "danger" ? "alert" : "status"} {...props}>
       <span className="mds-alert__icon" aria-hidden="true">
         {icon ?? alertIcons[tone]}
       </span>
@@ -30,4 +31,4 @@ export function Alert({ tone = "info", title, icon, className, children, ...prop
       </div>
     </div>
   );
-}
+});

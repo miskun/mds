@@ -19,6 +19,7 @@ Check exported components for:
 
 - consistent `className` and native prop passthrough
 - useful ref support on leaf DOM components
+- ref support on structural primitives that users compose, measure, scroll, or focus
 - consistent naming for `size`, `variant`, `tone`, `disabled`, `invalid`, `loading`, and selection props
 - controlled and uncontrolled state patterns where users would expect both
 - event names that match React or local component conventions

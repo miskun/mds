@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes } from "react";
 import { cx } from "./utils";
 import "./spinner.css";
@@ -7,10 +8,10 @@ export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;
 }
 
-export function Spinner({ size = "md", label = "Loading", className, ...props }: SpinnerProps) {
+export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner({ size = "md", label = "Loading", className, ...props }, ref) {
   return (
-    <span className={cx("mds-spinner", `mds-spinner--${size}`, className)} role="status" aria-label={label} {...props}>
+    <span ref={ref} className={cx("mds-spinner", `mds-spinner--${size}`, className)} role="status" aria-label={label} {...props}>
       <span className="mds-spinner__ring" aria-hidden="true" />
     </span>
   );
-}
+});

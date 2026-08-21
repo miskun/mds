@@ -1,10 +1,9 @@
 import { createContext, forwardRef, useContext, useState } from "react";
-import type { ButtonHTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import type { ButtonHTMLAttributes, HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { cx, getControllableValue, moveFocusWithin } from "./utils";
 import "./segmented-control.css";
 
-export interface SegmentedControlProps {
-  children: ReactNode;
+export interface SegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
   value?: string;
   defaultValue?: string;
@@ -18,7 +17,10 @@ interface SegmentedControlContextValue {
 
 const SegmentedControlContext = createContext<SegmentedControlContextValue | null>(null);
 
-export function SegmentedControl({ children, label = "Options", value, defaultValue, onValueChange }: SegmentedControlProps) {
+export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(function SegmentedControl(
+  { children, label = "Options", value, defaultValue, onValueChange, className, onKeyDown, ...props },
+  ref,
+) {
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   const currentValue = getControllableValue(value, uncontrolledValue);
 
@@ -29,12 +31,22 @@ export function SegmentedControl({ children, label = "Options", value, defaultVa
 
   return (
     <SegmentedControlContext.Provider value={{ value: currentValue, setValue }}>
-      <div className="mds-segmented" role="group" aria-label={label} onKeyDown={handleSegmentedKeyDown}>
+      <div
+        ref={ref}
+        className={cx("mds-segmented", className)}
+        role="group"
+        aria-label={label}
+        onKeyDown={(event) => {
+          handleSegmentedKeyDown(event);
+          onKeyDown?.(event);
+        }}
+        {...props}
+      >
         {children}
       </div>
     </SegmentedControlContext.Provider>
   );
-}
+});
 
 export interface SegmentProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   value?: string;

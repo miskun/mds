@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { SearchX } from "lucide-react";
 import { cx } from "./utils";
@@ -10,9 +11,12 @@ export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode;
 }
 
-export function EmptyState({ title, description, icon, action, className, ...props }: EmptyStateProps) {
+export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState(
+  { title, description, icon, action, className, ...props },
+  ref,
+) {
   return (
-    <div className={cx("mds-empty", className)} {...props}>
+    <div ref={ref} className={cx("mds-empty", className)} {...props}>
       <span className="mds-empty__icon" aria-hidden="true">
         {icon ?? <SearchX size={22} />}
       </span>
@@ -23,4 +27,4 @@ export function EmptyState({ title, description, icon, action, className, ...pro
       {action ? <div className="mds-empty__action">{action}</div> : null}
     </div>
   );
-}
+});
