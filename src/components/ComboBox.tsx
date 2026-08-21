@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import type { HTMLAttributes } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import { Field } from "./Field";
@@ -59,6 +59,7 @@ export function ComboBox({
   const invalidState = invalid || Boolean(error);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [internalValue, setInternalValue] = useState<ComboBoxValue>(defaultValue ?? (multiple ? [] : ""));
   const currentValue = value ?? internalValue;
   const selectedValues = multiple ? toArray(currentValue) : currentValue ? [String(currentValue)] : [];
@@ -68,6 +69,22 @@ export function ComboBox({
   const visibleOptions = useMemo(() => filterOptions(options, query), [options, query]);
   const groupedOptions = groupOptions(visibleOptions);
   const hasSelection = selectedValues.length > 0;
+  const activeOption = activeIndex >= 0 ? visibleOptions[activeIndex] : undefined;
+
+  useEffect(() => {
+    if (!open) {
+      setActiveIndex(-1);
+      return;
+    }
+
+    setActiveIndex((currentIndex) => {
+      if (currentIndex >= 0 && visibleOptions[currentIndex] && !visibleOptions[currentIndex].disabled) {
+        return currentIndex;
+      }
+
+      return findNextOptionIndex(visibleOptions, -1, 1);
+    });
+  }, [open, visibleOptions]);
 
   function commitValue(nextValue: ComboBoxValue) {
     setInternalValue(nextValue);
@@ -86,6 +103,7 @@ export function ComboBox({
       commitValue(nextValues);
       setQuery("");
       setOpen(true);
+      setActiveIndex(visibleOptions.findIndex((visibleOption) => visibleOption.value === option.value));
       return;
     }
 
@@ -101,6 +119,10 @@ export function ComboBox({
   function clearSelection() {
     commitValue(multiple ? [] : "");
     setQuery("");
+  }
+
+  function optionId(index: number) {
+    return `${listboxId}-option-${index}`;
   }
 
   return (
@@ -138,6 +160,7 @@ export function ComboBox({
             aria-autocomplete="list"
             aria-controls={listboxId}
             aria-expanded={open}
+            aria-activedescendant={open && activeIndex >= 0 ? optionId(activeIndex) : undefined}
             aria-invalid={invalidState || undefined}
             aria-describedby={messageId}
             aria-required={required || undefined}
@@ -156,6 +179,27 @@ export function ComboBox({
             onKeyDown={(event) => {
               if (event.key === "Escape") {
                 setOpen(false);
+                event.preventDefault();
+                return;
+              }
+
+              if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                setOpen(true);
+                setActiveIndex((currentIndex) => findNextOptionIndex(visibleOptions, currentIndex, event.key === "ArrowDown" ? 1 : -1));
+                event.preventDefault();
+                return;
+              }
+
+              if (event.key === "Home" || event.key === "End") {
+                setOpen(true);
+                setActiveIndex(findEdgeOptionIndex(visibleOptions, event.key === "Home" ? "first" : "last"));
+                event.preventDefault();
+                return;
+              }
+
+              if (event.key === "Enter" && open && activeOption) {
+                selectOption(activeOption);
+                event.preventDefault();
               }
             }}
           />
@@ -180,16 +224,27 @@ export function ComboBox({
                   <div className="mds-combo__group" key={group.label}>
                     {group.label ? <div className="mds-combo__group-label">{group.label}</div> : null}
                     {group.options.map((option) => {
+                      const optionIndex = visibleOptions.findIndex((visibleOption) => visibleOption.value === option.value);
                       const selected = selectedValues.includes(option.value);
+                      const active = optionIndex === activeIndex;
 
                       return (
                         <button
-                          className="mds-combo__option"
+                          id={optionId(optionIndex)}
+                          className={cx("mds-combo__option", active && "mds-combo__option--active")}
                           type="button"
                           key={option.value}
                           role="option"
                           aria-selected={selected}
+                          aria-disabled={option.disabled || undefined}
                           disabled={option.disabled}
+                          tabIndex={-1}
+                          onMouseDown={(event) => event.preventDefault()}
+                          onMouseEnter={() => {
+                            if (!option.disabled) {
+                              setActiveIndex(optionIndex);
+                            }
+                          }}
                           onClick={() => selectOption(option)}
                         >
                           <span className="mds-combo__check">{selected ? <Check size={14} aria-hidden="true" /> : null}</span>
@@ -234,4 +289,25 @@ function groupOptions(options: ComboBoxOption[]) {
   }
 
   return Array.from(groups, ([label, groupOptions]) => ({ label, options: groupOptions }));
+}
+
+function findNextOptionIndex(options: ComboBoxOption[], currentIndex: number, direction: 1 | -1) {
+  if (!options.length) {
+    return -1;
+  }
+
+  for (let offset = 1; offset <= options.length; offset += 1) {
+    const nextIndex = (currentIndex + offset * direction + options.length) % options.length;
+    if (!options[nextIndex].disabled) {
+      return nextIndex;
+    }
+  }
+
+  return -1;
+}
+
+function findEdgeOptionIndex(options: ComboBoxOption[], edge: "first" | "last") {
+  const startIndex = edge === "first" ? -1 : 0;
+  const direction = edge === "first" ? 1 : -1;
+  return findNextOptionIndex(options, startIndex, direction);
 }

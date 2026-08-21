@@ -63,7 +63,7 @@ export const NativeSelect: Story = {
 };
 
 export const SearchableSingleSelect: Story = {
-  parameters: storyDescription("Use ComboBox when option discovery, grouping, descriptions, disabled states, or filtering matter."),
+  parameters: storyDescription("Use ComboBox when option discovery, grouping, descriptions, disabled states, keyboard selection, or filtering matter."),
   render: () => (
     <ComboBox
       label="Primary component"
