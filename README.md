@@ -1,6 +1,6 @@
 # Miskun Design System
 
-Black-first React components for focused creative tools.
+Black-first React components for focused product interfaces.
 
 ## Run
 
@@ -36,8 +36,20 @@ import "@miskun/design-system/styles.css";
 - Typography: Inter-first CSS stack
 - Theme: near-black surfaces, crisp borders, bright signal accent
 - Targets: desktop, mobile, admin, editorial
-- Components: Button, IconButton, Field, Input, Textarea, Select, Checkbox, RadioGroup, Switch, Card, Badge, Tabs, Tooltip, Popover, DropdownMenu, Dialog, Drawer, Breadcrumbs, NavList, SegmentedControl, Alert, Toast, Progress, Spinner, Skeleton, EmptyState, StatusDot, Tag, Kbd, Divider, Table, DataTable, TableToolbar, Pagination, BulkActionBar, MetricCard, ActivityFeed, ListItem, DetailPanel
-- Stories: foundation tokens and component variants
+- Stories: getting started, foundations, components, patterns, content, utilities, and data visualization
+
+## Components
+
+Current component groups:
+
+- Actions: `Button`, `IconButton`
+- Forms: `Field`, `Input`, `Textarea`, `Select`, `ComboBox`, `Checkbox`, `RadioGroup`, `Radio`, `Switch`
+- Navigation: `Breadcrumbs`, `BreadcrumbItem`, `Link`, `Tabs`, `Tab`, `SegmentedControl`, `Segment`, `Pagination`, `NavList`, `NavItem`, `SideNav`, `SideNavSection`, `SideNavItem`, `TreeView`, `TreeItem`
+- Overlays: `Tooltip`, `Popover`, `DropdownMenu`, `MenuItem`, `MenuCheckboxItem`, `MenuSeparator`, `MenuLabel`, `MenuSub`, `Dialog`, `Drawer`
+- Display: `Avatar`, `Badge`, `StatusDot`, `Tag`, `DescriptionList`, `DescriptionItem`, `MetricCard`, `ListItem`, `Text`, `Title`, `Code`, `Prose`, `Kbd`, `Divider`
+- Feedback: `Alert`, `Toast`, `EmptyState`, `Progress`, `Spinner`, `Skeleton`
+- Data: `Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeader`, `TableCell`, `SortHeader`, `DataTable`, `TableToolbar`, `BulkActionBar`, `DetailPanel`, `ActivityFeed`, `ActivityItem`
+- Layout and containers: `Stack`, `Cluster`, `Inline`, `Grid`, `PageHeader`, `Panel`, `Card`
 
 ## Target
 

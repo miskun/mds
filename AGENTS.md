@@ -73,6 +73,8 @@ If a component needs a repeated size, spacing, or rhythm decision, add a semanti
 - Export components from `src/components/index.ts`.
 - Use target-aware CSS tokens for sizing, spacing, typography, and control dimensions.
 - Keep `sm`, `md`, and `lg` semantic within the active target.
+- Expose `className`, native prop passthrough, and useful refs on DOM-backed components.
+- Compose consumer ARIA props with MDS-generated labels, descriptions, and state on the actual focusable control.
 - Prefer Radix primitives for overlays, menus, dialogs, popovers, and focus-managed UI.
 - Use lucide icons when an icon is needed.
 - Keep components accessible by default: labels, focus states, ARIA roles, and keyboard behavior.
