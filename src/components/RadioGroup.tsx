@@ -9,17 +9,44 @@ export interface RadioGroupProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
   hint?: string;
   error?: string;
+  invalid?: boolean;
   required?: boolean;
   children: ReactNode;
 }
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(
-  { label, hint, error, required, className, children, ...props },
+  {
+    label,
+    hint,
+    error,
+    invalid,
+    required,
+    className,
+    children,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    ...props
+  },
   ref,
 ) {
+  const generatedId = useId();
+  const invalidState = invalid || Boolean(error);
+  const labelId = label ? `${generatedId}-label` : undefined;
+  const messageId = error || hint ? `${generatedId}-message` : undefined;
+  const labelledBy = [ariaLabelledBy, labelId].filter(Boolean).join(" ") || undefined;
+  const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
+
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={Boolean(error)}>
-      <div ref={ref} className={cx("mds-radio-group", className)} role="radiogroup" aria-invalid={Boolean(error) || undefined} {...props}>
+    <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} labelId={labelId} messageId={messageId}>
+      <div
+        ref={ref}
+        className={cx("mds-radio-group", className)}
+        role="radiogroup"
+        aria-labelledby={labelledBy}
+        aria-describedby={describedBy}
+        aria-invalid={invalidState || undefined}
+        {...props}
+      >
         {children}
       </div>
     </Field>

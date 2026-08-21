@@ -21,6 +21,7 @@ Check exported components for:
 - useful ref support on leaf DOM components
 - ref support on structural primitives that users compose, measure, scroll, or focus
 - consistent naming for `size`, `variant`, `tone`, `disabled`, `invalid`, `loading`, and selection props
+- consistent form props across text, choice, switch, and grouped controls: `label`, `hint`, `error`, `invalid`, and `required` where relevant
 - controlled and uncontrolled state patterns where users would expect both
 - event names that match React or local component conventions
 - stable exports from `src/components/index.ts` and `src/index.ts`

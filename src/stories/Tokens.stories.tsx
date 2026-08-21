@@ -27,7 +27,7 @@ const colors = [
 const targetRows = [
   ["desktop", "24 / 32 / 40", "13", "12", "Native desktop, pointer-first"],
   ["mobile", "40 / 48 / 56", "16", "16", "Native mobile, touch-first"],
-  ["admin", "32 / 40 / 48", "14", "12", "Web admin, data-dense"],
+  ["admin", "32 / 40 / 48", "14", "12", "Web admin, high-volume workflows"],
   ["editorial", "40 / 48 / 56", "15", "24", "Marketing, portfolio, publishing"],
 ];
 

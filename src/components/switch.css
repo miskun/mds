@@ -1,11 +1,10 @@
 .mds-switch {
-  display: inline-flex;
-  align-items: center;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
   gap: var(--mds-inline-gap);
   cursor: pointer;
-  color: var(--mds-text-muted);
-  font-size: var(--mds-font-size-sm);
-  font-weight: 700;
+  color: var(--mds-text);
 }
 
 .mds-switch__input {
@@ -20,6 +19,7 @@
   --mds-switch-offset: calc((var(--mds-switch-height) - var(--mds-switch-thumb-size)) / 2 - 1px);
   width: var(--mds-switch-width);
   height: var(--mds-switch-height);
+  margin-top: 1px;
   border: 1px solid var(--mds-line-strong);
   border-radius: 999px;
   background: var(--mds-panel-raised);
@@ -49,4 +49,41 @@
 
 .mds-switch__input:focus-visible + .mds-switch__track {
   box-shadow: var(--mds-focus);
+}
+
+.mds-switch__input:disabled + .mds-switch__track,
+.mds-switch__input:disabled ~ .mds-switch__content {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mds-switch__content {
+  display: grid;
+  gap: calc(var(--mds-field-gap) * 0.5);
+}
+
+.mds-switch__label {
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-sm);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.mds-switch__hint,
+.mds-switch__error {
+  font-size: var(--mds-font-size-xs);
+  line-height: 1.4;
+}
+
+.mds-switch__hint {
+  color: var(--mds-text-soft);
+}
+
+.mds-switch__error {
+  color: var(--mds-danger);
+  font-weight: 700;
+}
+
+.mds-switch--invalid .mds-switch__track {
+  border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
 }

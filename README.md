@@ -19,7 +19,7 @@ Reference `md` control heights are based on common platform conventions:
 
 - `desktop`: 32px, pointer-first native desktop feel
 - `mobile`: 48px, touch-first mobile target
-- `admin`: 40px, web admin default with `sm` available for dense toolbars
+- `admin`: 40px, web admin default with `sm` available for compact toolbars
 - `editorial`: 48px, spacious marketing and publishing surfaces
 
 Spacing follows the same target model through semantic aliases such as `--mds-stack-gap`, `--mds-inline-gap`, `--mds-field-gap`, `--mds-toolbar-gap`, `--mds-section-padding`, and `--mds-table-cell-padding-*`.
@@ -52,7 +52,7 @@ import { MDSProvider, Button, Input } from "@miskun/design-system";
 </MDSProvider>
 ```
 
-Use `desktop` for native desktop apps, `mobile` for native mobile apps, `admin` for dense web portals, and `editorial` for marketing, portfolio, and publishing surfaces.
+Use `desktop` for native desktop apps, `mobile` for native mobile apps, `admin` for high-volume web portals, and `editorial` for marketing, portfolio, and publishing surfaces.
 
 Viewport and target are separate concerns:
 

@@ -50,7 +50,7 @@ function App() {
               <Badge tone="success">Ready</Badge>
               <Badge tone="danger">Breaking</Badge>
             </div>
-            <Switch label="Enable dense mode" defaultChecked />
+            <Switch label="Show command hints" defaultChecked />
           </div>
         </Card>
 

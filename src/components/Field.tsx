@@ -10,23 +10,29 @@ export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
   required?: boolean;
   invalid?: boolean;
   htmlFor?: string;
+  labelId?: string;
   messageId?: string;
   children: ReactNode;
 }
 
 export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
-  { label, hint, error, required, invalid, htmlFor, messageId, className, children, ...props },
+  { label, hint, error, required, invalid, htmlFor, labelId, messageId, className, children, ...props },
   ref,
 ) {
   const hasError = invalid || Boolean(error);
 
   return (
     <div ref={ref} className={cx("mds-field", hasError && "mds-field--invalid", className)} data-invalid={hasError || undefined} {...props}>
-      {label ? (
-        <label className="mds-field__label" htmlFor={htmlFor}>
+      {label && htmlFor ? (
+        <label className="mds-field__label" htmlFor={htmlFor} id={labelId}>
           <span>{label}</span>
           {required ? <span className="mds-field__required">Required</span> : null}
         </label>
+      ) : label ? (
+        <span className="mds-field__label" id={labelId}>
+          <span>{label}</span>
+          {required ? <span className="mds-field__required">Required</span> : null}
+        </span>
       ) : null}
       {children}
       {error ? (

@@ -7,15 +7,28 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   label?: ReactNode;
   hint?: string;
   error?: string;
+  invalid?: boolean;
   indeterminate?: boolean;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
-  { label, hint, error, indeterminate, className, "aria-describedby": ariaDescribedBy, "aria-checked": ariaChecked, ...props },
+  {
+    label,
+    hint,
+    error,
+    invalid,
+    indeterminate,
+    className,
+    "aria-invalid": ariaInvalid,
+    "aria-describedby": ariaDescribedBy,
+    "aria-checked": ariaChecked,
+    ...props
+  },
   ref,
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
   const generatedId = useId();
+  const invalidState = invalid || Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
   const messageId = error || hint ? `${generatedId}-message` : undefined;
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
 
@@ -26,12 +39,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   }, [indeterminate]);
 
   return (
-    <label className={cx("mds-choice", error && "mds-choice--invalid", className)}>
+    <label className={cx("mds-choice", invalidState && "mds-choice--invalid", className)}>
       <input
         ref={inputRef}
         className="mds-choice__input"
         type="checkbox"
-        aria-invalid={Boolean(error) || undefined}
+        aria-invalid={invalidState || undefined}
         aria-checked={ariaChecked ?? (indeterminate ? "mixed" : props.checked === undefined ? undefined : Boolean(props.checked))}
         aria-describedby={describedBy}
         {...props}
