@@ -9,6 +9,9 @@ import {
   NavList,
   Segment,
   SegmentedControl,
+  SideNav,
+  SideNavItem,
+  SideNavSection,
   Tab,
   Tabs,
 } from "../components";
@@ -18,7 +21,7 @@ import "./navigation-overlays.css";
 const meta = {
   title: "MDS/Components/Navigation/Overview",
   component: Tabs,
-  subcomponents: { Tab, SegmentedControl, Segment, NavList, NavItem, Breadcrumbs, BreadcrumbItem },
+  subcomponents: { Tab, SegmentedControl, Segment, SideNav, SideNavSection, SideNavItem, NavList, NavItem, Breadcrumbs, BreadcrumbItem },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -50,20 +53,22 @@ export const NavigationPrimitives: Story = {
     return (
       <div className="nav-layout">
         <aside className="nav-layout__sidebar">
-          <NavList>
-            <NavItem href="#" active icon={<LayoutDashboard size={16} />}>
-              Overview
-            </NavItem>
-            <NavItem href="#" icon={<FileText size={16} />}>
-              Components
-            </NavItem>
-            <NavItem href="#" icon={<Settings size={16} />}>
-              Tokens
-            </NavItem>
-            <NavItem href="#" icon={<User size={16} />}>
-              Team
-            </NavItem>
-          </NavList>
+          <SideNav>
+            <SideNavSection>
+              <SideNavItem href="#" current icon={<LayoutDashboard size={16} />}>
+                Overview
+              </SideNavItem>
+              <SideNavItem href="#" icon={<FileText size={16} />}>
+                Components
+              </SideNavItem>
+              <SideNavItem href="#" icon={<Settings size={16} />}>
+                Tokens
+              </SideNavItem>
+              <SideNavItem href="#" icon={<User size={16} />}>
+                Team
+              </SideNavItem>
+            </SideNavSection>
+          </SideNav>
         </aside>
         <section className="nav-layout__main">
           <Breadcrumbs>

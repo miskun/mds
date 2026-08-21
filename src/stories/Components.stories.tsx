@@ -31,7 +31,7 @@ const groups = [
   ["Layout", "Spatial primitives and page-level arrangement.", "Flex, Grid, PageHeader"],
   ["Containers", "Bounded and disclosure surfaces.", "Panel, Card, Popover, Dialog, Drawer"],
   ["Overlays", "Floating layers and modal surfaces.", "Tooltip, Popover, DropdownMenu, Dialog, Drawer"],
-  ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Link, Tabs, Pagination, NavList"],
+  ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Link, Tabs, Pagination, NavList, SideNav, TreeView"],
   ["Display", "Passive information and metadata.", "Avatar, Description list, Metadata, Prose, Records, Metrics, Text, Utilities"],
   ["Feedback", "System state, recovery, loading, and confirmations.", "Alerts, Empty states, Loading, Toasts"],
   ["Forms", "Field layouts and input controls.", "Layouts, Text, Selection, Search and filter"],

@@ -8,10 +8,10 @@
 
 .mds-nav__item {
   display: grid;
-  grid-template-columns: var(--mds-control-icon-size-md) minmax(0, 1fr);
+  grid-template-columns: var(--mds-nav-icon-size) minmax(0, 1fr);
   gap: var(--mds-control-gap);
   align-items: center;
-  min-height: var(--mds-control-height-md);
+  min-height: var(--mds-nav-row-height);
   border-radius: var(--mds-radius-sm);
   color: var(--mds-text-muted);
   font-size: var(--mds-control-font-size-md);
@@ -38,4 +38,9 @@
 .mds-nav__icon {
   display: inline-flex;
   color: currentColor;
+}
+
+.mds-nav__icon svg {
+  width: var(--mds-nav-icon-size);
+  height: var(--mds-nav-icon-size);
 }

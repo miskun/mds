@@ -1,0 +1,102 @@
+.mds-side-nav {
+  display: grid;
+  gap: var(--mds-stack-gap);
+  min-width: 0;
+  color: var(--mds-text-muted);
+}
+
+.mds-side-nav__header,
+.mds-side-nav__footer {
+  min-width: 0;
+}
+
+.mds-side-nav__body {
+  display: grid;
+  gap: var(--mds-stack-gap);
+}
+
+.mds-side-nav__section {
+  min-width: 0;
+}
+
+.mds-side-nav__section-title {
+  margin: 0 0 var(--mds-field-gap);
+  padding-inline: calc(var(--mds-control-padding-x-md) * 0.75);
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.mds-side-nav__list {
+  display: grid;
+  gap: calc(var(--mds-control-gap) * 0.5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mds-side-nav__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mds-control-gap);
+  align-items: center;
+  min-height: var(--mds-nav-row-height);
+  padding: 0 var(--mds-control-padding-x-md);
+  border-radius: var(--mds-radius-sm);
+  color: var(--mds-text-muted);
+  font-size: var(--mds-control-font-size-md);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.mds-side-nav__item--with-icon {
+  grid-template-columns: var(--mds-nav-icon-size) minmax(0, 1fr);
+}
+
+.mds-side-nav__item--with-trailing {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.mds-side-nav__item--with-icon.mds-side-nav__item--with-trailing {
+  grid-template-columns: var(--mds-nav-icon-size) minmax(0, 1fr) auto;
+}
+
+.mds-side-nav__item:hover {
+  background: var(--mds-panel-raised);
+  color: var(--mds-text);
+}
+
+.mds-side-nav__item:focus-visible {
+  outline: none;
+  box-shadow: var(--mds-focus);
+}
+
+.mds-side-nav__item--current {
+  background: color-mix(in srgb, var(--mds-accent) 14%, transparent);
+  color: var(--mds-accent);
+}
+
+.mds-side-nav__icon,
+.mds-side-nav__trailing {
+  display: inline-flex;
+  align-items: center;
+  color: currentColor;
+}
+
+.mds-side-nav__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mds-side-nav__trailing {
+  justify-content: end;
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xs);
+}
+
+.mds-side-nav__icon svg {
+  width: var(--mds-nav-icon-size);
+  height: var(--mds-nav-icon-size);
+}

@@ -75,7 +75,7 @@ Keep components grouped topically:
 
 - `Actions`: buttons and action triggers
 - `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
-- `Navigation`: overview, breadcrumbs, links, tabs, segmented controls, pagination, nav lists, and future side nav or tree view
+- `Navigation`: overview, breadcrumbs, links, tabs, segmented controls, pagination, nav lists, side nav, and tree view
 - `Overlays`: overview, tooltips, popovers, dropdown menus, dialogs, and drawers
 - `Display`: avatar, description list, metadata, prose, records, metrics, text, keyboard hints, and dividers
 - `Feedback`: alerts, toasts, empty states, progress, spinners, skeletons, and recovery states
@@ -137,7 +137,7 @@ For form docs:
 For navigation docs:
 
 - keep buttons and action triggers under `MDS/Components/Actions`
-- split navigation by purpose: breadcrumbs for hierarchy, links for navigation from text or compact surfaces, tabs for peer sections, pagination for result pages, and nav lists for side navigation
+- split navigation by purpose: breadcrumbs for hierarchy, links for navigation from text or compact surfaces, tabs for peer sections, pagination for result pages, nav lists for compact lists, side nav for persistent app structure, and tree view for nested hierarchy
 - use Link for navigation and Button for state-changing actions
 - document selected or current state with the matching ARIA state
 - keep future side nav, tree view, steps, and context menu work under navigation when they move users through structure
