@@ -34,7 +34,7 @@ const groups = [
   ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, Link, Tabs, Pagination, NavList, SideNav, TreeView"],
   ["Display", "Passive information and metadata.", "Avatar, Description list, Metadata, Prose, Records, Metrics, Text, Utilities"],
   ["Feedback", "System state, recovery, loading, and confirmations.", "Alerts, Empty states, Loading, Toasts"],
-  ["Forms", "Field layouts and input controls.", "Layouts, Text, Selection, Search and filter"],
+  ["Forms", "Field layouts and input controls.", "Layouts, Text, Selects, Selection, Search and filter"],
   ["Data", "Tables and record workflows.", "Tables, Data table, Toolbars, Detail and activity"],
 ];
 

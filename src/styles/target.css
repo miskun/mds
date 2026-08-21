@@ -33,6 +33,7 @@
   --mds-toolbar-gap: var(--mds-space-3);
   --mds-table-cell-padding-y: 10px;
   --mds-table-cell-padding-x: var(--mds-panel-padding);
+  --mds-option-row-height: var(--mds-control-height-md);
   --mds-nav-row-height: var(--mds-control-height-md);
   --mds-nav-icon-size: var(--mds-control-icon-size-md);
   --mds-nav-indent: var(--mds-space-4);
@@ -90,6 +91,7 @@
   --mds-toolbar-gap: 8px;
   --mds-table-cell-padding-y: 7px;
   --mds-table-cell-padding-x: 12px;
+  --mds-option-row-height: 32px;
   --mds-nav-row-height: 28px;
   --mds-nav-icon-size: 15px;
   --mds-nav-indent: 14px;
@@ -147,6 +149,7 @@
   --mds-toolbar-gap: 12px;
   --mds-table-cell-padding-y: 12px;
   --mds-table-cell-padding-x: 16px;
+  --mds-option-row-height: 44px;
   --mds-nav-row-height: 44px;
   --mds-nav-icon-size: 18px;
   --mds-nav-indent: 22px;
@@ -204,6 +207,7 @@
   --mds-toolbar-gap: 10px;
   --mds-table-cell-padding-y: 9px;
   --mds-table-cell-padding-x: 14px;
+  --mds-option-row-height: 40px;
   --mds-nav-row-height: 36px;
   --mds-nav-icon-size: 16px;
   --mds-nav-indent: 18px;
@@ -261,6 +265,7 @@
   --mds-toolbar-gap: 16px;
   --mds-table-cell-padding-y: 14px;
   --mds-table-cell-padding-x: 18px;
+  --mds-option-row-height: 44px;
   --mds-nav-row-height: 44px;
   --mds-nav-icon-size: 17px;
   --mds-nav-indent: 20px;

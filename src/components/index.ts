@@ -7,6 +7,7 @@ export * from "./Button";
 export * from "./Card";
 export * from "./Checkbox";
 export * from "./BulkActionBar";
+export * from "./ComboBox";
 export * from "./DataTable";
 export * from "./DescriptionList";
 export * from "./DetailPanel";

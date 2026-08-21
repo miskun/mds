@@ -74,7 +74,7 @@ Keep Storybook organized by documentation intent:
 Keep components grouped topically:
 
 - `Actions`: buttons and action triggers
-- `Forms`: form layouts, text controls, selection controls, search/filter controls, and future date or numeric controls
+- `Forms`: form layouts, text controls, selects, selection controls, search/filter controls, and future date or numeric controls
 - `Navigation`: overview, breadcrumbs, links, tabs, segmented controls, pagination, nav lists, side nav, and tree view
 - `Overlays`: overview, tooltips, popovers, dropdown menus, dialogs, and drawers
 - `Display`: avatar, description list, metadata, prose, records, metrics, text, keyboard hints, and dividers
@@ -128,9 +128,10 @@ For container components:
 
 For form docs:
 
-- split form guidance by task: layouts, text controls, selection controls, and search/filter controls
+- split form guidance by task: layouts, text controls, selects, selection controls, and search/filter controls
 - keep `Field` focused on label, required marker, hint, error, and ARIA message relationships
 - document validation close to the affected control
+- document native Select separately from searchable ComboBox so consumers choose by workflow complexity
 - preserve native control semantics before adding custom form behavior
 - add numeric, date/time, combobox, and file controls only when the component contract is clear
 

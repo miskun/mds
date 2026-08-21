@@ -27,10 +27,10 @@ const colors = [
 ];
 
 const targetRows = [
-  ["desktop", "24 / 32 / 40", "13", "28", "Native desktop, pointer-first"],
-  ["mobile", "40 / 48 / 56", "16", "44", "Native mobile, touch-first"],
-  ["admin", "32 / 40 / 48", "14", "36", "Web admin, high-volume workflows"],
-  ["editorial", "40 / 48 / 56", "15", "44", "Marketing, portfolio, publishing"],
+  ["desktop", "24 / 32 / 40", "13", "32 / 28", "Native desktop, pointer-first"],
+  ["mobile", "40 / 48 / 56", "16", "44 / 44", "Native mobile, touch-first"],
+  ["admin", "32 / 40 / 48", "14", "40 / 36", "Web admin, high-volume workflows"],
+  ["editorial", "40 / 48 / 56", "15", "44 / 44", "Marketing, portfolio, publishing"],
 ];
 
 const proseRows = [
@@ -103,7 +103,7 @@ export const TargetScale: Story = {
             <th>Target</th>
             <th>Control sm / md / lg</th>
             <th>md font</th>
-            <th>nav row</th>
+            <th>option / nav row</th>
             <th>Intent</th>
           </tr>
         </thead>
