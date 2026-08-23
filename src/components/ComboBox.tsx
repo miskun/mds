@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useMemo, useState } from "react";
+import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { HTMLAttributes } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import { Field } from "./Field";
@@ -67,6 +67,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   const messageId = error || hint ? `${comboId}-message` : undefined;
   const invalidState = invalid || Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
+  const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -125,6 +126,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
     commitValue(option.value);
     setQuery("");
     setOpen(false);
+    inputRef.current?.blur();
   }
 
   function removeValue(valueToRemove: string) {
@@ -183,6 +185,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
         <div className="mds-combo__control">
           <Search className="mds-combo__search-icon" aria-hidden="true" />
           <input
+            ref={inputRef}
             id={comboId}
             className="mds-combo__input"
             type="text"

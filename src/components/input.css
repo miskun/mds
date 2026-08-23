@@ -30,3 +30,8 @@
 .mds-field--invalid .mds-input {
   background: var(--mds-control-surface-invalid);
 }
+
+.mds-input[aria-invalid="true"]:focus,
+.mds-field--invalid .mds-input:focus {
+  background: var(--mds-control-surface-invalid-raised);
+}

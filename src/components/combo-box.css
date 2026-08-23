@@ -66,6 +66,7 @@
   grid-template-columns: var(--mds-control-icon-size-md) minmax(0, 1fr) auto auto;
   gap: var(--mds-control-gap);
   align-items: center;
+  height: var(--mds-control-height-md);
   min-height: var(--mds-control-height-md);
   border: 0;
   border-radius: var(--mds-radius-lg);
@@ -85,6 +86,11 @@
   background: var(--mds-control-surface-invalid);
 }
 
+.mds-combo--invalid.mds-combo--open .mds-combo__control,
+.mds-combo--invalid:focus-within .mds-combo__control {
+  background: var(--mds-control-surface-invalid-raised);
+}
+
 .mds-combo--disabled {
   cursor: not-allowed;
   opacity: 0.58;
@@ -92,10 +98,18 @@
 
 .mds-combo--disabled .mds-combo__control {
   background: var(--mds-control-surface);
+  cursor: not-allowed;
+}
+
+.mds-combo--disabled .mds-combo__input,
+.mds-combo--disabled .mds-combo__search-icon,
+.mds-combo--disabled .mds-combo__clear,
+.mds-combo--disabled .mds-combo__toggle {
+  cursor: not-allowed;
 }
 
 .mds-combo__search-icon {
-  color: var(--mds-text-muted);
+  color: #ffffff;
   width: var(--mds-control-icon-size-md);
   height: var(--mds-control-icon-size-md);
 }
@@ -116,11 +130,35 @@
   color: color-mix(in srgb, var(--mds-text-soft) 58%, var(--mds-black));
 }
 
+.mds-combo--invalid .mds-combo__input::placeholder {
+  color: color-mix(in srgb, var(--mds-danger) 22%, color-mix(in srgb, var(--mds-text-soft) 42%, var(--mds-black)));
+}
+
 .mds-combo__clear,
 .mds-combo__toggle {
   width: var(--mds-control-icon-size-md);
   height: var(--mds-control-icon-size-md);
   border-radius: var(--mds-radius-xs);
+}
+
+.mds-combo__clear {
+  grid-column: 3;
+}
+
+.mds-combo__toggle {
+  grid-column: 4;
+}
+
+.mds-combo__clear,
+.mds-combo__toggle {
+  color: #ffffff;
+}
+
+.mds-combo--disabled .mds-combo__input,
+.mds-combo--disabled .mds-combo__search-icon,
+.mds-combo--disabled .mds-combo__clear,
+.mds-combo--disabled .mds-combo__toggle {
+  color: var(--mds-text-soft);
 }
 
 .mds-combo__popover {

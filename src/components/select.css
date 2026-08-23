@@ -33,6 +33,11 @@
   background: var(--mds-control-surface-invalid);
 }
 
+.mds-select[aria-invalid="true"]:focus,
+.mds-field--invalid .mds-select:focus {
+  background: var(--mds-control-surface-invalid-raised);
+}
+
 .mds-select__icon {
   position: absolute;
   right: var(--mds-control-padding-x-md);

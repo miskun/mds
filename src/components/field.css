@@ -1,5 +1,6 @@
 .mds-field {
   display: grid;
+  align-content: start;
   gap: var(--mds-field-gap);
   min-width: 220px;
 }

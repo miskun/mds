@@ -19,6 +19,7 @@ const colors = [
   ["Control surface", "--mds-control-surface", "Inputs, selects, textareas, and combo boxes."],
   ["Control raised", "--mds-control-surface-raised", "Focused controls and raised control details."],
   ["Control invalid", "--mds-control-surface-invalid", "Invalid form controls without an outline."],
+  ["Control invalid raised", "--mds-control-surface-invalid-raised", "Focused invalid controls without an outline."],
   ["Line", "--mds-line", "Default borders and dividers."],
   ["Strong line", "--mds-line-strong", "Control borders and stronger separation."],
   ["Text", "--mds-text", "Primary readable text."],

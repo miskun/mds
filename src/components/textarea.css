@@ -32,3 +32,8 @@
 .mds-field--invalid .mds-textarea {
   background: var(--mds-control-surface-invalid);
 }
+
+.mds-textarea[aria-invalid="true"]:focus,
+.mds-field--invalid .mds-textarea:focus {
+  background: var(--mds-control-surface-invalid-raised);
+}
