@@ -33,6 +33,7 @@ export * from "./Progress";
 export * from "./RadioGroup";
 export * from "./SegmentedControl";
 export * from "./Select";
+export * from "./SelectField";
 export * from "./Skeleton";
 export * from "./SideNav";
 export * from "./Spinner";

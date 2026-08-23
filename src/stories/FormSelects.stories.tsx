@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { ComboBox, Grid, Select, Stack, Text } from "../components";
+import { ComboBox, Grid, Select, SelectField, Stack, Text } from "../components";
 import "../showcase.css";
 
 const componentOptions = [
@@ -16,14 +16,14 @@ const componentOptions = [
 const meta = {
   title: "MDS/Components/Forms/Selects",
   component: ComboBox,
-  subcomponents: { Select },
+  subcomponents: { SelectField, Select },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
     docs: {
       description: {
         component:
-          "Selects cover native option choice and searchable selection workflows with target-aware triggers, menu rows, validation, and helper text.",
+          "Selects cover MDS-rendered dropdowns, searchable selection workflows, and native browser selects with target-aware triggers, menu rows, validation, and helper text.",
       },
     },
   },
@@ -58,6 +58,34 @@ export const NativeSelect: Story = {
         <option value="beta">Beta</option>
         <option value="stable">Stable</option>
       </Select>
+    </Grid>
+  ),
+};
+
+export const RegularSelect: Story = {
+  parameters: storyDescription("Use SelectField for short MDS-rendered option lists that do not need search."),
+  render: () => (
+    <Grid minItemWidth="260px" style={{ maxWidth: 760 }}>
+      <SelectField
+        label="Default target"
+        defaultValue="admin"
+        options={[
+          { value: "desktop", label: "Desktop" },
+          { value: "mobile", label: "Mobile" },
+          { value: "admin", label: "Admin portal" },
+          { value: "editorial", label: "Editorial" },
+        ]}
+      />
+      <SelectField
+        label="Release channel"
+        error="Choose a release channel before publishing."
+        placeholder="Select channel"
+        options={[
+          { value: "alpha", label: "Alpha" },
+          { value: "beta", label: "Beta" },
+          { value: "stable", label: "Stable" },
+        ]}
+      />
     </Grid>
   ),
 };
@@ -97,13 +125,13 @@ export const MultiSelect: Story = {
 };
 
 export const States: Story = {
-  parameters: storyDescription("ComboBox supports validation, loading, empty, disabled option, and clearable selection states."),
+  parameters: storyDescription("SelectField covers regular dropdown validation and disabled states. ComboBox adds loading, empty, filtering, and disabled options."),
   render: () => (
     <Grid minItemWidth="280px" style={{ maxWidth: 920 }}>
-      <ComboBox label="Required component" error="Choose at least one component." options={componentOptions} />
+      <SelectField label="Required component" error="Choose at least one component." placeholder="Choose component" options={componentOptions} clearable />
       <ComboBox label="Loading" hint="Use while remote options are resolving." options={[]} loading />
       <ComboBox label="No matches" options={componentOptions} placeholder="Type zzz" emptyMessage="No matching components" />
-      <ComboBox
+      <SelectField
         label="Deprecated package"
         hint="Disabled fields keep their message relationship."
         options={componentOptions}

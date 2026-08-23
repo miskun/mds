@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ComboBox, Input, Stack, Textarea } from "../components";
+import { ComboBox, Input, SelectField, Stack, Textarea } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -90,10 +90,10 @@ export const TextWithNativeTypes: Story = {
 };
 
 export const DropdownFields: Story = {
-  parameters: storyDescription("Use ComboBox for MDS-rendered dropdown fields in product forms. Native Select is documented separately."),
+  parameters: storyDescription("Use SelectField for regular MDS-rendered dropdown fields. Use ComboBox when searching/filtering options matters."),
   render: () => (
     <Stack style={{ maxWidth: 520 }}>
-      <ComboBox
+      <SelectField
         label="Target"
         defaultValue="admin"
         options={[
@@ -103,7 +103,7 @@ export const DropdownFields: Story = {
           { value: "editorial", label: "Editorial" },
         ]}
       />
-      <ComboBox
+      <SelectField
         label="Release target"
         defaultValue=""
         error="Select a target before publishing."
@@ -113,6 +113,15 @@ export const DropdownFields: Story = {
           { value: "mobile", label: "Mobile" },
           { value: "admin", label: "Admin portal" },
           { value: "editorial", label: "Editorial" },
+        ]}
+      />
+      <ComboBox
+        label="Component"
+        hint="Use ComboBox when option discovery matters."
+        options={[
+          { value: "button", label: "Button", description: "Primary action trigger" },
+          { value: "input", label: "Input", description: "Single-line text field" },
+          { value: "combo-box", label: "ComboBox", description: "Searchable selection control" },
         ]}
       />
     </Stack>
