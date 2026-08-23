@@ -8,6 +8,7 @@ import {
   BulkActionBar,
   Button,
   Card,
+  ComboBox,
   DataTableSort,
   DataTable,
   DetailPanel,
@@ -16,7 +17,6 @@ import {
   ListItem,
   MetricCard,
   Pagination,
-  Select,
   StatusDot,
   TableToolbar,
 } from "../components";
@@ -71,11 +71,15 @@ export const AdminTable: Story = {
               actions={<Button icon={<Plus size={14} />}>New component</Button>}
             >
               <Input aria-label="Search components" placeholder="Search" />
-              <Select aria-label="Target filter" defaultValue="all">
-                <option value="all">All targets</option>
-                <option value="admin">Admin</option>
-                <option value="desktop">Desktop</option>
-              </Select>
+              <ComboBox
+                aria-label="Target filter"
+                defaultValue="all"
+                options={[
+                  { value: "all", label: "All targets" },
+                  { value: "admin", label: "Admin" },
+                  { value: "desktop", label: "Desktop" },
+                ]}
+              />
             </TableToolbar>
             <BulkActionBar selectedCount={selectedRowIds.length} actions={<Button size="sm" variant="secondary">Archive</Button>} />
             <DataTable

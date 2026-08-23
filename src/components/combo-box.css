@@ -67,21 +67,22 @@
   gap: var(--mds-control-gap);
   align-items: center;
   min-height: var(--mds-control-height-md);
-  border: 1px solid var(--mds-line);
-  border-radius: var(--mds-radius-sm);
-  background: var(--mds-ink);
+  border: 0;
+  border-radius: var(--mds-radius-lg);
+  background: var(--mds-control-surface);
+  box-shadow: var(--mds-control-inset-shadow);
   color: var(--mds-text);
   padding: 0 var(--mds-control-padding-x-md);
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
 }
 
 .mds-combo--open .mds-combo__control {
-  border-color: color-mix(in srgb, var(--mds-accent) 72%, var(--mds-line));
-  box-shadow: var(--mds-focus);
+  background: var(--mds-control-surface-raised);
+  box-shadow: var(--mds-control-inset-shadow);
 }
 
 .mds-combo--invalid .mds-combo__control {
-  border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
+  background: var(--mds-control-surface-invalid);
 }
 
 .mds-combo--disabled {
@@ -90,11 +91,11 @@
 }
 
 .mds-combo--disabled .mds-combo__control {
-  background: var(--mds-ink);
+  background: var(--mds-control-surface);
 }
 
 .mds-combo__search-icon {
-  color: var(--mds-text-soft);
+  color: var(--mds-text-muted);
   width: var(--mds-control-icon-size-md);
   height: var(--mds-control-icon-size-md);
 }
@@ -112,7 +113,7 @@
 }
 
 .mds-combo__input::placeholder {
-  color: var(--mds-text-soft);
+  color: color-mix(in srgb, var(--mds-text-soft) 58%, var(--mds-black));
 }
 
 .mds-combo__clear,

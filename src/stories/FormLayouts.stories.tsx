@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card, Checkbox, Cluster, Field, Grid, Input, Panel, Select, Stack, Textarea } from "../components";
+import { Button, Card, Checkbox, Cluster, ComboBox, Field, Grid, Input, Panel, Stack, Textarea } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -35,11 +35,15 @@ export const BasicForm: Story = {
       <Stack>
         <Grid minItemWidth="220px">
           <Input label="Name" placeholder="Component name" required />
-          <Select label="Group" defaultValue="forms">
-            <option value="actions">Actions</option>
-            <option value="forms">Forms</option>
-            <option value="layout">Layout</option>
-          </Select>
+          <ComboBox
+            label="Group"
+            defaultValue="forms"
+            options={[
+              { value: "actions", label: "Actions" },
+              { value: "forms", label: "Forms" },
+              { value: "layout", label: "Layout" },
+            ]}
+          />
         </Grid>
         <Textarea label="Description" hint="Keep descriptions useful in docs and generated prop tables." />
         <Checkbox label="Include in public docs" defaultChecked />
@@ -58,13 +62,18 @@ export const ValidationSection: Story = {
     <Panel style={{ maxWidth: 640 }}>
       <Stack>
         <Input label="Package name" defaultValue="@miskun/mds" error="This package name is already in use." />
-        <Select label="Release target" defaultValue="" error="Select a target before continuing.">
-          <option value="">Choose target</option>
-          <option value="desktop">Desktop</option>
-          <option value="mobile">Mobile</option>
-          <option value="admin">Admin portal</option>
-          <option value="editorial">Editorial</option>
-        </Select>
+        <ComboBox
+          label="Release target"
+          defaultValue=""
+          error="Select a target before continuing."
+          placeholder="Choose target"
+          options={[
+            { value: "desktop", label: "Desktop" },
+            { value: "mobile", label: "Mobile" },
+            { value: "admin", label: "Admin portal" },
+            { value: "editorial", label: "Editorial" },
+          ]}
+        />
         <Checkbox label="I reviewed the release notes" error="Confirm review before publishing." />
       </Stack>
     </Panel>

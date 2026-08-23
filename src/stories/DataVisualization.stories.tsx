@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Alert, Badge, Button, Card, EmptyState, MetricCard, Select, StatusDot } from "../components";
+import { Alert, Badge, Button, Card, ComboBox, EmptyState, MetricCard, StatusDot } from "../components";
 import "../showcase.css";
 import "./data-visualization.css";
 
@@ -205,17 +205,25 @@ export const DashboardComposition: Story = {
       </header>
 
       <div className="mds-cluster">
-        <Select aria-label="Time range" defaultValue="7d">
-          <option value="24h">Last 24 hours</option>
-          <option value="7d">Last 7 days</option>
-          <option value="30d">Last 30 days</option>
-        </Select>
-        <Select aria-label="Target" defaultValue="all">
-          <option value="all">All targets</option>
-          <option value="admin">Admin</option>
-          <option value="desktop">Desktop</option>
-          <option value="mobile">Mobile</option>
-        </Select>
+        <ComboBox
+          aria-label="Time range"
+          defaultValue="7d"
+          options={[
+            { value: "24h", label: "Last 24 hours" },
+            { value: "7d", label: "Last 7 days" },
+            { value: "30d", label: "Last 30 days" },
+          ]}
+        />
+        <ComboBox
+          aria-label="Target"
+          defaultValue="all"
+          options={[
+            { value: "all", label: "All targets" },
+            { value: "admin", label: "Admin" },
+            { value: "desktop", label: "Desktop" },
+            { value: "mobile", label: "Mobile" },
+          ]}
+        />
         <Button variant="secondary">Export</Button>
       </div>
 

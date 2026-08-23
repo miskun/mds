@@ -18,10 +18,10 @@
   --mds-gray-11: #d4d4d8;
   --mds-gray-12: #f5f5f4;
 
-  --mds-black: var(--mds-gray-1);
+  --mds-black: #000000;
   --mds-ink: var(--mds-gray-2);
-  --mds-panel: var(--mds-gray-4);
-  --mds-panel-raised: var(--mds-gray-5);
+  --mds-panel: var(--mds-gray-1);
+  --mds-panel-raised: var(--mds-gray-2);
   --mds-line: var(--mds-gray-7);
   --mds-line-strong: var(--mds-gray-8);
   --mds-text: var(--mds-gray-12);
@@ -36,6 +36,11 @@
   --mds-light-halo-opacity: 88%;
   --mds-light-halo-sm-blur: 7px;
   --mds-light-halo-md-blur: 12px;
+  --mds-control-surface: var(--mds-gray-4);
+  --mds-control-surface-raised: var(--mds-gray-6);
+  --mds-control-surface-invalid: color-mix(in srgb, var(--mds-danger) 15%, var(--mds-black));
+  --mds-control-inset-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.22);
+  --mds-control-raised-shadow: 0 7px 18px rgba(0, 0, 0, 0.34);
 
   --mds-space-1: 4px;
   --mds-space-2: 8px;

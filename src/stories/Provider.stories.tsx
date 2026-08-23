@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card, Input, MDSProvider, Select, Tab, Tabs } from "../components";
+import { Button, Card, ComboBox, Input, MDSProvider, Tab, Tabs } from "../components";
 import "./provider.css";
 
 const meta = {
@@ -51,12 +51,16 @@ export const NestedTargets: Story = {
                 <Tab>Specs</Tab>
               </Tabs>
               <Input label="Name" defaultValue="Miskun Design System" />
-              <Select label="Mode" defaultValue={target}>
-                <option value="desktop">Desktop</option>
-                <option value="mobile">Mobile</option>
-                <option value="admin">Admin</option>
-                <option value="editorial">Editorial</option>
-              </Select>
+              <ComboBox
+                label="Mode"
+                defaultValue={target}
+                options={[
+                  { value: "desktop", label: "Desktop" },
+                  { value: "mobile", label: "Mobile" },
+                  { value: "admin", label: "Admin" },
+                  { value: "editorial", label: "Editorial" },
+                ]}
+              />
               <div className="mds-cluster">
                 <Button>Primary</Button>
                 <Button variant="secondary">Secondary</Button>

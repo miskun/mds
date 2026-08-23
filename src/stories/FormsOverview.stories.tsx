@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, Grid, Input, Select, Stack, Switch } from "../components";
+import { Card, ComboBox, Grid, Input, Stack, Switch } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -26,12 +26,16 @@ export const Introduction: Story = {
         <Card title="Field controls" eyebrow="Text and select">
           <Stack gap="sm">
             <Input label="Name" placeholder="Button" hint="Use concise component names." />
-            <Select label="Target" defaultValue="admin">
-              <option value="desktop">Desktop</option>
-              <option value="mobile">Mobile</option>
-              <option value="admin">Admin portal</option>
-              <option value="editorial">Editorial</option>
-            </Select>
+            <ComboBox
+              label="Target"
+              defaultValue="admin"
+              options={[
+                { value: "desktop", label: "Desktop" },
+                { value: "mobile", label: "Mobile" },
+                { value: "admin", label: "Admin portal" },
+                { value: "editorial", label: "Editorial" },
+              ]}
+            />
           </Stack>
         </Card>
         <Card title="Selection" eyebrow="Choices">

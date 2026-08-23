@@ -1,7 +1,7 @@
 .mds-card {
   border: 1px solid var(--mds-line);
   border-radius: var(--mds-radius-md);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), var(--mds-panel);
+  background: var(--mds-panel);
 }
 
 .mds-card__header {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ArrowRight, Monitor, PanelTop, Smartphone } from "lucide-react";
-import { Badge, Button, Card, Checkbox, Input, MDSProvider, Select, Switch } from "../components";
+import { Badge, Button, Card, Checkbox, ComboBox, Input, MDSProvider, Switch } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -145,12 +145,16 @@ export const UsingComponents: Story = {
       <Card eyebrow="Example" title="Component form">
         <div className="mds-stack">
           <Input label="Name" placeholder="Miskun Design System" hint="Use concise labels and direct hints." required />
-          <Select label="Target" defaultValue="admin">
-            <option value="desktop">Desktop</option>
-            <option value="mobile">Mobile</option>
-            <option value="admin">Admin portal</option>
-            <option value="editorial">Editorial</option>
-          </Select>
+          <ComboBox
+            label="Target"
+            defaultValue="admin"
+            options={[
+              { value: "desktop", label: "Desktop" },
+              { value: "mobile", label: "Mobile" },
+              { value: "admin", label: "Admin portal" },
+              { value: "editorial", label: "Editorial" },
+            ]}
+          />
           <Checkbox label="Include in public docs" defaultChecked />
           <Switch label="Show command hints" hint="Surface shortcuts next to frequent actions." defaultChecked />
           <div className="mds-cluster">
@@ -161,9 +165,16 @@ export const UsingComponents: Story = {
       </Card>
 
       <Card eyebrow="Code" title="Same composition">
-        <pre>{`<Card title="Component form">
+        <pre>{`const targetOptions = [
+  { value: "desktop", label: "Desktop" },
+  { value: "mobile", label: "Mobile" },
+  { value: "admin", label: "Admin portal" },
+  { value: "editorial", label: "Editorial" },
+];
+
+<Card title="Component form">
   <Input label="Name" required />
-  <Select label="Target" defaultValue="admin" />
+  <ComboBox label="Target" defaultValue="admin" options={targetOptions} />
   <Checkbox label="Include in public docs" defaultChecked />
   <Switch label="Show command hints" defaultChecked />
   <Button>Save</Button>

@@ -7,19 +7,20 @@
   width: 100%;
   height: var(--mds-control-height-md);
   appearance: none;
-  border: 1px solid var(--mds-line);
-  border-radius: var(--mds-radius-sm);
-  background: var(--mds-ink);
+  border: 0;
+  border-radius: var(--mds-radius-lg);
+  background: var(--mds-control-surface);
+  box-shadow: var(--mds-control-inset-shadow);
   color: var(--mds-text);
   font-size: var(--mds-control-font-size-md);
   padding: 0 calc(var(--mds-control-padding-x-md) + var(--mds-control-icon-size-md) + var(--mds-control-gap)) 0 var(--mds-control-padding-x-md);
   outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
 }
 
 .mds-select:focus {
-  border-color: color-mix(in srgb, var(--mds-accent) 72%, var(--mds-line));
-  box-shadow: var(--mds-focus);
+  background: var(--mds-control-surface-raised);
+  box-shadow: var(--mds-control-inset-shadow);
 }
 
 .mds-select:disabled {
@@ -29,7 +30,7 @@
 
 .mds-select[aria-invalid="true"],
 .mds-field--invalid .mds-select {
-  border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
+  background: var(--mds-control-surface-invalid);
 }
 
 .mds-select__icon {
@@ -37,7 +38,7 @@
   right: var(--mds-control-padding-x-md);
   top: 50%;
   pointer-events: none;
-  color: var(--mds-text-soft);
+  color: var(--mds-text);
   transform: translateY(-50%);
   width: var(--mds-control-icon-size-md);
   height: var(--mds-control-icon-size-md);

@@ -9,9 +9,12 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--mds-inline-gap);
-  color: var(--mds-text);
-  font-size: var(--mds-font-size-sm);
-  font-weight: 700;
+  color: var(--mds-text-muted);
+  font-size: var(--mds-font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .mds-field__required,

@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Checkbox,
+  ComboBox,
   Dialog,
   Drawer,
   DropdownMenu,
@@ -16,7 +17,6 @@ import {
   MenuSeparator,
   MenuSub,
   Popover,
-  Select,
   Tooltip,
 } from "../components";
 import "../showcase.css";
@@ -70,12 +70,16 @@ export const FloatingLayer: Story = {
               onOpenChange={setPopoverOpen}
             >
               <div className="mds-stack">
-                <Select label="Target" defaultValue="admin">
-                  <option value="desktop">Desktop</option>
-                  <option value="mobile">Mobile</option>
-                  <option value="admin">Admin</option>
-                  <option value="editorial">Editorial</option>
-                </Select>
+                <ComboBox
+                  label="Target"
+                  defaultValue="admin"
+                  options={[
+                    { value: "desktop", label: "Desktop" },
+                    { value: "mobile", label: "Mobile" },
+                    { value: "admin", label: "Admin" },
+                    { value: "editorial", label: "Editorial" },
+                  ]}
+                />
                 <Checkbox label="Only stable components" defaultChecked />
                 <Button onClick={() => setPopoverOpen(false)}>Apply</Button>
               </div>
@@ -154,12 +158,16 @@ export const ModalSurfaces: Story = {
         >
           <div className="mds-stack">
             <Input label="Owner" defaultValue="Miskun" />
-            <Select label="Target" defaultValue="admin">
-              <option value="desktop">Desktop</option>
-              <option value="mobile">Mobile</option>
-              <option value="admin">Admin</option>
-              <option value="editorial">Editorial</option>
-            </Select>
+            <ComboBox
+              label="Target"
+              defaultValue="admin"
+              options={[
+                { value: "desktop", label: "Desktop" },
+                { value: "mobile", label: "Mobile" },
+                { value: "admin", label: "Admin" },
+                { value: "editorial", label: "Editorial" },
+              ]}
+            />
           </div>
         </Drawer>
 

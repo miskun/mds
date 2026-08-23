@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Alert, Badge, Button, Card, Checkbox, Dialog, EmptyState, Input, Select, StatusDot, Switch, Tag, Textarea, Toast } from "../components";
+import { Alert, Badge, Button, Card, Checkbox, ComboBox, Dialog, EmptyState, Input, StatusDot, Switch, Tag, Textarea, Toast } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -109,11 +109,15 @@ export const LabelsAndActions: Story = {
       <Card eyebrow="Example" title="Publish component">
         <div className="mds-stack">
           <Input label="Component name" defaultValue="DataTable" />
-          <Select label="Release channel" defaultValue="review">
-            <option value="draft">Draft</option>
-            <option value="review">Review</option>
-            <option value="stable">Stable</option>
-          </Select>
+          <ComboBox
+            label="Release channel"
+            defaultValue="review"
+            options={[
+              { value: "draft", label: "Draft" },
+              { value: "review", label: "Review" },
+              { value: "stable", label: "Stable" },
+            ]}
+          />
           <div className="mds-cluster">
             <Button>Publish</Button>
             <Button variant="secondary">Save draft</Button>
@@ -166,13 +170,18 @@ export const ErrorMessages: Story = {
       <Card eyebrow="Validation" title="Field-level error">
         <div className="mds-stack">
           <Input label="Slug" defaultValue="mds" error="This slug is already reserved." />
-          <Select label="Release target" defaultValue="" error="Select a target before publishing.">
-            <option value="">Choose target</option>
-            <option value="desktop">Desktop</option>
-            <option value="mobile">Mobile</option>
-            <option value="admin">Admin portal</option>
-            <option value="editorial">Editorial</option>
-          </Select>
+          <ComboBox
+            label="Release target"
+            defaultValue=""
+            error="Select a target before publishing."
+            placeholder="Choose target"
+            options={[
+              { value: "desktop", label: "Desktop" },
+              { value: "mobile", label: "Mobile" },
+              { value: "admin", label: "Admin portal" },
+              { value: "editorial", label: "Editorial" },
+            ]}
+          />
         </div>
       </Card>
 

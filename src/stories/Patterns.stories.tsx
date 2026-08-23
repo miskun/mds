@@ -15,13 +15,13 @@ import {
   Dialog,
   Drawer,
   EmptyState,
+  ComboBox,
   IconButton,
   Input,
   ListItem,
   Pagination,
   Radio,
   RadioGroup,
-  Select,
   StatusDot,
   Switch,
   TableToolbar,
@@ -134,11 +134,15 @@ export const Overview: Story = {
         <Card eyebrow="Pattern" title="Filter a component inventory" action={<FileText size={16} aria-hidden="true" />}>
           <div className="mds-cluster">
             <Input aria-label="Search components" placeholder="Search" />
-            <Select aria-label="Target filter" defaultValue="all">
-              <option value="all">All targets</option>
-              <option value="admin">Admin</option>
-              <option value="desktop">Desktop</option>
-            </Select>
+            <ComboBox
+              aria-label="Target filter"
+              defaultValue="all"
+              options={[
+                { value: "all", label: "All targets" },
+                { value: "admin", label: "Admin" },
+                { value: "desktop", label: "Desktop" },
+              ]}
+            />
             <Switch label="Stable only" defaultChecked />
             <Button>Apply</Button>
           </div>
@@ -156,12 +160,16 @@ export const ValidationAndPublishing: Story = {
         <div className="mds-stack">
           <Input label="Component name" defaultValue="DataTable" required />
           <Input label="Slug" defaultValue="mds" error="This slug is already reserved." />
-          <Select label="Default target" defaultValue="admin">
-            <option value="desktop">Desktop</option>
-            <option value="mobile">Mobile</option>
-            <option value="admin">Admin portal</option>
-            <option value="editorial">Editorial</option>
-          </Select>
+          <ComboBox
+            label="Default target"
+            defaultValue="admin"
+            options={[
+              { value: "desktop", label: "Desktop" },
+              { value: "mobile", label: "Mobile" },
+              { value: "admin", label: "Admin portal" },
+              { value: "editorial", label: "Editorial" },
+            ]}
+          />
           <Checkbox label="Include in public docs" defaultChecked />
           <Alert tone="danger" title="Publish blocked">
             Resolve invalid fields before publishing this component.
@@ -192,12 +200,16 @@ export const FilteringAndBulkActions: Story = {
               actions={<Button>New component</Button>}
             >
               <Input aria-label="Search components" placeholder="Search" />
-              <Select aria-label="Target filter" defaultValue="all">
-                <option value="all">All targets</option>
-                <option value="admin">Admin</option>
-                <option value="desktop">Desktop</option>
-                <option value="editorial">Editorial</option>
-              </Select>
+              <ComboBox
+                aria-label="Target filter"
+                defaultValue="all"
+                options={[
+                  { value: "all", label: "All targets" },
+                  { value: "admin", label: "Admin" },
+                  { value: "desktop", label: "Desktop" },
+                  { value: "editorial", label: "Editorial" },
+                ]}
+              />
               <Switch label="Stable only" />
             </TableToolbar>
             <BulkActionBar selectedCount={selectedRowIds.length} actions={<Button size="sm" variant="secondary">Archive</Button>} />
@@ -283,12 +295,16 @@ export const SettingsSurfaces: Story = {
         >
           <div className="mds-stack">
             <Input label="Owner" defaultValue="Miskun" />
-            <Select label="Target" defaultValue="admin">
-              <option value="desktop">Desktop</option>
-              <option value="mobile">Mobile</option>
-              <option value="admin">Admin</option>
-              <option value="editorial">Editorial</option>
-            </Select>
+            <ComboBox
+              label="Target"
+              defaultValue="admin"
+              options={[
+                { value: "desktop", label: "Desktop" },
+                { value: "mobile", label: "Mobile" },
+                { value: "admin", label: "Admin" },
+                { value: "editorial", label: "Editorial" },
+              ]}
+            />
             <Switch label="Visible in docs" defaultChecked />
           </div>
         </Drawer>

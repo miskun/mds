@@ -53,6 +53,8 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
     id,
     className,
     onBlur,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
     "aria-invalid": ariaInvalid,
     "aria-describedby": ariaDescribedBy,
     ...props
@@ -190,6 +192,8 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
             aria-controls={listboxId}
             aria-expanded={open}
             aria-activedescendant={open && activeIndex >= 0 ? optionId(activeIndex) : undefined}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
             aria-invalid={invalidState || undefined}
             aria-describedby={describedBy}
             aria-required={required || undefined}

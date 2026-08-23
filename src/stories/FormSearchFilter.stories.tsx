@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Search } from "lucide-react";
-import { Badge, Button, Card, Cluster, Input, Panel, Select, Stack, Tag } from "../components";
+import { Badge, Button, Card, Cluster, ComboBox, Input, Panel, Stack, Tag } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -49,17 +49,25 @@ export const FilterBar: Story = {
       <Stack>
         <Cluster align="end">
           <Input type="search" label="Query" placeholder="Search components" />
-          <Select label="Group" defaultValue="all">
-            <option value="all">All groups</option>
-            <option value="forms">Forms</option>
-            <option value="layout">Layout</option>
-            <option value="containers">Containers</option>
-          </Select>
-          <Select label="Status" defaultValue="stable">
-            <option value="stable">Stable</option>
-            <option value="review">In review</option>
-            <option value="draft">Draft</option>
-          </Select>
+          <ComboBox
+            label="Group"
+            defaultValue="all"
+            options={[
+              { value: "all", label: "All groups" },
+              { value: "forms", label: "Forms" },
+              { value: "layout", label: "Layout" },
+              { value: "containers", label: "Containers" },
+            ]}
+          />
+          <ComboBox
+            label="Status"
+            defaultValue="stable"
+            options={[
+              { value: "stable", label: "Stable" },
+              { value: "review", label: "In review" },
+              { value: "draft", label: "Draft" },
+            ]}
+          />
           <Button>Apply</Button>
         </Cluster>
         <Panel variant="ghost" padding="sm">

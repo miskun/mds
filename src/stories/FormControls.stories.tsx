@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Input, Select, Stack, Textarea } from "../components";
+import { ComboBox, Input, Stack, Textarea } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -89,23 +89,32 @@ export const TextWithNativeTypes: Story = {
   ),
 };
 
-export const SelectFields: Story = {
-  parameters: storyDescription("Select belongs with text controls when it behaves as a single field in a form row."),
+export const DropdownFields: Story = {
+  parameters: storyDescription("Use ComboBox for MDS-rendered dropdown fields in product forms. Native Select is documented separately."),
   render: () => (
     <Stack style={{ maxWidth: 520 }}>
-      <Select label="Target" defaultValue="admin">
-        <option value="desktop">Desktop</option>
-        <option value="mobile">Mobile</option>
-        <option value="admin">Admin portal</option>
-        <option value="editorial">Editorial</option>
-      </Select>
-      <Select label="Release target" defaultValue="" error="Select a target before publishing.">
-        <option value="">Choose target</option>
-        <option value="desktop">Desktop</option>
-        <option value="mobile">Mobile</option>
-        <option value="admin">Admin portal</option>
-        <option value="editorial">Editorial</option>
-      </Select>
+      <ComboBox
+        label="Target"
+        defaultValue="admin"
+        options={[
+          { value: "desktop", label: "Desktop" },
+          { value: "mobile", label: "Mobile" },
+          { value: "admin", label: "Admin portal" },
+          { value: "editorial", label: "Editorial" },
+        ]}
+      />
+      <ComboBox
+        label="Release target"
+        defaultValue=""
+        error="Select a target before publishing."
+        placeholder="Choose target"
+        options={[
+          { value: "desktop", label: "Desktop" },
+          { value: "mobile", label: "Mobile" },
+          { value: "admin", label: "Admin portal" },
+          { value: "editorial", label: "Editorial" },
+        ]}
+      />
     </Stack>
   ),
 };

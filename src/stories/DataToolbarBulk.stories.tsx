@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Archive, Plus } from "lucide-react";
-import { BulkActionBar, Button, Card, Cluster, Input, Select, Stack, TableToolbar } from "../components";
+import { BulkActionBar, Button, Card, Cluster, ComboBox, Input, Stack, TableToolbar } from "../components";
 import "./data-admin.css";
 
 const meta = {
@@ -40,11 +40,15 @@ export const TableControls: Story = {
         actions={<Button icon={<Plus size={14} />}>New component</Button>}
       >
         <Input aria-label="Search components" placeholder="Search" />
-        <Select aria-label="Target filter" defaultValue="all">
-          <option value="all">All targets</option>
-          <option value="admin">Admin</option>
-          <option value="desktop">Desktop</option>
-        </Select>
+        <ComboBox
+          aria-label="Target filter"
+          defaultValue="all"
+          options={[
+            { value: "all", label: "All targets" },
+            { value: "admin", label: "Admin" },
+            { value: "desktop", label: "Desktop" },
+          ]}
+        />
       </TableToolbar>
     </Card>
   ),

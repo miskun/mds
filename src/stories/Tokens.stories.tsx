@@ -12,10 +12,13 @@ export default meta;
 type Story = StoryObj;
 
 const colors = [
-  ["Black", "--mds-black", "App background and deepest surfaces."],
-  ["Ink", "--mds-ink", "Inputs, choices, and inset controls."],
-  ["Panel", "--mds-panel", "Cards, panels, menus, and table surfaces."],
-  ["Raised", "--mds-panel-raised", "Elevated controls and selected surfaces."],
+  ["Black", "--mds-black", "Pure canvas background."],
+  ["Ink", "--mds-ink", "Inset app chrome and deepest control details."],
+  ["Panel", "--mds-panel", "Cards, panels, forms, menus, and table surfaces."],
+  ["Raised", "--mds-panel-raised", "Slightly lifted panels and selected surfaces."],
+  ["Control surface", "--mds-control-surface", "Inputs, selects, textareas, and combo boxes."],
+  ["Control raised", "--mds-control-surface-raised", "Focused controls and raised control details."],
+  ["Control invalid", "--mds-control-surface-invalid", "Invalid form controls without an outline."],
   ["Line", "--mds-line", "Default borders and dividers."],
   ["Strong line", "--mds-line-strong", "Control borders and stronger separation."],
   ["Text", "--mds-text", "Primary readable text."],
@@ -27,7 +30,7 @@ const colors = [
 ];
 
 const grayScale = [
-  ["Gray 1", "--mds-gray-1", "Deepest canvas."],
+  ["Gray 1", "--mds-gray-1", "Default panel surface above pure black."],
   ["Gray 2", "--mds-gray-2", "Inset controls and app chrome."],
   ["Gray 3", "--mds-gray-3", "Subtle surface transition."],
   ["Gray 4", "--mds-gray-4", "Panel surface."],
@@ -78,9 +81,9 @@ const typography = [
 
 const radii = [
   ["XS", "--mds-radius-xs", "Checkboxes, tags, tight details."],
-  ["SM", "--mds-radius-sm", "Inputs and compact controls."],
+  ["SM", "--mds-radius-sm", "Compact controls and small grouped details."],
   ["MD", "--mds-radius-md", "Cards, panels, menus, and modals."],
-  ["LG", "--mds-radius-lg", "Large surfaces that need a softer edge."],
+  ["LG", "--mds-radius-lg", "Inputs, selects, textareas, and large soft-edged surfaces."],
 ];
 
 const namingRules = [

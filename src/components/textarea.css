@@ -2,24 +2,25 @@
   width: 100%;
   min-height: calc(var(--mds-control-height-md) * 2.4);
   resize: vertical;
-  border: 1px solid var(--mds-line);
-  border-radius: var(--mds-radius-sm);
-  background: var(--mds-ink);
+  border: 0;
+  border-radius: var(--mds-radius-lg);
+  background: var(--mds-control-surface);
+  box-shadow: var(--mds-control-inset-shadow);
   color: var(--mds-text);
   font-size: var(--mds-control-font-size-md);
   padding: var(--mds-floating-padding) var(--mds-control-padding-x-md);
   outline: none;
   line-height: 1.5;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
 }
 
 .mds-textarea::placeholder {
-  color: var(--mds-text-soft);
+  color: color-mix(in srgb, var(--mds-text-soft) 58%, var(--mds-black));
 }
 
 .mds-textarea:focus {
-  border-color: color-mix(in srgb, var(--mds-accent) 72%, var(--mds-line));
-  box-shadow: var(--mds-focus);
+  background: var(--mds-control-surface-raised);
+  box-shadow: var(--mds-control-inset-shadow);
 }
 
 .mds-textarea:disabled {
@@ -29,5 +30,5 @@
 
 .mds-textarea[aria-invalid="true"],
 .mds-field--invalid .mds-textarea {
-  border-color: color-mix(in srgb, var(--mds-danger) 72%, var(--mds-line));
+  background: var(--mds-control-surface-invalid);
 }
