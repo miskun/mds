@@ -16,11 +16,12 @@
 
 .mds-switch__track {
   position: relative;
-  --mds-switch-offset: calc((var(--mds-switch-height) - var(--mds-switch-thumb-size)) / 2 - 1px);
+  --mds-switch-border-width: 1px;
+  --mds-switch-offset: calc((var(--mds-switch-height) - var(--mds-switch-thumb-size)) / 2 - var(--mds-switch-border-width));
   width: var(--mds-switch-width);
   height: var(--mds-switch-height);
   margin-top: 1px;
-  border: 1px solid var(--mds-line-strong);
+  border: var(--mds-switch-border-width) solid var(--mds-line-strong);
   border-radius: 999px;
   background: var(--mds-panel-raised);
   transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
@@ -43,7 +44,9 @@
 }
 
 .mds-switch__input:checked + .mds-switch__track .mds-switch__thumb {
-  transform: translateX(calc(var(--mds-switch-width) - var(--mds-switch-thumb-size) - (var(--mds-switch-offset) * 2)));
+  transform: translateX(
+    calc(var(--mds-switch-width) - var(--mds-switch-thumb-size) - (var(--mds-switch-offset) * 2) - (var(--mds-switch-border-width) * 2))
+  );
   background: var(--mds-accent);
 }
 
