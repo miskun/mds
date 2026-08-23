@@ -90,7 +90,7 @@
 }
 
 .mds-combo--disabled .mds-combo__control {
-  background: color-mix(in srgb, var(--mds-ink) 72%, transparent);
+  background: var(--mds-ink);
 }
 
 .mds-combo__search-icon {

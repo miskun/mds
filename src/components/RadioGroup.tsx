@@ -1,5 +1,5 @@
 import { forwardRef, useId } from "react";
-import type { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import type { CSSProperties, HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { Field } from "./Field";
 import { cx } from "./utils";
 import "./checkbox.css";
@@ -63,18 +63,24 @@ export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   label: ReactNode;
   /** Helper text shown below the label. */
   hint?: string;
+  /** Selection dot color used when the radio is checked. */
+  dotColor?: string;
 }
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
-  { label, hint, className, "aria-describedby": ariaDescribedBy, ...props },
+  { label, hint, dotColor, className, style, "aria-describedby": ariaDescribedBy, ...props },
   ref,
 ) {
   const generatedId = useId();
   const hintId = hint ? `${generatedId}-hint` : undefined;
   const describedBy = [ariaDescribedBy, hintId].filter(Boolean).join(" ") || undefined;
+  const radioStyle = {
+    ...style,
+    ...(dotColor ? { "--mds-choice-accent": dotColor } : {}),
+  } as CSSProperties;
 
   return (
-    <label className={cx("mds-choice", className)}>
+    <label className={cx("mds-choice", className)} style={radioStyle}>
       <input ref={ref} className="mds-choice__input" type="radio" aria-describedby={describedBy} {...props} />
       <span className="mds-choice__radio" aria-hidden="true" />
       <span className="mds-choice__content">

@@ -5,20 +5,37 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  --mds-black: #050505;
-  --mds-ink: #0a0a0b;
-  --mds-panel: #111113;
-  --mds-panel-raised: #171719;
-  --mds-line: #2a2a2e;
-  --mds-line-strong: #3a3a40;
-  --mds-text: #f5f5f4;
-  --mds-text-muted: #a6a6ad;
-  --mds-text-soft: #73737c;
+  --mds-gray-1: #050505;
+  --mds-gray-2: #0a0a0b;
+  --mds-gray-3: #0e0e0f;
+  --mds-gray-4: #111113;
+  --mds-gray-5: #171719;
+  --mds-gray-6: #1c1c1f;
+  --mds-gray-7: #2a2a2e;
+  --mds-gray-8: #3a3a40;
+  --mds-gray-9: #73737c;
+  --mds-gray-10: #a6a6ad;
+  --mds-gray-11: #d4d4d8;
+  --mds-gray-12: #f5f5f4;
+
+  --mds-black: var(--mds-gray-1);
+  --mds-ink: var(--mds-gray-2);
+  --mds-panel: var(--mds-gray-4);
+  --mds-panel-raised: var(--mds-gray-5);
+  --mds-line: var(--mds-gray-7);
+  --mds-line-strong: var(--mds-gray-8);
+  --mds-text: var(--mds-gray-12);
+  --mds-text-muted: var(--mds-gray-10);
+  --mds-text-soft: var(--mds-gray-9);
   --mds-accent: #d7ff3f;
   --mds-accent-ink: #101400;
   --mds-danger: #ff5c5c;
   --mds-success: #4ade80;
   --mds-focus: 0 0 0 3px color-mix(in srgb, var(--mds-accent) 32%, transparent);
+  --mds-light-color: var(--mds-accent);
+  --mds-light-halo-opacity: 88%;
+  --mds-light-halo-sm-blur: 7px;
+  --mds-light-halo-md-blur: 12px;
 
   --mds-space-1: 4px;
   --mds-space-2: 8px;

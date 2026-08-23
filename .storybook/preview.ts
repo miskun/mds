@@ -64,7 +64,7 @@ const preview: Preview = {
     backgrounds: {
       default: "MDS Black",
       values: [
-        { name: "MDS Black", value: "#050505" },
+        { name: "MDS Black", value: "#000000" },
         { name: "MDS Panel", value: "#0a0a0b" },
       ],
     },

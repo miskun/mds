@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef } from "react";
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { CSSProperties, InputHTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./checkbox.css";
 
@@ -14,6 +14,8 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   invalid?: boolean;
   /** Renders the native mixed checkbox state. */
   indeterminate?: boolean;
+  /** Check glyph color used when the checkbox is checked or mixed. */
+  checkColor?: string;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
@@ -23,7 +25,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
     error,
     invalid,
     indeterminate,
+    checkColor,
     className,
+    style,
     "aria-invalid": ariaInvalid,
     "aria-describedby": ariaDescribedBy,
     "aria-checked": ariaChecked,
@@ -36,6 +40,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   const invalidState = invalid || Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
   const messageId = error || hint ? `${generatedId}-message` : undefined;
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
+  const checkboxStyle = {
+    ...style,
+    ...(checkColor ? { "--mds-choice-accent": checkColor } : {}),
+  } as CSSProperties;
 
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
@@ -44,7 +52,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   }, [indeterminate]);
 
   return (
-    <label className={cx("mds-choice", invalidState && "mds-choice--invalid", className)}>
+    <label className={cx("mds-choice", invalidState && "mds-choice--invalid", className)} style={checkboxStyle}>
       <input
         ref={inputRef}
         className="mds-choice__input"

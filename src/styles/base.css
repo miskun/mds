@@ -6,9 +6,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    linear-gradient(135deg, rgba(215, 255, 63, 0.06), transparent 30%),
-    var(--mds-black);
+  background: #000000;
   color: var(--mds-text);
 }
 

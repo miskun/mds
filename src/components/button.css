@@ -66,7 +66,7 @@
 
 .mds-button--secondary:hover {
   border-color: var(--mds-line-strong);
-  background: color-mix(in srgb, var(--mds-panel-raised) 88%, #ffffff);
+  background: var(--mds-gray-6);
 }
 
 .mds-button--ghost {

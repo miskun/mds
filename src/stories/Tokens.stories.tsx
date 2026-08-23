@@ -26,6 +26,21 @@ const colors = [
   ["Success", "--mds-success", "Positive status and completion state."],
 ];
 
+const grayScale = [
+  ["Gray 1", "--mds-gray-1", "Deepest canvas."],
+  ["Gray 2", "--mds-gray-2", "Inset controls and app chrome."],
+  ["Gray 3", "--mds-gray-3", "Subtle surface transition."],
+  ["Gray 4", "--mds-gray-4", "Panel surface."],
+  ["Gray 5", "--mds-gray-5", "Raised surface."],
+  ["Gray 6", "--mds-gray-6", "Reserved dark step."],
+  ["Gray 7", "--mds-gray-7", "Default divider."],
+  ["Gray 8", "--mds-gray-8", "Strong divider."],
+  ["Gray 9", "--mds-gray-9", "Soft text."],
+  ["Gray 10", "--mds-gray-10", "Muted text."],
+  ["Gray 11", "--mds-gray-11", "High-emphasis secondary text."],
+  ["Gray 12", "--mds-gray-12", "Primary text."],
+];
+
 const targetRows = [
   ["desktop", "24 / 32 / 40", "13", "32 / 28", "Native desktop, pointer-first"],
   ["mobile", "40 / 48 / 56", "16", "44 / 44", "Native mobile, touch-first"],
@@ -79,16 +94,32 @@ export const Color: Story = {
   render: () => (
     <div className="token-doc">
       <Header title="Color" description="Black-first surfaces with restrained semantic accents." />
-      <div className="token-doc__swatches">
-        {colors.map(([name, token, usage]) => (
-          <div className="token-doc__swatch" key={token}>
-            <span className="token-doc__color" style={{ background: `var(${token})` }} />
-            <strong>{name}</strong>
-            <code>{token}</code>
-            <span>{usage}</span>
-          </div>
-        ))}
-      </div>
+      <section className="token-doc__section">
+        <h2>Gray Scale</h2>
+        <div className="token-doc__swatches token-doc__swatches--compact">
+          {grayScale.map(([name, token, usage]) => (
+            <div className="token-doc__swatch" key={token}>
+              <span className="token-doc__color" style={{ background: `var(${token})` }} />
+              <strong>{name}</strong>
+              <code>{token}</code>
+              <span>{usage}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="token-doc__section">
+        <h2>Semantic Color</h2>
+        <div className="token-doc__swatches">
+          {colors.map(([name, token, usage]) => (
+            <div className="token-doc__swatch" key={token}>
+              <span className="token-doc__color" style={{ background: `var(${token})` }} />
+              <strong>{name}</strong>
+              <code>{token}</code>
+              <span>{usage}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   ),
 };

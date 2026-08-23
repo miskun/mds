@@ -5,22 +5,27 @@
 
 .mds-choice__radio {
   border-radius: 50%;
+  border: 0;
+  background: var(--mds-gray-5);
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.22);
 }
 
 .mds-choice__radio::after {
-  width: 8px;
-  height: 8px;
+  width: max(3px, calc(var(--mds-choice-size) * 0.24));
+  height: max(3px, calc(var(--mds-choice-size) * 0.24));
   border-radius: 50%;
-  background: var(--mds-accent-ink);
+  background: var(--mds-black);
   content: "";
-  opacity: 0;
+  box-shadow: inset 0 0 0 1px var(--mds-gray-4);
+  transition: background 160ms ease, box-shadow 160ms ease;
 }
 
 .mds-choice__input:checked + .mds-choice__radio {
-  border-color: var(--mds-accent);
-  background: var(--mds-accent);
+  background: var(--mds-gray-5);
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.22), 0 6px 14px rgba(0, 0, 0, 0.34);
 }
 
 .mds-choice__input:checked + .mds-choice__radio::after {
-  opacity: 1;
+  background: var(--mds-choice-accent);
+  box-shadow: 0 0 var(--mds-light-halo-sm-blur) color-mix(in srgb, var(--mds-light-color) var(--mds-light-halo-opacity), transparent);
 }

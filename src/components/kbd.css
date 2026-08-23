@@ -5,7 +5,7 @@
   min-width: var(--mds-kbd-height);
   height: var(--mds-kbd-height);
   border: 1px solid var(--mds-line-strong);
-  border-bottom-color: color-mix(in srgb, var(--mds-line-strong) 74%, #000000);
+  border-bottom-color: var(--mds-gray-7);
   border-radius: var(--mds-radius-xs);
   background: var(--mds-panel-raised);
   color: var(--mds-text-muted);

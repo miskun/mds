@@ -1,5 +1,5 @@
 import { forwardRef, useId } from "react";
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { CSSProperties, InputHTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./switch.css";
 
@@ -12,10 +12,23 @@ export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
   error?: string;
   /** Marks the switch invalid without requiring error text. */
   invalid?: boolean;
+  /** LED color used when the switch is checked. */
+  ledColor?: string;
 }
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
-  { label, hint, error, invalid, className, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props },
+  {
+    label,
+    hint,
+    error,
+    invalid,
+    ledColor,
+    className,
+    style,
+    "aria-invalid": ariaInvalid,
+    "aria-describedby": ariaDescribedBy,
+    ...props
+  },
   ref,
 ) {
   const generatedId = useId();
@@ -23,9 +36,13 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   const messageId = error || hint ? `${generatedId}-message` : undefined;
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
   const hasContent = label || error || hint;
+  const switchStyle = {
+    ...style,
+    ...(ledColor ? { "--mds-switch-led": ledColor } : {}),
+  } as CSSProperties;
 
   return (
-    <label className={cx("mds-switch", invalidState && "mds-switch--invalid", className)}>
+    <label className={cx("mds-switch", invalidState && "mds-switch--invalid", className)} style={switchStyle}>
       <input
         ref={ref}
         className="mds-switch__input"
@@ -35,7 +52,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         {...props}
       />
       <span className="mds-switch__track" aria-hidden="true">
-        <span className="mds-switch__thumb" />
+        <span className="mds-switch__thumb">
+          <span className="mds-switch__led" />
+        </span>
       </span>
       {hasContent ? (
         <span className="mds-switch__content">
