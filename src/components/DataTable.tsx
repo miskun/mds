@@ -138,14 +138,18 @@ function DataTableInner<T>({
   const currentColumnWidths = getControllableValue(columnWidths, uncontrolledColumnWidths);
   const selectedIdSet = useMemo(() => new Set(currentSelectedRowIds), [currentSelectedRowIds]);
   const visibleColumnIdSet = useMemo(() => new Set(currentVisibleColumnIds), [currentVisibleColumnIds]);
-  const visibleColumns = useMemo(() => {
+  const orderedColumns = useMemo(() => {
     const columnsById = new Map(columns.map((column) => [column.id, column]));
     const orderedIds = getCompleteColumnOrder(columns, currentColumnOrder);
 
     return orderedIds
       .map((columnId) => columnsById.get(columnId))
-      .filter((column): column is DataColumn<T> => column !== undefined && (!isColumnHideable(column) || visibleColumnIdSet.has(column.id)));
-  }, [columns, currentColumnOrder, visibleColumnIdSet]);
+      .filter((column): column is DataColumn<T> => column !== undefined);
+  }, [columns, currentColumnOrder]);
+  const visibleColumns = useMemo(
+    () => orderedColumns.filter((column) => !isColumnHideable(column) || visibleColumnIdSet.has(column.id)),
+    [orderedColumns, visibleColumnIdSet],
+  );
   const hasColumnSizing =
     columnWidths !== undefined ||
     defaultColumnWidths !== undefined ||
@@ -244,12 +248,15 @@ function DataTableInner<T>({
     const column = columns.find((candidate) => candidate.id === columnId);
     if (!column || !isColumnHideable(column)) return;
 
-    setTableVisibleColumnIds(currentVisibleColumnIds.filter((visibleColumnId) => visibleColumnId !== columnId));
+    const nextVisibleColumnIds = new Set(currentVisibleColumnIds);
+    nextVisibleColumnIds.delete(columnId);
+    setTableVisibleColumnIds(getPersistedVisibleColumnIds(orderedColumns, nextVisibleColumnIds));
   }
 
   function setColumnVisibility(columnId: string, visible: boolean) {
     if (visible) {
-      setTableVisibleColumnIds(Array.from(new Set([...currentVisibleColumnIds, columnId])));
+      const nextVisibleColumnIds = new Set([...currentVisibleColumnIds, columnId]);
+      setTableVisibleColumnIds(getPersistedVisibleColumnIds(orderedColumns, nextVisibleColumnIds));
       return;
     }
 
@@ -257,7 +264,7 @@ function DataTableInner<T>({
   }
 
   function showAllColumns() {
-    setTableVisibleColumnIds(columns.filter(isColumnHideable).map((column) => column.id));
+    setTableVisibleColumnIds(orderedColumns.map((column) => column.id));
   }
 
   function openColumnContextMenu(event: MouseEvent<HTMLTableCellElement>, column: DataColumn<T>) {
@@ -330,7 +337,7 @@ function DataTableInner<T>({
     tableProps.className,
     usesFixedLayout && hasColumnSizing && (hasGrowColumn ? "mds-table--fill-widths" : "mds-table--literal-widths"),
   );
-  const tableStyle = getTableStyle(tableProps.style, usesFixedLayout && hasGrowColumn ? tableContentMinWidth : undefined);
+  const tableStyle = getTableStyle(tableProps.style, usesFixedLayout && hasGrowColumn ? tableContentMinWidth : undefined, hasControlColumn);
   const containerClassName = tableProps.containerClassName;
 
   return (
@@ -526,7 +533,7 @@ function DataTableInner<T>({
   }
 
   function renderTableActions() {
-    const hideableColumns = columns.filter(isColumnHideable);
+    const hideableColumns = orderedColumns.filter(isColumnHideable);
     const hiddenColumnCount = hideableColumns.filter((column) => !visibleColumnIdSet.has(column.id)).length;
     const visibleColumnCount = visibleColumns.length;
     const allColumnsVisible = hiddenColumnCount === 0;
@@ -646,6 +653,10 @@ function getCompleteColumnOrder<T>(columns: Array<DataColumn<T>>, columnOrder: s
   return [...columnOrder, ...columns.map((column) => column.id).filter((columnId) => !columnOrder.includes(columnId))];
 }
 
+function getPersistedVisibleColumnIds<T>(columns: Array<DataColumn<T>>, visibleColumnIds: Set<string>) {
+  return columns.filter((column) => visibleColumnIds.has(column.id) || !isColumnHideable(column)).map((column) => column.id);
+}
+
 function getRowHeightStyle<T>(rowHeight: DataTableRowHeight<T> | undefined, row: T): CSSProperties | undefined {
   if (rowHeight === undefined) return undefined;
   const height = typeof rowHeight === "function" ? rowHeight(row) : rowHeight;
@@ -710,9 +721,13 @@ function getTotalGrowWeight<T>(columns: Array<DataColumn<T>>) {
   return columns.reduce((total, column) => total + getColumnGrowWeight(column), 0);
 }
 
-function getTableStyle(style: CSSProperties | undefined, contentMinWidth: number | undefined) {
+function getTableStyle(style: CSSProperties | undefined, contentMinWidth: number | undefined, hasControlColumn: boolean) {
   if (contentMinWidth === undefined) return style;
-  return { ...style, "--mds-table-content-min-width": `${contentMinWidth}px` } as CSSProperties;
+  return {
+    ...style,
+    "--mds-table-content-min-width": `${contentMinWidth}px`,
+    "--mds-table-control-width-offset": hasControlColumn ? "var(--mds-table-control-column-width)" : "0px",
+  } as CSSProperties;
 }
 
 function getContextMenuAnchorStyle(contextMenu: { x: number; y: number } | null): CSSProperties | undefined {

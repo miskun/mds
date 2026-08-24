@@ -47,6 +47,14 @@ const storyDescription = (story: string) => ({
   },
 });
 
+const literalColumnWidths: Record<string, number> = {
+  name: 220,
+  stories: 96,
+  status: 140,
+  target: 140,
+  owner: 150,
+};
+
 export const SortAndSelect: Story = {
   parameters: storyDescription("Use controlled state when selection and sorting drive other surfaces such as bulk actions or detail panels."),
   render: () => {
@@ -167,6 +175,43 @@ export const WeightedGrowColumns: Story = {
           target: 140,
         }}
         columnControls
+      />
+    );
+  },
+};
+
+export const LiteralWidthColumns: Story = {
+  parameters: storyDescription(
+    "Use literal-width columns when every column should keep its declared pixel width and the wrapper should scroll when the table no longer fits.",
+  ),
+  render: () => {
+    const literalColumns = columns.map((column) => ({
+      ...column,
+      grow: undefined,
+      maxWidth: undefined,
+      numeric: column.id === "stories" ? false : column.numeric,
+      resizable: true,
+      defaultWidth: literalColumnWidths[column.id],
+    }));
+    const [columnWidths, setColumnWidths] = useState<Record<string, number>>(() => ({ ...literalColumnWidths }));
+
+    return (
+      <DataTable
+        label="Component inventory with literal column widths"
+        caption="Component inventory with literal-width columns and no grow column."
+        columns={literalColumns}
+        data={rows}
+        getRowId={(row) => row.id}
+        getRowLabel={(row) => row.name}
+        columnWidths={columnWidths}
+        onColumnWidthsChange={setColumnWidths}
+        onColumnWidthsCommit={setColumnWidths}
+        columnControls
+        rowActions={[
+          { label: "Open" },
+          { label: "Duplicate" },
+          { label: "Archive" },
+        ]}
       />
     );
   },

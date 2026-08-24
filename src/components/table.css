@@ -21,6 +21,7 @@
 
 .mds-table {
   --mds-table-control-column-width: calc((var(--mds-table-action-edge-inset) * 2) + var(--mds-control-height-sm));
+  --mds-table-control-width-offset: 0px;
 
   width: 100%;
   min-width: var(--mds-table-min-width);
@@ -40,7 +41,7 @@
 
 .mds-table--fill-widths {
   width: 100%;
-  min-width: max(var(--mds-table-min-width), var(--mds-table-content-min-width, 0px));
+  min-width: max(var(--mds-table-min-width), calc(var(--mds-table-content-min-width, 0px) + var(--mds-table-control-width-offset)));
 }
 
 .mds-table__caption {
