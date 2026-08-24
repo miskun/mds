@@ -1,8 +1,8 @@
 import { forwardRef, useMemo, useState } from "react";
-import type { CSSProperties, ForwardedRef, KeyboardEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
-import { ArrowLeft, ArrowRight, EyeOff, MoreHorizontal } from "lucide-react";
+import type { CSSProperties, ForwardedRef, KeyboardEvent, MouseEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, EyeOff, MoreHorizontal, X } from "lucide-react";
 import { Checkbox } from "./Checkbox";
-import { DropdownMenu, MenuItem } from "./DropdownMenu";
+import { DropdownMenu, MenuItem, MenuSeparator } from "./DropdownMenu";
 import { EmptyState } from "./EmptyState";
 import { IconButton } from "./Button";
 import { Skeleton } from "./Skeleton";
@@ -127,6 +127,7 @@ function DataTableInner<T>({
       ...defaultColumnWidths,
     }),
   );
+  const [contextMenu, setContextMenu] = useState<{ columnId: string; x: number; y: number } | null>(null);
   const currentSort = getControllableValue(sort, uncontrolledSort);
   const currentSelectedRowIds = getControllableValue(selectedRowIds, uncontrolledSelectedRowIds);
   const currentColumnOrder = getControllableValue(columnOrder, uncontrolledColumnOrder);
@@ -185,9 +186,16 @@ function DataTableInner<T>({
   }
 
   function toggleSort(columnId: string) {
-    const nextSort = getNextSort(currentSort, columnId);
+    setTableSort(getNextSort(currentSort, columnId));
+  }
+
+  function setTableSort(nextSort: DataTableSort | null) {
     setUncontrolledSort(nextSort);
     onSortChange?.(nextSort);
+  }
+
+  function sortColumn(columnId: string, direction: DataTableSort["direction"] | null) {
+    setTableSort(direction ? { columnId, direction } : null);
   }
 
   function setColumnWidth(columnId: string, width: number) {
@@ -231,6 +239,13 @@ function DataTableInner<T>({
     if (!column || !isColumnHideable(column)) return;
 
     setTableVisibleColumnIds(currentVisibleColumnIds.filter((visibleColumnId) => visibleColumnId !== columnId));
+  }
+
+  function openColumnContextMenu(event: MouseEvent<HTMLTableCellElement>, column: DataColumn<T>) {
+    if (!columnControls) return;
+
+    event.preventDefault();
+    setContextMenu({ columnId: column.id, x: event.clientX, y: event.clientY });
   }
 
   function startColumnResize(event: PointerEvent<HTMLButtonElement>, column: DataColumn<T>) {
@@ -313,6 +328,10 @@ function DataTableInner<T>({
         <TableRow>
           {visibleColumns.map((column, columnIndex) => {
             const headerProps = getColumnHeaderProps?.(column, columnIndex) ?? {};
+            const onContextMenu = (event: MouseEvent<HTMLTableCellElement>) => {
+              headerProps.onContextMenu?.(event);
+              if (!event.defaultPrevented) openColumnContextMenu(event, column);
+            };
             const hasHeaderActions = columnControls || isColumnResizable(column, columnWidths, defaultColumnWidths);
             const headerClassName = cx(
               getColumnClassName("mds-table__header", column, selectable && columnIndex === 0, hasRowActions(columnIndex)),
@@ -330,6 +349,7 @@ function DataTableInner<T>({
               <SortHeader
                 key={column.id}
                 {...headerProps}
+                onContextMenu={onContextMenu}
                 active={currentSort?.columnId === column.id}
                 direction={currentSort?.columnId === column.id ? currentSort.direction : null}
                 sortLabel={column.sortLabel ?? (typeof column.header === "string" ? column.header : column.id)}
@@ -341,7 +361,7 @@ function DataTableInner<T>({
                 {column.header}
               </SortHeader>
             ) : (
-              <TableHeader key={column.id} {...headerProps} className={headerClassName}>
+              <TableHeader key={column.id} {...headerProps} onContextMenu={onContextMenu} className={headerClassName}>
                 {selectable && columnIndex === 0 ? renderSelectAllCheckbox() : null}
                 {column.header}
                 {headerAction}
@@ -396,24 +416,67 @@ function DataTableInner<T>({
     const canMoveLeft = columnIndex > 0;
     const canMoveRight = columnIndex < visibleColumns.length - 1;
     const canHide = isColumnHideable(column) && visibleColumns.length > 1;
-    if (!canMoveLeft && !canMoveRight && !canHide) return null;
+    if (!column.sortable && !canMoveLeft && !canMoveRight && !canHide) return null;
 
     const columnLabel = getColumnLabel(column);
 
     return (
       <span className="mds-table__column-control">
         <DropdownMenu trigger={<IconButton label={`Column options for ${columnLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
-          <MenuItem disabled={!canMoveLeft} icon={<ArrowLeft size={14} />} onSelect={() => moveColumn(column.id, -1)}>
-            Move left
-          </MenuItem>
-          <MenuItem disabled={!canMoveRight} icon={<ArrowRight size={14} />} onSelect={() => moveColumn(column.id, 1)}>
-            Move right
-          </MenuItem>
-          <MenuItem disabled={!canHide} icon={<EyeOff size={14} />} onSelect={() => hideColumn(column.id)}>
-            Hide column
-          </MenuItem>
+          {renderColumnControlItems(column, columnIndex)}
+        </DropdownMenu>
+        <DropdownMenu
+          trigger={<button className="mds-table__context-anchor" type="button" aria-hidden="true" tabIndex={-1} style={getContextMenuAnchorStyle(contextMenu)} />}
+          align="start"
+          side="right"
+          open={contextMenu?.columnId === column.id}
+          onOpenChange={(open) => {
+            if (!open) setContextMenu(null);
+          }}
+        >
+          {renderColumnControlItems(column, columnIndex)}
         </DropdownMenu>
       </span>
+    );
+  }
+
+  function renderColumnControlItems(column: DataColumn<T>, columnIndex: number) {
+    const canMoveLeft = columnIndex > 0;
+    const canMoveRight = columnIndex < visibleColumns.length - 1;
+    const canHide = isColumnHideable(column) && visibleColumns.length > 1;
+    const canSort = column.sortable;
+    const columnLabel = getColumnLabel(column);
+    const sortedAscending = currentSort?.columnId === column.id && currentSort.direction === "asc";
+    const sortedDescending = currentSort?.columnId === column.id && currentSort.direction === "desc";
+    const sorted = sortedAscending || sortedDescending;
+    const hasLayoutActions = canMoveLeft || canMoveRight || canHide;
+
+    return (
+      <>
+        {canSort ? (
+          <>
+            <MenuItem disabled={sortedAscending} icon={<ArrowUp size={14} />} onSelect={() => sortColumn(column.id, "asc")}>
+              Sort {columnLabel} ascending
+            </MenuItem>
+            <MenuItem disabled={sortedDescending} icon={<ArrowDown size={14} />} onSelect={() => sortColumn(column.id, "desc")}>
+              Sort {columnLabel} descending
+            </MenuItem>
+            <MenuItem disabled={!sorted} icon={<X size={14} />} onSelect={() => sortColumn(column.id, null)}>
+              Clear sorting
+            </MenuItem>
+            {hasLayoutActions ? <MenuSeparator /> : null}
+          </>
+        ) : null}
+        <MenuItem disabled={!canMoveLeft} icon={<ArrowLeft size={14} />} onSelect={() => moveColumn(column.id, -1)}>
+          Move left
+        </MenuItem>
+        <MenuItem disabled={!canMoveRight} icon={<ArrowRight size={14} />} onSelect={() => moveColumn(column.id, 1)}>
+          Move right
+        </MenuItem>
+        <MenuItem disabled={!canHide} icon={<EyeOff size={14} />} onSelect={() => hideColumn(column.id)}>
+          Hide column
+        </MenuItem>
+      </>
     );
   }
 
@@ -464,6 +527,11 @@ function renderCell<T>(column: DataColumn<T>, row: T) {
 function getSortValue<T>(column: DataColumn<T>, row: T) {
   if (typeof column.sortValue === "function") return column.sortValue(row);
   if (column.sortValue) return row[column.sortValue] as string | number;
+  if (typeof column.accessor === "function") {
+    const value = column.accessor(row);
+    return typeof value === "number" || typeof value === "string" ? value : "";
+  }
+  if (column.accessor) return row[column.accessor] as string | number;
   const value = renderCell(column, row);
   return typeof value === "number" || typeof value === "string" ? value : "";
 }
@@ -544,4 +612,9 @@ function getTableContentMinWidth<T>(columns: Array<DataColumn<T>>, columnWidths:
 function getTableStyle(style: CSSProperties | undefined, contentMinWidth: number | undefined) {
   if (contentMinWidth === undefined) return style;
   return { ...style, "--mds-table-content-min-width": `${contentMinWidth}px` } as CSSProperties;
+}
+
+function getContextMenuAnchorStyle(contextMenu: { x: number; y: number } | null): CSSProperties | undefined {
+  if (!contextMenu) return undefined;
+  return { insetInlineStart: contextMenu.x, insetBlockStart: contextMenu.y };
 }

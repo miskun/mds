@@ -173,6 +173,18 @@
   transform: translateY(-50%);
 }
 
+.mds-table__context-anchor {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
 .mds-table__sort {
   display: inline-flex;
   align-items: center;
