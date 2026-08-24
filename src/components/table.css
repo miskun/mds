@@ -174,7 +174,17 @@
   inset-inline-end: 8px;
   z-index: 1;
   display: inline-flex;
+  opacity: 0;
+  pointer-events: none;
   transform: translateY(-50%);
+  transition: opacity 120ms ease;
+}
+
+.mds-table__header:hover .mds-table__column-control,
+.mds-table__header:focus-within .mds-table__column-control,
+.mds-table__header--menu-open .mds-table__column-control {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .mds-table__context-control {
@@ -197,6 +207,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--mds-control-gap);
+  max-width: 100%;
+  min-width: 0;
   border: 0;
   background: transparent;
   color: inherit;
@@ -205,6 +217,16 @@
   font-weight: inherit;
   padding: 0;
   text-transform: inherit;
+}
+
+.mds-table__sort span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mds-table__sort svg {
+  flex: none;
 }
 
 .mds-table__sort:hover,
