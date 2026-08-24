@@ -336,6 +336,7 @@ function DataTableInner<T>({
             const headerClassName = cx(
               getColumnClassName("mds-table__header", column, selectable && columnIndex === 0, hasRowActions(columnIndex)),
               hasHeaderActions && "mds-table__header--with-column-actions",
+              contextMenu?.columnId === column.id && "mds-table__header--menu-open",
               headerProps.className,
             );
             const headerAction = (

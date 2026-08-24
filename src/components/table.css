@@ -72,6 +72,10 @@
   padding-inline-end: calc(var(--mds-table-cell-padding-x) + var(--mds-control-height-sm));
 }
 
+.mds-table__header--menu-open {
+  color: var(--mds-text);
+}
+
 .mds-table--sticky-header .mds-table__header {
   position: sticky;
   top: 0;
@@ -203,7 +207,8 @@
   text-transform: inherit;
 }
 
-.mds-table__sort:hover {
+.mds-table__sort:hover,
+.mds-table__header--menu-open .mds-table__sort {
   color: var(--mds-text);
 }
 
