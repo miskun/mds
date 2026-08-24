@@ -3,7 +3,7 @@ import { Card, Cluster, Grid, Stack, StatusDot } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Overview",
+  title: "MDS/Components",
   parameters: {
     layout: "padded",
     docs: {
@@ -39,7 +39,6 @@ const groups = [
 ];
 
 export const Overview: Story = {
-  name: "Component groups",
   parameters: storyDescription("Use this page as the entry point for the MDS component taxonomy."),
   render: () => (
     <Stack>

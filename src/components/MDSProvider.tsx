@@ -9,7 +9,7 @@ export interface MDSProviderProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-export const MDSProvider = forwardRef<HTMLDivElement, MDSProviderProps>(function MDSProvider({ target = "desktop", className, children, ...props }, ref) {
+export const MDSProvider = forwardRef<HTMLDivElement, MDSProviderProps>(function MDSProvider({ target = "admin", className, children, ...props }, ref) {
   return (
     <div ref={ref} data-mds-target={target} className={cx("mds-provider", className)} {...props}>
       {children}

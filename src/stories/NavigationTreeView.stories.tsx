@@ -37,8 +37,12 @@ export const DocumentationTree: Story = {
       <Panel padding="sm">
         <TreeView label="Documentation navigation">
           <TreeItem label="Getting started" level={1} icon={<Folder size={16} />} defaultExpanded>
+            <TreeItem href="#" label="Introduction" level={2} icon={<FileText size={16} />} />
             <TreeItem href="#" label="Installation" level={2} icon={<FileText size={16} />} />
-            <TreeItem href="#" label="Provider" level={2} icon={<FileText size={16} />} />
+          </TreeItem>
+          <TreeItem label="Foundations" level={1} icon={<Folder size={16} />} defaultExpanded>
+            <TreeItem href="#" label="Targets" level={2} icon={<FileText size={16} />} />
+            <TreeItem href="#" label="Tokens" level={2} icon={<FileText size={16} />} />
           </TreeItem>
           <TreeItem label="Components" level={1} icon={<Folder size={16} />} defaultExpanded>
             <TreeItem label="Navigation" level={2} icon={<Folder size={16} />} defaultExpanded>

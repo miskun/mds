@@ -131,7 +131,7 @@ export const Color: Story = {
 export const TargetScale: Story = {
   render: () => (
     <div className="token-doc">
-      <Header title="Target Scale" description="Use the Storybook MDS Target toolbar to preview actual token values." />
+      <Header title="Target Scale" description="Use MDSProvider to set product intent and the Storybook MDS Target toolbar to preview actual token values." />
       <table className="token-doc__table">
         <thead>
           <tr>
@@ -152,6 +152,13 @@ export const TargetScale: Story = {
           ))}
         </tbody>
       </table>
+      <section className="token-doc__section">
+        <h2>Apply target</h2>
+        <pre>{`<MDSProvider target="admin">
+  <Button>Save</Button>
+  <Input label="Name" />
+</MDSProvider>`}</pre>
+      </section>
     </div>
   ),
 };

@@ -7,7 +7,7 @@ const preview: Preview = {
     mdsTarget: {
       name: "MDS Target",
       description: "Switch MDS component ergonomics by product target",
-      defaultValue: "desktop",
+      defaultValue: "admin",
       toolbar: {
         title: "MDS Target",
         icon: "browser",
@@ -26,7 +26,7 @@ const preview: Preview = {
       createElement(
         "div",
         {
-          "data-mds-target": context.globals.mdsTarget ?? "desktop",
+          "data-mds-target": context.globals.mdsTarget ?? "admin",
           style: { minHeight: "100%" },
         },
         createElement(Story),
@@ -39,6 +39,7 @@ const preview: Preview = {
           "MDS",
           [
             "Getting Started",
+            ["Introduction", "Installation", "Using Components"],
             "Foundations",
             "Components",
             [

@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Badge, Card, Grid, Stack } from "../components";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Foundations/Overview",
+  title: "MDS/Foundations",
   parameters: {
     layout: "padded",
   },
@@ -11,101 +12,92 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
+const foundationAreas = [
+  ["Tokens", "Color, spacing, typography, radii, focus, and state values.", "Foundations / Tokens"],
+  ["Target Scale", "How desktop, mobile, admin, and editorial adjust component ergonomics.", "Foundations / Tokens / Target Scale"],
+  ["Prose Rhythm", "Readable rich content defaults for marketing, docs, blogs, and product copy.", "Foundations / Tokens / Prose Rhythm"],
+  ["Naming Rules", "How base, semantic, component, and state tokens should be used.", "Foundations / Tokens / Naming Rules"],
+];
+
+const rules = [
+  ["Set target once", "Use MDSProvider to describe product intent for an app or subtree."],
+  ["Use semantic sizes", "Treat sm, md, and lg as target-aware sizes, not fixed global dimensions."],
+  ["Use surface tokens", "Build depth from black, panel, raised, control, and state surfaces."],
+  ["Keep states consistent", "Focus, validation, disabled, selected, and loading states should reuse shared tokens."],
+];
+
+const targets = [
+  ["desktop", "Native desktop apps", "Pointer-first, compact controls"],
+  ["mobile", "Native mobile apps", "Touch-first, larger controls"],
+  ["admin", "Web admin portals", "Operational control scale"],
+  ["editorial", "Marketing and publishing", "Spacious reading rhythm"],
+];
+
 export const Overview: Story = {
-  name: "Introduction",
+  name: "Overview",
   render: () => (
-    <div className="mds-stack">
-      <p className="mds-kicker">Foundations</p>
-      <h1 className="mds-title">The system rules behind every component.</h1>
-      <p className="mds-subtitle">
-        Foundations document the tokens, target scale, typography, spacing, color, radius, and focus behavior that keep MDS coherent across product surfaces.
-      </p>
-    </div>
-  ),
-};
+    <Stack style={{ maxWidth: 1040 }}>
+      <header className="mds-stack">
+        <p className="mds-kicker">Foundations</p>
+        <h1 className="mds-title">The system rules behind every component.</h1>
+        <p className="mds-subtitle">
+          Foundations explain how MDS turns a black-first visual language into target-aware components. Use this section for tokens, target behavior, typography, spacing, focus, and state rules.
+        </p>
+      </header>
 
-export const Tokens: Story = {
-  render: () => (
-    <div className="mds-stack">
-      <p className="mds-kicker">MDS Tokens</p>
-      <h1 className="mds-title">Black, Inter, sharp signal.</h1>
-      <p className="mds-subtitle">The system begins with dark surfaces, tight radii, crisp borders, and a bright accent.</p>
       <div className="mds-cluster">
-        {[
-          ["Black", "var(--mds-black)"],
-          ["Panel", "var(--mds-panel)"],
-          ["Line", "var(--mds-line)"],
-          ["Text", "var(--mds-text)"],
-          ["Accent", "var(--mds-accent)"],
-        ].map(([name, value]) => (
-          <div className="token" style={{ minWidth: 160 }} key={name}>
-            <span className="token__swatch" style={{ background: value }} />
-            <span>{name}</span>
-          </div>
-        ))}
+        <Badge tone="accent">Black-first</Badge>
+        <Badge>Inter</Badge>
+        <Badge>Target-aware</Badge>
+        <Badge tone="success">Semantic tokens</Badge>
       </div>
-    </div>
-  ),
-};
 
-export const TargetTokens: Story = {
-  render: () => (
-    <div className="mds-stack">
-      <p className="mds-kicker">MDS Target</p>
-      <h1 className="mds-title">One component set, four ergonomic modes.</h1>
-      <p className="mds-subtitle">
-        Apply target with MDSProvider or a subtree attribute: desktop, mobile, admin, or editorial.
-      </p>
-      <pre
-        style={{
-          margin: 0,
-          border: "1px solid var(--mds-line)",
-          borderRadius: "var(--mds-radius-md)",
-          background: "var(--mds-panel)",
-          color: "var(--mds-text-muted)",
-          padding: "var(--mds-panel-padding)",
-          overflow: "auto",
-        }}
-      >
-        {`<MDSProvider target="admin">
+      <Grid minItemWidth="220px">
+        {foundationAreas.map(([title, description, location]) => (
+          <Card key={title} eyebrow="Docs" title={title}>
+            <Stack gap="sm">
+              <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+                {description}
+              </p>
+              <code>{location}</code>
+            </Stack>
+          </Card>
+        ))}
+      </Grid>
+
+      <Card eyebrow="Target model" title="Target describes product intent">
+        <Stack>
+          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            Viewport is screen size. Target is ergonomics: typography, spacing, control scale, hit area, and interaction comfort.
+          </p>
+          <div className="token-doc__rows">
+            {targets.map(([target, use, intent]) => (
+              <div className="token-doc__row" key={target}>
+                <strong>{target}</strong>
+                <span>{use}</span>
+                <code>{intent}</code>
+              </div>
+            ))}
+          </div>
+        </Stack>
+      </Card>
+
+      <Grid minItemWidth="240px">
+        {rules.map(([title, description]) => (
+          <Card key={title} eyebrow="Rule" title={title}>
+            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+              {description}
+            </p>
+          </Card>
+        ))}
+      </Grid>
+
+      <Card eyebrow="Provider" title="Apply target">
+        <pre>{`<MDSProvider target="admin">
   <Button>Save</Button>
   <Input label="Name" />
-</MDSProvider>`}
-      </pre>
-    </div>
-  ),
-};
-
-export const TargetScale: Story = {
-  render: () => (
-    <div className="mds-stack">
-      <p className="mds-kicker">MDS Target Scale</p>
-      <h1 className="mds-title">Semantic sizes resolve through the selected target.</h1>
-      <p className="mds-subtitle">
-        Use the MDS Target toolbar to inspect how md, sm, lg, spacing, choice controls, tags, keyboard hints, and loading indicators scale.
-      </p>
-      <div className="token-grid" style={{ maxWidth: 720 }}>
-        {[
-          ["Control sm", "var(--mds-control-height-sm)"],
-          ["Control md", "var(--mds-control-height-md)"],
-          ["Control lg", "var(--mds-control-height-lg)"],
-          ["Stack gap", "var(--mds-stack-gap)"],
-          ["Inline gap", "var(--mds-inline-gap)"],
-          ["Panel padding", "var(--mds-panel-padding)"],
-          ["Section padding", "var(--mds-section-padding)"],
-          ["Table cell", "var(--mds-table-cell-padding-y) x var(--mds-table-cell-padding-x)"],
-          ["Choice", "var(--mds-choice-size)"],
-          ["Switch", "var(--mds-switch-width) x var(--mds-switch-height)"],
-          ["Badge", "var(--mds-badge-height)"],
-          ["Tag", "var(--mds-tag-height)"],
-          ["Avatar", "var(--mds-avatar-size)"],
-        ].map(([name, value]) => (
-          <div className="token" key={name}>
-            <span>{name}</span>
-            <code>{value}</code>
-          </div>
-        ))}
-      </div>
-    </div>
+</MDSProvider>`}</pre>
+      </Card>
+    </Stack>
   ),
 };
