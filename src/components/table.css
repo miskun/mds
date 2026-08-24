@@ -68,10 +68,6 @@
   white-space: nowrap;
 }
 
-.mds-table__header--with-column-actions {
-  padding-inline-end: calc(var(--mds-table-cell-padding-x) + var(--mds-control-height-sm));
-}
-
 .mds-table__header--menu-open {
   color: var(--mds-text);
 }
@@ -169,14 +165,11 @@
 }
 
 .mds-table__column-control {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: 8px;
-  z-index: 1;
   display: inline-flex;
+  margin-inline-start: var(--mds-control-gap);
+  vertical-align: middle;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-50%);
   transition: opacity 120ms ease;
 }
 
