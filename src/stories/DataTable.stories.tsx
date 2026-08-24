@@ -59,12 +59,13 @@ export const SortAndSelect: Story = {
 };
 
 export const ColumnLayout: Story = {
-  parameters: storyDescription("Column order, visibility, and widths can be controlled by the consumer and persisted outside MDS."),
+  parameters: storyDescription(
+    "Column order, visibility, and widths can be controlled by the consumer. Use grow with minWidth for the flexible column, maxWidth to cap resize, and resizable=false for fixed metadata.",
+  ),
   render: () => {
     const [columnOrder, setColumnOrder] = useState(["name", "stories", "status", "target", "owner"]);
     const [visibleColumnIds, setVisibleColumnIds] = useState(["name", "stories", "status", "target"]);
     const [columnWidths, setColumnWidths] = useState<Record<string, number>>({
-      name: 240,
       stories: 96,
       status: 140,
       target: 140,

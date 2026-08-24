@@ -24,14 +24,14 @@ for (const fontFile of fontFiles) {
 
 const stylesPath = "dist/styles.css";
 const styles = readFileSync(stylesPath, "utf8");
-const tokenRootIndex = styles.indexOf(":root{");
+const stylesWithoutInlinedFonts = styles.replace(/@font-face\{[^{}]*\}/g, "");
 
-if (tokenRootIndex === -1) {
+if (!stylesWithoutInlinedFonts.includes(":root{")) {
   throw new Error("Could not find token root in dist/styles.css.");
 }
 
 const fontsCss = readFileSync("src/styles/fonts.css", "utf8");
-writeFileSync(stylesPath, `${fontsCss}\n${styles.slice(tokenRootIndex)}`);
+writeFileSync(stylesPath, `${fontsCss}\n${stylesWithoutInlinedFonts}`);
 
 const finalSize = (statSync(stylesPath).size / 1024).toFixed(1);
 console.log(`Final dist/styles.css: ${finalSize} kB with external font files.`);

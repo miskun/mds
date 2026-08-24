@@ -26,8 +26,12 @@ export interface DataColumn<T> {
   sortable?: boolean;
   align?: "left" | "right" | "center";
   numeric?: boolean;
+  width?: number;
   defaultWidth?: number;
   minWidth?: number;
+  maxWidth?: number;
+  grow?: boolean;
+  resizable?: boolean;
   hideable?: boolean;
   defaultHidden?: boolean;
 }
@@ -109,7 +113,11 @@ function DataTableInner<T>({
   );
   const [uncontrolledColumnWidths, setUncontrolledColumnWidths] = useState<Record<string, number>>(() =>
     ({
-      ...Object.fromEntries(columns.filter((column) => column.defaultWidth).map((column) => [column.id, column.defaultWidth as number])),
+      ...Object.fromEntries(
+        columns
+          .map((column) => [column.id, getColumnInitialWidth(column)] as const)
+          .filter((entry): entry is readonly [string, number] => entry[1] !== undefined),
+      ),
       ...defaultColumnWidths,
     }),
   );
@@ -131,7 +139,9 @@ function DataTableInner<T>({
   const hasColumnSizing =
     columnWidths !== undefined ||
     defaultColumnWidths !== undefined ||
-    visibleColumns.some((column) => currentColumnWidths[column.id] !== undefined || column.defaultWidth !== undefined);
+    visibleColumns.some((column) => currentColumnWidths[column.id] !== undefined || getColumnBaseWidth(column) !== undefined || column.grow);
+  const hasGrowColumn = visibleColumns.some((column) => column.grow);
+  const tableContentMinWidth = getTableContentMinWidth(visibleColumns, currentColumnWidths);
 
   const sortedData = useMemo(() => {
     if (!currentSort) return data;
@@ -175,7 +185,8 @@ function DataTableInner<T>({
   }
 
   function setColumnWidth(columnId: string, width: number) {
-    const nextColumnWidths = { ...currentColumnWidths, [columnId]: width };
+    const column = columns.find((candidate) => candidate.id === columnId);
+    const nextColumnWidths = { ...currentColumnWidths, [columnId]: column ? clampColumnWidth(column, width) : width };
     setUncontrolledColumnWidths(nextColumnWidths);
     onColumnWidthsChange?.(nextColumnWidths);
   }
@@ -184,11 +195,10 @@ function DataTableInner<T>({
     event.preventDefault();
     const handle = event.currentTarget;
     const startX = event.clientX;
-    const startWidth = currentColumnWidths[column.id] ?? handle.closest("th")?.getBoundingClientRect().width ?? column.defaultWidth ?? column.minWidth ?? 80;
-    const minWidth = column.minWidth ?? 48;
+    const startWidth = currentColumnWidths[column.id] ?? handle.closest("th")?.getBoundingClientRect().width ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
 
     function resize(nextEvent: globalThis.PointerEvent) {
-      setColumnWidth(column.id, Math.max(minWidth, Math.round(startWidth + nextEvent.clientX - startX)));
+      setColumnWidth(column.id, Math.round(startWidth + nextEvent.clientX - startX));
     }
 
     function stopResize(nextEvent: globalThis.PointerEvent) {
@@ -209,8 +219,8 @@ function DataTableInner<T>({
 
     event.preventDefault();
     const direction = event.key === "ArrowRight" ? 1 : -1;
-    const currentWidth = currentColumnWidths[column.id] ?? event.currentTarget.closest("th")?.getBoundingClientRect().width ?? column.defaultWidth ?? column.minWidth ?? 80;
-    setColumnWidth(column.id, Math.max(column.minWidth ?? 48, Math.round(currentWidth + direction * 8)));
+    const currentWidth = currentColumnWidths[column.id] ?? event.currentTarget.closest("th")?.getBoundingClientRect().width ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
+    setColumnWidth(column.id, Math.round(currentWidth + direction * 8));
   }
 
   function setSelectedRows(nextSelectedRowIds: string[]) {
@@ -231,7 +241,12 @@ function DataTableInner<T>({
   }
 
   const tableAriaLabel = tableProps["aria-label"] ?? (caption ? undefined : label);
-  const tableClassName = tableProps.className;
+  const usesFixedLayout = tableProps.fixed ?? hasColumnSizing;
+  const tableClassName = cx(
+    tableProps.className,
+    usesFixedLayout && hasColumnSizing && (hasGrowColumn ? "mds-table--fill-widths" : "mds-table--literal-widths"),
+  );
+  const tableStyle = getTableStyle(tableProps.style, usesFixedLayout && hasGrowColumn ? tableContentMinWidth : undefined);
   const containerClassName = tableProps.containerClassName;
 
   return (
@@ -241,8 +256,9 @@ function DataTableInner<T>({
       className={tableClassName}
       containerClassName={containerClassName}
       surface={surface}
-      fixed={tableProps.fixed ?? hasColumnSizing}
+      fixed={usesFixedLayout}
       stickyHeader={stickyHeader}
+      style={tableStyle}
       aria-label={tableAriaLabel}
     >
       {caption ? <caption className="mds-table__caption">{caption}</caption> : null}
@@ -311,7 +327,7 @@ function DataTableInner<T>({
   );
 
   function renderColumnResizer(column: DataColumn<T>) {
-    if (!column.defaultWidth && !columnWidths && !defaultColumnWidths) return null;
+    if (!isColumnResizable(column, columnWidths, defaultColumnWidths)) return null;
 
     return (
       <button
@@ -389,7 +405,9 @@ function getColumnClassName<T>(baseClassName: string, column: DataColumn<T>, wit
 }
 
 function getColumnStyle<T>(column: DataColumn<T>, columnWidths: Record<string, number>) {
-  const width = columnWidths[column.id] ?? column.defaultWidth;
+  if (column.grow) return undefined;
+
+  const width = columnWidths[column.id] ?? getColumnInitialWidth(column);
   return width ? { width: `${width}px` } : undefined;
 }
 
@@ -410,4 +428,39 @@ function getRowHeightStyle<T>(rowHeight: DataTableRowHeight<T> | undefined, row:
   const height = typeof rowHeight === "function" ? rowHeight(row) : rowHeight;
   if (height === undefined) return undefined;
   return { "--mds-table-row-height": typeof height === "number" ? `${height}px` : height } as CSSProperties;
+}
+
+function getColumnBaseWidth<T>(column: DataColumn<T>) {
+  return column.width ?? column.defaultWidth;
+}
+
+function getColumnInitialWidth<T>(column: DataColumn<T>) {
+  const width = getColumnBaseWidth(column);
+  return width === undefined ? undefined : clampColumnWidth(column, width);
+}
+
+function getColumnMinWidth<T>(column: DataColumn<T>) {
+  return column.minWidth ?? 48;
+}
+
+function clampColumnWidth<T>(column: DataColumn<T>, width: number) {
+  const maxWidth = column.maxWidth ?? Number.MAX_SAFE_INTEGER;
+  return Math.min(maxWidth, Math.max(getColumnMinWidth(column), width));
+}
+
+function isColumnResizable<T>(column: DataColumn<T>, columnWidths: Record<string, number> | undefined, defaultColumnWidths: Record<string, number> | undefined) {
+  if (column.resizable === false || column.grow) return false;
+  return getColumnBaseWidth(column) !== undefined || columnWidths !== undefined || defaultColumnWidths !== undefined;
+}
+
+function getTableContentMinWidth<T>(columns: Array<DataColumn<T>>, columnWidths: Record<string, number>) {
+  return columns.reduce((total, column) => {
+    if (column.grow) return total + (column.minWidth ?? 0);
+    return total + (columnWidths[column.id] ?? getColumnInitialWidth(column) ?? column.minWidth ?? 0);
+  }, 0);
+}
+
+function getTableStyle(style: CSSProperties | undefined, contentMinWidth: number | undefined) {
+  if (contentMinWidth === undefined) return style;
+  return { ...style, "--mds-table-content-min-width": `${contentMinWidth}px` } as CSSProperties;
 }

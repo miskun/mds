@@ -21,7 +21,7 @@
 
 .mds-table {
   width: 100%;
-  min-width: 640px;
+  min-width: var(--mds-table-min-width);
   border-collapse: collapse;
   color: var(--mds-text-muted);
   font-size: var(--mds-font-size-sm);
@@ -29,6 +29,16 @@
 
 .mds-table--fixed {
   table-layout: fixed;
+}
+
+.mds-table--literal-widths {
+  width: max-content;
+  min-width: 0;
+}
+
+.mds-table--fill-widths {
+  width: 100%;
+  min-width: max(var(--mds-table-min-width), var(--mds-table-content-min-width, 0px));
 }
 
 .mds-table__caption {
