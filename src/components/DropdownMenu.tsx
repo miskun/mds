@@ -1,8 +1,9 @@
 import * as DropdownPrimitive from "@radix-ui/react-dropdown-menu";
 import { forwardRef } from "react";
 import type { ElementRef, ReactNode } from "react";
-import { Check, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { cx } from "./utils";
+import "./checkbox.css";
 import "./dropdown-menu.css";
 
 export const DropdownMenuRoot = DropdownPrimitive.Root;
@@ -53,12 +54,13 @@ export const MenuCheckboxItem = forwardRef<
   ElementRef<typeof DropdownPrimitive.CheckboxItem>,
   DropdownPrimitive.DropdownMenuCheckboxItemProps
 >(function MenuCheckboxItem({ className, children, ...props }, ref) {
+  const checked = props.checked === true;
+  const indeterminate = props.checked === "indeterminate";
+
   return (
     <DropdownPrimitive.CheckboxItem ref={ref} className={cx("mds-menu__item", className)} {...props}>
       <span className="mds-menu__icon">
-        <DropdownPrimitive.ItemIndicator>
-          <Check size={14} />
-        </DropdownPrimitive.ItemIndicator>
+        <span className="mds-choice__box mds-menu__checkbox-box" data-state={indeterminate ? "indeterminate" : checked ? "checked" : "unchecked"} />
       </span>
       <span>{children}</span>
     </DropdownPrimitive.CheckboxItem>

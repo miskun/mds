@@ -29,7 +29,7 @@ const meta = {
           "",
           "`columnOrder`, `visibleColumnIds`, `columnWidths`, `sort`, and `selectedRowIds` support controlled and uncontrolled usage. Use `onColumnWidthsChange` for live rendering during resize and `onColumnWidthsCommit` for persistence after a pointer resize ends or a keyboard resize step completes.",
           "",
-          "Enable `columnControls` when MDS should provide the header context menu for sorting, moving, and hiding columns.",
+          "Enable `columnControls` when MDS should provide column header menus plus the table-level column visibility menu.",
         ].join("\n"),
       },
     },
@@ -97,8 +97,6 @@ export const ColumnLayout: Story = {
     const [selectedRowIds, setSelectedRowIds] = useState<string[]>(["cmp-001-1", "cmp-003-1"]);
     const [sort, setSort] = useState<DataTableSort | null>({ columnId: "name", direction: "asc" });
     const repeatedRows = Array.from({ length: 4 }, (_, index) => rows.map((row) => ({ ...row, id: `${row.id}-${index + 1}` }))).flat();
-    const ownerVisible = visibleColumnIds.includes("owner");
-
     return (
       <div className="data-page data-page--plain">
         <div className="mds-cluster">
@@ -110,15 +108,6 @@ export const ColumnLayout: Story = {
             }
           >
             Swap first columns
-          </Button>
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={() =>
-              setVisibleColumnIds(ownerVisible ? visibleColumnIds.filter((columnId) => columnId !== "owner") : [...visibleColumnIds, "owner"])
-            }
-          >
-            {ownerVisible ? "Hide owner" : "Show owner"}
           </Button>
         </div>
         <DataTable
@@ -141,6 +130,11 @@ export const ColumnLayout: Story = {
           onSelectedRowIdsChange={setSelectedRowIds}
           sort={sort}
           onSortChange={setSort}
+          rowActions={[
+            { label: "Open" },
+            { label: "Duplicate" },
+            { label: "Archive" },
+          ]}
           containerStyle={{ maxHeight: 320 }}
           stickyHeader
         />

@@ -3,7 +3,7 @@ import type { CSSProperties, ForwardedRef, KeyboardEvent, MouseEvent, PointerEve
 import { createPortal } from "react-dom";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, EyeOff, MoreHorizontal, X } from "lucide-react";
 import { Checkbox } from "./Checkbox";
-import { DropdownMenu, MenuItem, MenuSeparator } from "./DropdownMenu";
+import { DropdownMenu, MenuCheckboxItem, MenuItem, MenuLabel, MenuSeparator } from "./DropdownMenu";
 import { EmptyState } from "./EmptyState";
 import { IconButton } from "./Button";
 import { Skeleton } from "./Skeleton";
@@ -152,6 +152,7 @@ function DataTableInner<T>({
     visibleColumns.some((column) => currentColumnWidths[column.id] !== undefined || getColumnBaseWidth(column) !== undefined || column.grow);
   const totalGrowWeight = getTotalGrowWeight(visibleColumns);
   const hasGrowColumn = totalGrowWeight > 0;
+  const hasControlColumn = columnControls || !!rowActions?.length;
   const tableContentMinWidth = getTableContentMinWidth(visibleColumns, currentColumnWidths);
 
   const sortedData = useMemo(() => {
@@ -246,6 +247,19 @@ function DataTableInner<T>({
     setTableVisibleColumnIds(currentVisibleColumnIds.filter((visibleColumnId) => visibleColumnId !== columnId));
   }
 
+  function setColumnVisibility(columnId: string, visible: boolean) {
+    if (visible) {
+      setTableVisibleColumnIds(Array.from(new Set([...currentVisibleColumnIds, columnId])));
+      return;
+    }
+
+    hideColumn(columnId);
+  }
+
+  function showAllColumns() {
+    setTableVisibleColumnIds(columns.filter(isColumnHideable).map((column) => column.id));
+  }
+
   function openColumnContextMenu(event: MouseEvent<HTMLTableCellElement>, column: DataColumn<T>) {
     if (!columnControls) return;
 
@@ -336,6 +350,7 @@ function DataTableInner<T>({
         {visibleColumns.map((column) => (
           <col key={column.id} style={getColumnStyle(column, currentColumnWidths, totalGrowWeight)} />
         ))}
+        {hasControlColumn ? <col style={{ width: "var(--mds-table-control-column-width)" }} /> : null}
       </colgroup>
       <TableHead>
         <TableRow>
@@ -355,13 +370,13 @@ function DataTableInner<T>({
               openColumnContextMenuAt(column, rect.left + 12, rect.bottom - 2);
             };
             const headerClassName = cx(
-              getColumnClassName("mds-table__header", column, selectable && columnIndex === 0, hasRowActions(columnIndex)),
+              getColumnClassName("mds-table__header", column, selectable && columnIndex === 0),
               contextMenu?.columnId === column.id && "mds-table__header--menu-open",
               headerProps.className,
             );
             const headerAction = (
               <>
-                {columnIndex > 0 ? renderColumnResizer(column, visibleColumns[columnIndex - 1]) : null}
+                {hasGrowColumn ? renderColumnBoundaryResizer(column, visibleColumns[columnIndex - 1]) : renderColumnEdgeResizer(column)}
                 {renderColumnContextMenu(column, columnIndex)}
               </>
             );
@@ -390,6 +405,11 @@ function DataTableInner<T>({
               </TableHeader>
             );
           })}
+          {hasControlColumn ? (
+            <TableHeader className="mds-table__control-header" aria-label={columnControls ? "Table actions" : "Row actions"}>
+              {columnControls ? renderTableActions() : null}
+            </TableHeader>
+          ) : null}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -401,16 +421,16 @@ function DataTableInner<T>({
           return (
             <TableRow key={rowId} className={rowHeightStyle && "mds-table__row--fixed-height"} style={rowHeightStyle} aria-selected={selectable ? selected : undefined}>
               {visibleColumns.map((column, columnIndex) => (
-                <TableCell key={column.id} className={getColumnClassName("mds-table__cell", column, selectable && columnIndex === 0, hasRowActions(columnIndex))}>
+                <TableCell key={column.id} className={getColumnClassName("mds-table__cell", column, selectable && columnIndex === 0)}>
                   {selectable && columnIndex === 0 ? (
                     <span className="mds-table__select-control">
                       <Checkbox aria-label={`Select ${rowLabel}`} checked={selected} onChange={() => toggleRow(rowId)} />
                     </span>
                   ) : null}
                   {renderCell(column, row)}
-                  {hasRowActions(columnIndex) ? renderRowActions(row, rowLabel) : null}
                 </TableCell>
               ))}
+              {hasControlColumn ? <TableCell className="mds-table__control-cell">{rowActions?.length ? renderRowActions(row, rowLabel) : null}</TableCell> : null}
             </TableRow>
           );
         })}
@@ -418,17 +438,28 @@ function DataTableInner<T>({
     </Table>
   );
 
-  function renderColumnResizer(column: DataColumn<T>, previousColumn: DataColumn<T>) {
+  function renderColumnBoundaryResizer(column: DataColumn<T>, previousColumn: DataColumn<T> | undefined) {
+    if (!previousColumn) return null;
     const resizeTarget = getBoundaryResizeTarget(column, previousColumn, columnWidths, defaultColumnWidths);
     if (!resizeTarget) return null;
 
+    return renderColumnResizeHandle(resizeTarget.column, resizeTarget.direction, "start");
+  }
+
+  function renderColumnEdgeResizer(column: DataColumn<T>) {
+    if (!isColumnResizable(column, columnWidths, defaultColumnWidths)) return null;
+
+    return renderColumnResizeHandle(column, 1, "end");
+  }
+
+  function renderColumnResizeHandle(column: DataColumn<T>, direction: -1 | 1, edge: "start" | "end") {
     return (
       <button
-        className="mds-table__resize"
+        className={cx("mds-table__resize", edge === "end" && "mds-table__resize--end")}
         type="button"
-        aria-label={`Resize ${getColumnLabel(resizeTarget.column)} column`}
-        onPointerDown={(event) => startColumnResize(event, resizeTarget.column, resizeTarget.direction)}
-        onKeyDown={(event) => resizeColumnWithKeyboard(event, resizeTarget.column, resizeTarget.direction)}
+        aria-label={`Resize ${getColumnLabel(column)} column`}
+        onPointerDown={(event) => startColumnResize(event, column, direction)}
+        onKeyDown={(event) => resizeColumnWithKeyboard(event, column, direction)}
       />
     );
   }
@@ -463,7 +494,6 @@ function DataTableInner<T>({
     const columnLabel = getColumnLabel(column);
     const sortedAscending = currentSort?.columnId === column.id && currentSort.direction === "asc";
     const sortedDescending = currentSort?.columnId === column.id && currentSort.direction === "desc";
-    const sorted = sortedAscending || sortedDescending;
     const hasLayoutActions = canMoveLeft || canMoveRight || canHide;
 
     return (
@@ -476,7 +506,7 @@ function DataTableInner<T>({
             <MenuItem disabled={sortedDescending} icon={<ArrowDown size={14} />} onSelect={() => sortColumn(column.id, "desc")}>
               Sort {columnLabel} descending
             </MenuItem>
-            <MenuItem disabled={!sorted} icon={<X size={14} />} onSelect={() => sortColumn(column.id, null)}>
+            <MenuItem disabled={!currentSort} icon={<X size={14} />} onSelect={() => sortColumn(column.id, null)}>
               Clear sorting
             </MenuItem>
             {hasLayoutActions ? <MenuSeparator /> : null}
@@ -495,6 +525,38 @@ function DataTableInner<T>({
     );
   }
 
+  function renderTableActions() {
+    const hideableColumns = columns.filter(isColumnHideable);
+    const hiddenColumnCount = hideableColumns.filter((column) => !visibleColumnIdSet.has(column.id)).length;
+    const visibleColumnCount = visibleColumns.length;
+    const allColumnsVisible = hiddenColumnCount === 0;
+
+    return (
+      <DropdownMenu trigger={<IconButton label="Manage columns" size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+        <MenuLabel>Columns</MenuLabel>
+        {hideableColumns.map((column) => {
+          const visible = visibleColumnIdSet.has(column.id);
+          const disabled = visible && visibleColumnCount <= 1;
+          return (
+            <MenuCheckboxItem
+              key={column.id}
+              checked={visible}
+              disabled={disabled}
+              onSelect={(event) => event.preventDefault()}
+              onCheckedChange={(checked) => setColumnVisibility(column.id, checked === true)}
+            >
+              {getColumnLabel(column)}
+            </MenuCheckboxItem>
+          );
+        })}
+        <MenuSeparator />
+        <MenuItem disabled={allColumnsVisible} onSelect={showAllColumns} inset>
+          Show all columns
+        </MenuItem>
+      </DropdownMenu>
+    );
+  }
+
   function renderSelectAllCheckbox() {
     return (
       <span className="mds-table__select-control">
@@ -507,20 +569,14 @@ function DataTableInner<T>({
     if (!rowActions?.length) return null;
 
     return (
-      <span className="mds-table__action-control">
-        <DropdownMenu trigger={<IconButton label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
-          {rowActions.map((action) => (
-            <MenuItem key={action.label} onSelect={() => action.onSelect?.(row)}>
-              {action.label}
-            </MenuItem>
-          ))}
-        </DropdownMenu>
-      </span>
+      <DropdownMenu trigger={<IconButton label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+        {rowActions.map((action) => (
+          <MenuItem key={action.label} onSelect={() => action.onSelect?.(row)}>
+            {action.label}
+          </MenuItem>
+        ))}
+      </DropdownMenu>
     );
-  }
-
-  function hasRowActions(columnIndex: number) {
-    return !!rowActions?.length && columnIndex === visibleColumns.length - 1;
   }
 }
 

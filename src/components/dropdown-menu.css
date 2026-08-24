@@ -48,6 +48,27 @@
   color: var(--mds-text-soft);
 }
 
+.mds-menu__checkbox-box {
+  --mds-choice-accent: var(--mds-accent);
+  --mds-light-color: var(--mds-choice-accent);
+
+  width: var(--mds-choice-size);
+  height: var(--mds-choice-size);
+  margin-top: 0;
+}
+
+.mds-menu__checkbox-box[data-state="checked"]::after,
+.mds-menu__checkbox-box[data-state="indeterminate"]::after {
+  opacity: 1;
+}
+
+.mds-menu__checkbox-box[data-state="indeterminate"]::after {
+  width: calc(var(--mds-choice-size) * 0.5);
+  height: 0;
+  border-width: 0 0 2px;
+  transform: none;
+}
+
 .mds-menu__chevron {
   color: var(--mds-text-soft);
 }
