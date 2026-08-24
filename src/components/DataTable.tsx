@@ -1,6 +1,6 @@
 import { forwardRef, useMemo, useState } from "react";
 import type { CSSProperties, ForwardedRef, KeyboardEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowLeft, ArrowRight, EyeOff, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "./Checkbox";
 import { DropdownMenu, MenuItem } from "./DropdownMenu";
 import { EmptyState } from "./EmptyState";
@@ -60,11 +60,14 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   onSortChange?: (sort: DataTableSort | null) => void;
   columnOrder?: string[];
   defaultColumnOrder?: string[];
+  onColumnOrderChange?: (columnOrder: string[]) => void;
   visibleColumnIds?: string[];
   defaultVisibleColumnIds?: string[];
+  onVisibleColumnIdsChange?: (visibleColumnIds: string[]) => void;
   columnWidths?: Record<string, number>;
   defaultColumnWidths?: Record<string, number>;
   onColumnWidthsChange?: (columnWidths: Record<string, number>) => void;
+  columnControls?: boolean;
   getColumnHeaderProps?: (column: DataColumn<T>, columnIndex: number) => ThHTMLAttributes<HTMLTableCellElement>;
   rowHeight?: DataTableRowHeight<T>;
   stickyHeader?: boolean;
@@ -91,11 +94,14 @@ function DataTableInner<T>({
   onSortChange,
   columnOrder,
   defaultColumnOrder,
+  onColumnOrderChange,
   visibleColumnIds,
   defaultVisibleColumnIds,
+  onVisibleColumnIdsChange,
   columnWidths,
   defaultColumnWidths,
   onColumnWidthsChange,
+  columnControls,
   getColumnHeaderProps,
   rowHeight,
   stickyHeader,
@@ -107,8 +113,8 @@ function DataTableInner<T>({
 }: DataTableProps<T>, ref: ForwardedRef<HTMLTableElement>) {
   const [uncontrolledSort, setUncontrolledSort] = useState<DataTableSort | null>(defaultSort);
   const [uncontrolledSelectedRowIds, setUncontrolledSelectedRowIds] = useState<string[]>(defaultSelectedRowIds);
-  const [uncontrolledColumnOrder] = useState<string[]>(defaultColumnOrder ?? columns.map((column) => column.id));
-  const [uncontrolledVisibleColumnIds] = useState<string[]>(
+  const [uncontrolledColumnOrder, setUncontrolledColumnOrder] = useState<string[]>(defaultColumnOrder ?? columns.map((column) => column.id));
+  const [uncontrolledVisibleColumnIds, setUncontrolledVisibleColumnIds] = useState<string[]>(
     defaultVisibleColumnIds ?? columns.filter((column) => !isColumnHiddenByDefault(column)).map((column) => column.id),
   );
   const [uncontrolledColumnWidths, setUncontrolledColumnWidths] = useState<Record<string, number>>(() =>
@@ -130,7 +136,7 @@ function DataTableInner<T>({
   const visibleColumnIdSet = useMemo(() => new Set(currentVisibleColumnIds), [currentVisibleColumnIds]);
   const visibleColumns = useMemo(() => {
     const columnsById = new Map(columns.map((column) => [column.id, column]));
-    const orderedIds = [...currentColumnOrder, ...columns.map((column) => column.id).filter((columnId) => !currentColumnOrder.includes(columnId))];
+    const orderedIds = getCompleteColumnOrder(columns, currentColumnOrder);
 
     return orderedIds
       .map((columnId) => columnsById.get(columnId))
@@ -189,6 +195,42 @@ function DataTableInner<T>({
     const nextColumnWidths = { ...currentColumnWidths, [columnId]: column ? clampColumnWidth(column, width) : width };
     setUncontrolledColumnWidths(nextColumnWidths);
     onColumnWidthsChange?.(nextColumnWidths);
+  }
+
+  function setTableColumnOrder(nextColumnOrder: string[]) {
+    setUncontrolledColumnOrder(nextColumnOrder);
+    onColumnOrderChange?.(nextColumnOrder);
+  }
+
+  function setTableVisibleColumnIds(nextVisibleColumnIds: string[]) {
+    setUncontrolledVisibleColumnIds(nextVisibleColumnIds);
+    onVisibleColumnIdsChange?.(nextVisibleColumnIds);
+  }
+
+  function moveColumn(columnId: string, direction: -1 | 1) {
+    const visibleIds = visibleColumns.map((column) => column.id);
+    const visibleIndex = visibleIds.indexOf(columnId);
+    const targetColumnId = visibleIds[visibleIndex + direction];
+    if (!targetColumnId) return;
+
+    const orderedIds = getCompleteColumnOrder(columns, currentColumnOrder);
+    const columnIndex = orderedIds.indexOf(columnId);
+    const targetIndex = orderedIds.indexOf(targetColumnId);
+    if (columnIndex === -1 || targetIndex === -1) return;
+
+    const nextColumnOrder = [...orderedIds];
+    nextColumnOrder[columnIndex] = targetColumnId;
+    nextColumnOrder[targetIndex] = columnId;
+    setTableColumnOrder(nextColumnOrder);
+  }
+
+  function hideColumn(columnId: string) {
+    if (visibleColumns.length <= 1) return;
+
+    const column = columns.find((candidate) => candidate.id === columnId);
+    if (!column || !isColumnHideable(column)) return;
+
+    setTableVisibleColumnIds(currentVisibleColumnIds.filter((visibleColumnId) => visibleColumnId !== columnId));
   }
 
   function startColumnResize(event: PointerEvent<HTMLButtonElement>, column: DataColumn<T>) {
@@ -271,9 +313,17 @@ function DataTableInner<T>({
         <TableRow>
           {visibleColumns.map((column, columnIndex) => {
             const headerProps = getColumnHeaderProps?.(column, columnIndex) ?? {};
+            const hasHeaderActions = columnControls || isColumnResizable(column, columnWidths, defaultColumnWidths);
             const headerClassName = cx(
               getColumnClassName("mds-table__header", column, selectable && columnIndex === 0, hasRowActions(columnIndex)),
+              hasHeaderActions && "mds-table__header--with-column-actions",
               headerProps.className,
+            );
+            const headerAction = (
+              <>
+                {renderColumnControls(column, columnIndex)}
+                {renderColumnResizer(column)}
+              </>
             );
 
             return column.sortable ? (
@@ -286,7 +336,7 @@ function DataTableInner<T>({
                 onSort={() => toggleSort(column.id)}
                 className={headerClassName}
                 leading={selectable && columnIndex === 0 ? renderSelectAllCheckbox() : undefined}
-                action={renderColumnResizer(column)}
+                action={headerAction}
               >
                 {column.header}
               </SortHeader>
@@ -294,7 +344,7 @@ function DataTableInner<T>({
               <TableHeader key={column.id} {...headerProps} className={headerClassName}>
                 {selectable && columnIndex === 0 ? renderSelectAllCheckbox() : null}
                 {column.header}
-                {renderColumnResizer(column)}
+                {headerAction}
               </TableHeader>
             );
           })}
@@ -337,6 +387,33 @@ function DataTableInner<T>({
         onPointerDown={(event) => startColumnResize(event, column)}
         onKeyDown={(event) => resizeColumnWithKeyboard(event, column)}
       />
+    );
+  }
+
+  function renderColumnControls(column: DataColumn<T>, columnIndex: number) {
+    if (!columnControls) return null;
+
+    const canMoveLeft = columnIndex > 0;
+    const canMoveRight = columnIndex < visibleColumns.length - 1;
+    const canHide = isColumnHideable(column) && visibleColumns.length > 1;
+    if (!canMoveLeft && !canMoveRight && !canHide) return null;
+
+    const columnLabel = getColumnLabel(column);
+
+    return (
+      <span className="mds-table__column-control">
+        <DropdownMenu trigger={<IconButton label={`Column options for ${columnLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+          <MenuItem disabled={!canMoveLeft} icon={<ArrowLeft size={14} />} onSelect={() => moveColumn(column.id, -1)}>
+            Move left
+          </MenuItem>
+          <MenuItem disabled={!canMoveRight} icon={<ArrowRight size={14} />} onSelect={() => moveColumn(column.id, 1)}>
+            Move right
+          </MenuItem>
+          <MenuItem disabled={!canHide} icon={<EyeOff size={14} />} onSelect={() => hideColumn(column.id)}>
+            Hide column
+          </MenuItem>
+        </DropdownMenu>
+      </span>
     );
   }
 
@@ -421,6 +498,10 @@ function isColumnHideable<T>(column: DataColumn<T>) {
 
 function isColumnHiddenByDefault<T>(column: DataColumn<T>) {
   return isColumnHideable(column) && column.defaultHidden === true;
+}
+
+function getCompleteColumnOrder<T>(columns: Array<DataColumn<T>>, columnOrder: string[]) {
+  return [...columnOrder, ...columns.map((column) => column.id).filter((columnId) => !columnOrder.includes(columnId))];
 }
 
 function getRowHeightStyle<T>(rowHeight: DataTableRowHeight<T> | undefined, row: T): CSSProperties | undefined {

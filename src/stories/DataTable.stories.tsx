@@ -60,7 +60,7 @@ export const SortAndSelect: Story = {
 
 export const ColumnLayout: Story = {
   parameters: storyDescription(
-    "Column order, visibility, and widths can be controlled by the consumer. Use grow with minWidth for the flexible column, maxWidth to cap resize, and resizable=false for fixed metadata.",
+    "Column order, visibility, and widths can be controlled by the consumer. Enable column controls when MDS should provide the header menu interaction.",
   ),
   render: () => {
     const [columnOrder, setColumnOrder] = useState(["name", "stories", "status", "target", "owner"]);
@@ -104,9 +104,12 @@ export const ColumnLayout: Story = {
           getRowId={(row) => row.id}
           getRowLabel={(row) => row.name}
           columnOrder={columnOrder}
+          onColumnOrderChange={setColumnOrder}
           visibleColumnIds={visibleColumnIds}
+          onVisibleColumnIdsChange={setVisibleColumnIds}
           columnWidths={columnWidths}
           onColumnWidthsChange={setColumnWidths}
+          columnControls
           containerStyle={{ maxHeight: 320 }}
           stickyHeader
           surface="flush"
