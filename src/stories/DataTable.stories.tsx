@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Button, DataTable, DataTableSort } from "../components";
+import { Button, DataTable } from "../components";
+import type { DataColumn, DataTableSort } from "../components";
 import "./data-admin.css";
 import { columns, rows } from "./data-admin-data";
 
@@ -30,6 +31,8 @@ const meta = {
           "`columnOrder`, `visibleColumnIds`, `columnWidths`, `sort`, and `selectedRowIds` support controlled and uncontrolled usage. Use `onColumnWidthsChange` for live rendering during resize and `onColumnWidthsCommit` for persistence after a pointer resize ends or a keyboard resize step completes.",
           "",
           "Enable `columnControls` when MDS should provide column header menus plus the table-level column visibility menu.",
+          "",
+          "Use `onRowClick` for clickable detail rows and `getRowProps` for row-level DOM attributes or custom event handling.",
         ].join("\n"),
       },
     },
@@ -55,6 +58,56 @@ const literalColumnWidths: Record<string, number> = {
   owner: 150,
 };
 
+interface HoldingRow {
+  id: string;
+  symbol: string;
+  name: string;
+  gain: number;
+  today: number;
+}
+
+const holdingRows: HoldingRow[] = [
+  { id: "holding-001", symbol: "MSK", name: "Miskun Labs", gain: 100, today: 12 },
+  { id: "holding-002", symbol: "HLX", name: "Helix Works", gain: -5, today: -1.8 },
+  { id: "holding-003", symbol: "NRV", name: "Nerve Systems", gain: 3, today: 0.4 },
+  { id: "holding-004", symbol: "ORB", name: "Orbital Studio", gain: -20, today: -4.1 },
+  { id: "holding-005", symbol: "ZRO", name: "Zero Point", gain: 0, today: 0 },
+  { id: "holding-006", symbol: "ARC", name: "Arc Supply", gain: 12, today: 2.3 },
+  { id: "holding-007", symbol: "INF", name: "Infinity Fund", gain: Number.NEGATIVE_INFINITY, today: -9.7 },
+];
+
+const holdingColumns: Array<DataColumn<HoldingRow>> = [
+  {
+    id: "symbol",
+    header: "Symbol",
+    sortable: true,
+    grow: true,
+    minWidth: 160,
+    cell: (row: HoldingRow) => row.symbol,
+    sortValue: (row: HoldingRow) => row.symbol,
+  },
+  {
+    id: "gain",
+    header: "Total gain",
+    sortable: true,
+    numeric: true,
+    defaultWidth: 140,
+    minWidth: 110,
+    sortValue: (row: HoldingRow) => row.gain,
+    cell: (row: HoldingRow) => (row.gain === Number.NEGATIVE_INFINITY ? "-Infinity" : row.gain.toLocaleString()),
+  },
+  {
+    id: "today",
+    header: "Today",
+    sortable: true,
+    numeric: true,
+    defaultWidth: 120,
+    minWidth: 100,
+    sortValue: (row: HoldingRow) => row.today,
+    cell: (row: HoldingRow) => row.today.toFixed(1),
+  },
+];
+
 export const SortAndSelect: Story = {
   parameters: storyDescription("Use controlled state when selection and sorting drive other surfaces such as bulk actions or detail panels."),
   render: () => {
@@ -79,6 +132,34 @@ export const SortAndSelect: Story = {
           { label: "Archive" },
         ]}
       />
+    );
+  },
+};
+
+export const NumericRows: Story = {
+  parameters: storyDescription("Numeric sort values use numeric comparison so negative values, zero, and Infinity order correctly."),
+  render: () => {
+    const [sort, setSort] = useState<DataTableSort | null>({ columnId: "gain", direction: "asc" });
+    const [activeRow, setActiveRow] = useState<HoldingRow | null>(holdingRows[0]);
+
+    return (
+      <div className="data-page data-page--plain">
+        <DataTable
+          label="Holdings"
+          caption="Holdings with negative numeric sort values and clickable rows."
+          columns={holdingColumns}
+          data={holdingRows}
+          getRowId={(row) => row.id}
+          getRowLabel={(row) => row.symbol}
+          sort={sort}
+          onSortChange={setSort}
+          onRowClick={setActiveRow}
+          getRowProps={(row) => ({
+            "aria-label": `Open ${row.symbol} details`,
+          })}
+        />
+        <p className="mds-text mds-text--muted">Selected row: {activeRow ? `${activeRow.symbol} - ${activeRow.name}` : "None"}</p>
+      </div>
     );
   },
 };

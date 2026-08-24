@@ -1,5 +1,5 @@
 import { forwardRef, useMemo, useState } from "react";
-import type { CSSProperties, ForwardedRef, KeyboardEvent, MouseEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
+import type { CSSProperties, ForwardedRef, HTMLAttributes, KeyboardEvent, MouseEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
 import { createPortal } from "react-dom";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, EyeOff, MoreHorizontal, X } from "lucide-react";
 import { Checkbox } from "./Checkbox";
@@ -52,6 +52,8 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   label?: string;
   caption?: string;
   rowActions?: Array<RowAction<T>>;
+  onRowClick?: (row: T, event: MouseEvent<HTMLTableRowElement> | KeyboardEvent<HTMLTableRowElement>) => void;
+  getRowProps?: (row: T, rowIndex: number) => HTMLAttributes<HTMLTableRowElement>;
   selectable?: boolean;
   selectedRowIds?: string[];
   defaultSelectedRowIds?: string[];
@@ -87,6 +89,8 @@ function DataTableInner<T>({
   label = "Data table",
   caption,
   rowActions,
+  onRowClick,
+  getRowProps,
   selectable,
   selectedRowIds,
   defaultSelectedRowIds = [],
@@ -167,7 +171,7 @@ function DataTableInner<T>({
     return [...data].sort((a, b) => {
       const aValue = getSortValue(column, a);
       const bValue = getSortValue(column, b);
-      const result = String(aValue).localeCompare(String(bValue), undefined, { numeric: true, sensitivity: "base" });
+      const result = compareSortValues(aValue, bValue);
       return currentSort.direction === "asc" ? result : -result;
     });
   }, [columns, data, currentSort]);
@@ -420,13 +424,44 @@ function DataTableInner<T>({
         </TableRow>
       </TableHead>
       <TableBody>
-        {sortedData.map((row) => {
+        {sortedData.map((row, rowIndex) => {
           const rowId = getRowId(row);
           const rowLabel = getRowLabel?.(row) ?? rowId;
           const selected = selectedIdSet.has(rowId);
+          const rowProps = getRowProps?.(row, rowIndex) ?? {};
+          const rowInteractive = onRowClick !== undefined || rowProps.onClick !== undefined;
           const rowHeightStyle = getRowHeightStyle(rowHeight, row);
+          const rowClassName = cx(
+            rowHeightStyle && "mds-table__row--fixed-height",
+            rowInteractive && "mds-table__row--interactive",
+            rowProps.className,
+          );
+          const rowStyle = rowHeightStyle || rowProps.style ? { ...rowHeightStyle, ...rowProps.style } : undefined;
+          const handleRowClick = (event: MouseEvent<HTMLTableRowElement>) => {
+            rowProps.onClick?.(event);
+            if (event.defaultPrevented || isInteractiveEventTarget(event.target, event.currentTarget)) return;
+            onRowClick?.(row, event);
+          };
+          const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>) => {
+            rowProps.onKeyDown?.(event);
+            if (event.defaultPrevented || !onRowClick || isInteractiveEventTarget(event.target, event.currentTarget) || (event.key !== "Enter" && event.key !== " ")) return;
+
+            event.preventDefault();
+            onRowClick(row, event);
+          };
+
           return (
-            <TableRow key={rowId} className={rowHeightStyle && "mds-table__row--fixed-height"} style={rowHeightStyle} aria-selected={selectable ? selected : undefined}>
+            <TableRow
+              key={rowId}
+              data-row-id={rowId}
+              {...rowProps}
+              className={rowClassName}
+              style={rowStyle}
+              tabIndex={onRowClick ? (rowProps.tabIndex ?? 0) : rowProps.tabIndex}
+              onClick={handleRowClick}
+              onKeyDown={handleRowKeyDown}
+              aria-selected={selectable ? selected : rowProps["aria-selected"]}
+            >
               {visibleColumns.map((column, columnIndex) => (
                 <TableCell key={column.id} className={getColumnClassName("mds-table__cell", column, selectable && columnIndex === 0)}>
                   {selectable && columnIndex === 0 ? (
@@ -612,6 +647,26 @@ function getSortValue<T>(column: DataColumn<T>, row: T) {
   if (column.accessor) return row[column.accessor] as string | number;
   const value = renderCell(column, row);
   return typeof value === "number" || typeof value === "string" ? value : "";
+}
+
+function compareSortValues(aValue: string | number, bValue: string | number) {
+  if (typeof aValue === "number" && typeof bValue === "number") {
+    const aNaN = Number.isNaN(aValue);
+    const bNaN = Number.isNaN(bValue);
+    if (aNaN && bNaN) return 0;
+    if (aNaN) return 1;
+    if (bNaN) return -1;
+    return aValue - bValue;
+  }
+
+  return String(aValue).localeCompare(String(bValue), undefined, { numeric: true, sensitivity: "base" });
+}
+
+function isInteractiveEventTarget(target: EventTarget | null, currentTarget: EventTarget) {
+  if (!(target instanceof Element) || !(currentTarget instanceof Element)) return false;
+
+  const interactiveTarget = target.closest("a, button, input, select, textarea, [role='button'], [role='checkbox'], [role='link'], [role='menuitem'], [role='switch']");
+  return interactiveTarget !== null && interactiveTarget !== currentTarget && currentTarget.contains(interactiveTarget);
 }
 
 function getColumnClassName<T>(baseClassName: string, column: DataColumn<T>, withSelect = false, withActions = false) {
