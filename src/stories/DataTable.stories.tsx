@@ -60,9 +60,15 @@ export const SortAndSelect: Story = {
 
 export const ColumnLayout: Story = {
   parameters: storyDescription(
-    "Column order, visibility, and widths can be controlled by the consumer. Enable column controls when MDS should provide the header menu interaction.",
+    "Column order, visibility, widths, selection, and sorting can be controlled by the consumer. Enable column controls when MDS should provide the header menu interaction.",
   ),
   render: () => {
+    const layoutColumns = columns.map((column) => ({
+      ...column,
+      maxWidth: undefined,
+      numeric: column.id === "stories" ? false : column.numeric,
+      resizable: column.id === "name" ? column.resizable : true,
+    }));
     const [columnOrder, setColumnOrder] = useState(["name", "stories", "status", "target", "owner"]);
     const [visibleColumnIds, setVisibleColumnIds] = useState(["name", "stories", "status", "target"]);
     const [columnWidths, setColumnWidths] = useState<Record<string, number>>({
@@ -71,6 +77,8 @@ export const ColumnLayout: Story = {
       target: 140,
       owner: 150,
     });
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>(["cmp-001-1", "cmp-003-1"]);
+    const [sort, setSort] = useState<DataTableSort | null>({ columnId: "name", direction: "asc" });
     const repeatedRows = Array.from({ length: 4 }, (_, index) => rows.map((row) => ({ ...row, id: `${row.id}-${index + 1}` }))).flat();
     const ownerVisible = visibleColumnIds.includes("owner");
 
@@ -99,7 +107,7 @@ export const ColumnLayout: Story = {
         <DataTable
           label="Controlled component inventory"
           caption="Component inventory with controlled column order, visibility, widths, and a sticky header."
-          columns={columns}
+          columns={layoutColumns}
           data={repeatedRows}
           getRowId={(row) => row.id}
           getRowLabel={(row) => row.name}
@@ -110,29 +118,17 @@ export const ColumnLayout: Story = {
           columnWidths={columnWidths}
           onColumnWidthsChange={setColumnWidths}
           columnControls
+          selectable
+          selectedRowIds={selectedRowIds}
+          onSelectedRowIdsChange={setSelectedRowIds}
+          sort={sort}
+          onSortChange={setSort}
           containerStyle={{ maxHeight: 320 }}
           stickyHeader
-          surface="flush"
         />
       </div>
     );
   },
-};
-
-export const RowHeight: Story = {
-  parameters: storyDescription("Rows fit content by default. Pass a fixed height or a row-based function when dense data needs stable row rhythm."),
-  render: () => (
-    <DataTable
-      label="Component inventory with stable row heights"
-      caption="Component inventory with stable row heights."
-      columns={columns}
-      data={rows}
-      getRowId={(row) => row.id}
-      getRowLabel={(row) => row.name}
-      rowHeight={(row) => (row.status === "review" ? 56 : 46)}
-      surface="flush"
-    />
-  ),
 };
 
 export const LoadingAndEmpty: Story = {

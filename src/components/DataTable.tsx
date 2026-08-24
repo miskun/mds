@@ -252,14 +252,15 @@ function DataTableInner<T>({
     setContextMenu({ columnId: column.id, x, y });
   }
 
-  function startColumnResize(event: PointerEvent<HTMLButtonElement>, column: DataColumn<T>) {
+  function startColumnResize(event: PointerEvent<HTMLButtonElement>, column: DataColumn<T>, direction: -1 | 1) {
     event.preventDefault();
     const handle = event.currentTarget;
     const startX = event.clientX;
-    const startWidth = currentColumnWidths[column.id] ?? handle.closest("th")?.getBoundingClientRect().width ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
+    const startWidth = currentColumnWidths[column.id] ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
 
     function resize(nextEvent: globalThis.PointerEvent) {
-      setColumnWidth(column.id, Math.round(startWidth + nextEvent.clientX - startX));
+      const delta = nextEvent.clientX - startX;
+      setColumnWidth(column.id, Math.round(startWidth + direction * delta));
     }
 
     function stopResize(nextEvent: globalThis.PointerEvent) {
@@ -275,13 +276,13 @@ function DataTableInner<T>({
     handle.addEventListener("pointercancel", stopResize, { once: true });
   }
 
-  function resizeColumnWithKeyboard(event: KeyboardEvent<HTMLButtonElement>, column: DataColumn<T>) {
+  function resizeColumnWithKeyboard(event: KeyboardEvent<HTMLButtonElement>, column: DataColumn<T>, direction: -1 | 1) {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
 
     event.preventDefault();
-    const direction = event.key === "ArrowRight" ? 1 : -1;
-    const currentWidth = currentColumnWidths[column.id] ?? event.currentTarget.closest("th")?.getBoundingClientRect().width ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
-    setColumnWidth(column.id, Math.round(currentWidth + direction * 8));
+    const keyDirection = event.key === "ArrowRight" ? 1 : -1;
+    const currentWidth = currentColumnWidths[column.id] ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
+    setColumnWidth(column.id, Math.round(currentWidth + direction * keyDirection * 8));
   }
 
   function setSelectedRows(nextSelectedRowIds: string[]) {
@@ -352,8 +353,8 @@ function DataTableInner<T>({
             );
             const headerAction = (
               <>
+                {columnIndex > 0 ? renderColumnResizer(column, visibleColumns[columnIndex - 1]) : null}
                 {renderColumnContextMenu(column, columnIndex)}
-                {renderColumnResizer(column)}
               </>
             );
 
@@ -409,16 +410,17 @@ function DataTableInner<T>({
     </Table>
   );
 
-  function renderColumnResizer(column: DataColumn<T>) {
-    if (!isColumnResizable(column, columnWidths, defaultColumnWidths)) return null;
+  function renderColumnResizer(column: DataColumn<T>, previousColumn: DataColumn<T>) {
+    const resizeTarget = getBoundaryResizeTarget(column, previousColumn, columnWidths, defaultColumnWidths);
+    if (!resizeTarget) return null;
 
     return (
       <button
         className="mds-table__resize"
         type="button"
-        aria-label={`Resize ${getColumnLabel(column)} column`}
-        onPointerDown={(event) => startColumnResize(event, column)}
-        onKeyDown={(event) => resizeColumnWithKeyboard(event, column)}
+        aria-label={`Resize ${getColumnLabel(resizeTarget.column)} column`}
+        onPointerDown={(event) => startColumnResize(event, resizeTarget.column, resizeTarget.direction)}
+        onKeyDown={(event) => resizeColumnWithKeyboard(event, resizeTarget.column, resizeTarget.direction)}
       />
     );
   }
@@ -603,6 +605,23 @@ function clampColumnWidth<T>(column: DataColumn<T>, width: number) {
 function isColumnResizable<T>(column: DataColumn<T>, columnWidths: Record<string, number> | undefined, defaultColumnWidths: Record<string, number> | undefined) {
   if (column.resizable === false || column.grow) return false;
   return getColumnBaseWidth(column) !== undefined || columnWidths !== undefined || defaultColumnWidths !== undefined;
+}
+
+function getBoundaryResizeTarget<T>(
+  column: DataColumn<T>,
+  previousColumn: DataColumn<T>,
+  columnWidths: Record<string, number> | undefined,
+  defaultColumnWidths: Record<string, number> | undefined,
+) {
+  if (isColumnResizable(column, columnWidths, defaultColumnWidths)) {
+    return { column, direction: -1 as const };
+  }
+
+  if (column.grow && isColumnResizable(previousColumn, columnWidths, defaultColumnWidths)) {
+    return { column: previousColumn, direction: 1 as const };
+  }
+
+  return null;
 }
 
 function getTableContentMinWidth<T>(columns: Array<DataColumn<T>>, columnWidths: Record<string, number>) {

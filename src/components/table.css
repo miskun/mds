@@ -220,7 +220,7 @@
 .mds-table__resize {
   position: absolute;
   inset-block: 0;
-  inset-inline-end: 0;
+  inset-inline-start: 0;
   z-index: 2;
   width: 8px;
   border: 0;
@@ -232,7 +232,7 @@
 .mds-table__resize::after {
   position: absolute;
   inset-block: 25%;
-  inset-inline-end: 0;
+  inset-inline-start: 0;
   width: 1px;
   content: "";
   background: transparent;
