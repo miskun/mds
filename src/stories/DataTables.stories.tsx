@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Badge, Card, SortHeader, Stack, StatusDot, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components";
+import { Badge, Card, SortHeader, StatusDot, Table, TableBody, TableCell, TableCellText, TableHead, TableHeader, TableRow } from "../components";
 import "./data-admin.css";
 import { rows } from "./data-admin-data";
 
 const meta = {
   title: "MDS/Components/Data/Tables",
   component: Table,
-  subcomponents: { TableHead, TableBody, TableRow, TableHeader, TableCell, SortHeader },
+  subcomponents: { TableHead, TableBody, TableRow, TableHeader, TableCell, TableCellText, SortHeader },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -47,10 +47,7 @@ export const BasicTable: Story = {
           {rows.slice(0, 4).map((row) => (
             <TableRow key={row.id}>
               <TableCell>
-                <Stack gap="xs">
-                  <strong>{row.name}</strong>
-                  <span className="data-muted">{row.id}</span>
-                </Stack>
+                <TableCellText secondary={row.id}>{row.name}</TableCellText>
               </TableCell>
               <TableCell>
                 <Badge tone={row.target === "admin" ? "accent" : "neutral"}>{row.target}</Badge>

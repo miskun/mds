@@ -1,4 +1,4 @@
-import { Badge, DataColumn, StatusDot } from "../components";
+import { Badge, DataColumn, StatusDot, TableCellText } from "../components";
 
 export interface ComponentRow {
   id: string;
@@ -25,12 +25,7 @@ export const columns: Array<DataColumn<ComponentRow>> = [
     sortable: true,
     grow: true,
     minWidth: 180,
-    cell: (row) => (
-      <div className="data-name">
-        <strong>{row.name}</strong>
-        <span>{row.id}</span>
-      </div>
-    ),
+    cell: (row) => <TableCellText secondary={row.id}>{row.name}</TableCellText>,
   },
   {
     id: "target",

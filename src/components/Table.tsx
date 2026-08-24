@@ -42,6 +42,29 @@ export const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLT
   return <td ref={ref} className={cx("mds-table__cell", className)} {...props} />;
 });
 
+export interface TableCellTextProps extends HTMLAttributes<HTMLDivElement> {
+  secondary?: ReactNode;
+  reserveSecondary?: boolean;
+}
+
+export const TableCellText = forwardRef<HTMLDivElement, TableCellTextProps>(function TableCellText(
+  { secondary, reserveSecondary, className, children, ...props },
+  ref,
+) {
+  const hasSecondary = secondary !== undefined && secondary !== null;
+
+  return (
+    <div ref={ref} className={cx("mds-table-cell-text", className)} {...props}>
+      <span className="mds-table-cell-text__primary">{children}</span>
+      {hasSecondary || reserveSecondary ? (
+        <span className="mds-table-cell-text__secondary" aria-hidden={hasSecondary ? undefined : true}>
+          {secondary}
+        </span>
+      ) : null}
+    </div>
+  );
+});
+
 export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> {
   active?: boolean;
   direction?: SortDirection;
