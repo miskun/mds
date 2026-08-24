@@ -164,22 +164,6 @@
   transform: translateY(-50%);
 }
 
-.mds-table__column-control {
-  display: inline-flex;
-  margin-inline-start: var(--mds-control-gap);
-  vertical-align: middle;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 120ms ease;
-}
-
-.mds-table__header:hover .mds-table__column-control,
-.mds-table__header:focus-within .mds-table__column-control,
-.mds-table__header--menu-open .mds-table__column-control {
-  opacity: 1;
-  pointer-events: auto;
-}
-
 .mds-table__context-control {
   position: static;
 }

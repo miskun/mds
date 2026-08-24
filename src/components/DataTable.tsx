@@ -245,7 +245,11 @@ function DataTableInner<T>({
     if (!columnControls) return;
 
     event.preventDefault();
-    setContextMenu({ columnId: column.id, x: event.clientX, y: event.clientY });
+    openColumnContextMenuAt(column, event.clientX, event.clientY);
+  }
+
+  function openColumnContextMenuAt(column: DataColumn<T>, x: number, y: number) {
+    setContextMenu({ columnId: column.id, x, y });
   }
 
   function startColumnResize(event: PointerEvent<HTMLButtonElement>, column: DataColumn<T>) {
@@ -332,16 +336,22 @@ function DataTableInner<T>({
               headerProps.onContextMenu?.(event);
               if (!event.defaultPrevented) openColumnContextMenu(event, column);
             };
-            const hasHeaderActions = columnControls || isColumnResizable(column, columnWidths, defaultColumnWidths);
+            const onKeyDown = (event: KeyboardEvent<HTMLTableCellElement>) => {
+              headerProps.onKeyDown?.(event);
+              if (event.defaultPrevented || !columnControls) return;
+              if (event.key !== "ContextMenu" && !(event.shiftKey && event.key === "F10")) return;
+
+              event.preventDefault();
+              const rect = event.currentTarget.getBoundingClientRect();
+              openColumnContextMenuAt(column, rect.left + 12, rect.bottom - 2);
+            };
             const headerClassName = cx(
               getColumnClassName("mds-table__header", column, selectable && columnIndex === 0, hasRowActions(columnIndex)),
-              hasHeaderActions && "mds-table__header--with-column-actions",
               contextMenu?.columnId === column.id && "mds-table__header--menu-open",
               headerProps.className,
             );
             const headerAction = (
               <>
-                {renderColumnControls(column, columnIndex)}
                 {renderColumnContextMenu(column, columnIndex)}
                 {renderColumnResizer(column)}
               </>
@@ -352,6 +362,7 @@ function DataTableInner<T>({
                 key={column.id}
                 {...headerProps}
                 onContextMenu={onContextMenu}
+                onKeyDown={onKeyDown}
                 active={currentSort?.columnId === column.id}
                 direction={currentSort?.columnId === column.id ? currentSort.direction : null}
                 sortLabel={column.sortLabel ?? (typeof column.header === "string" ? column.header : column.id)}
@@ -363,7 +374,7 @@ function DataTableInner<T>({
                 {column.header}
               </SortHeader>
             ) : (
-              <TableHeader key={column.id} {...headerProps} onContextMenu={onContextMenu} className={headerClassName}>
+              <TableHeader key={column.id} {...headerProps} onContextMenu={onContextMenu} onKeyDown={onKeyDown} className={headerClassName}>
                 {selectable && columnIndex === 0 ? renderSelectAllCheckbox() : null}
                 {column.header}
                 {headerAction}
@@ -409,25 +420,6 @@ function DataTableInner<T>({
         onPointerDown={(event) => startColumnResize(event, column)}
         onKeyDown={(event) => resizeColumnWithKeyboard(event, column)}
       />
-    );
-  }
-
-  function renderColumnControls(column: DataColumn<T>, columnIndex: number) {
-    if (!columnControls) return null;
-
-    const canMoveLeft = columnIndex > 0;
-    const canMoveRight = columnIndex < visibleColumns.length - 1;
-    const canHide = isColumnHideable(column) && visibleColumns.length > 1;
-    if (!column.sortable && !canMoveLeft && !canMoveRight && !canHide) return null;
-
-    const columnLabel = getColumnLabel(column);
-
-    return (
-      <span className="mds-table__column-control">
-        <DropdownMenu trigger={<IconButton label={`Column options for ${columnLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
-          {renderColumnControlItems(column, columnIndex)}
-        </DropdownMenu>
-      </span>
     );
   }
 
