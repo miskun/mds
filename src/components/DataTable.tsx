@@ -1,5 +1,6 @@
 import { forwardRef, useMemo, useState } from "react";
 import type { CSSProperties, ForwardedRef, KeyboardEvent, MouseEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
+import { createPortal } from "react-dom";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, EyeOff, MoreHorizontal, X } from "lucide-react";
 import { Checkbox } from "./Checkbox";
 import { DropdownMenu, MenuItem, MenuSeparator } from "./DropdownMenu";
@@ -30,7 +31,7 @@ export interface DataColumn<T> {
   defaultWidth?: number;
   minWidth?: number;
   maxWidth?: number;
-  grow?: boolean;
+  grow?: boolean | number;
   resizable?: boolean;
   hideable?: boolean;
   defaultHidden?: boolean;
@@ -67,6 +68,7 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   columnWidths?: Record<string, number>;
   defaultColumnWidths?: Record<string, number>;
   onColumnWidthsChange?: (columnWidths: Record<string, number>) => void;
+  onColumnWidthsCommit?: (columnWidths: Record<string, number>) => void;
   columnControls?: boolean;
   getColumnHeaderProps?: (column: DataColumn<T>, columnIndex: number) => ThHTMLAttributes<HTMLTableCellElement>;
   rowHeight?: DataTableRowHeight<T>;
@@ -101,6 +103,7 @@ function DataTableInner<T>({
   columnWidths,
   defaultColumnWidths,
   onColumnWidthsChange,
+  onColumnWidthsCommit,
   columnControls,
   getColumnHeaderProps,
   rowHeight,
@@ -147,7 +150,8 @@ function DataTableInner<T>({
     columnWidths !== undefined ||
     defaultColumnWidths !== undefined ||
     visibleColumns.some((column) => currentColumnWidths[column.id] !== undefined || getColumnBaseWidth(column) !== undefined || column.grow);
-  const hasGrowColumn = visibleColumns.some((column) => column.grow);
+  const totalGrowWeight = getTotalGrowWeight(visibleColumns);
+  const hasGrowColumn = totalGrowWeight > 0;
   const tableContentMinWidth = getTableContentMinWidth(visibleColumns, currentColumnWidths);
 
   const sortedData = useMemo(() => {
@@ -203,6 +207,7 @@ function DataTableInner<T>({
     const nextColumnWidths = { ...currentColumnWidths, [columnId]: column ? clampColumnWidth(column, width) : width };
     setUncontrolledColumnWidths(nextColumnWidths);
     onColumnWidthsChange?.(nextColumnWidths);
+    return nextColumnWidths;
   }
 
   function setTableColumnOrder(nextColumnOrder: string[]) {
@@ -257,10 +262,11 @@ function DataTableInner<T>({
     const handle = event.currentTarget;
     const startX = event.clientX;
     const startWidth = currentColumnWidths[column.id] ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
+    let latestColumnWidths = currentColumnWidths;
 
     function resize(nextEvent: globalThis.PointerEvent) {
       const delta = nextEvent.clientX - startX;
-      setColumnWidth(column.id, Math.round(startWidth + direction * delta));
+      latestColumnWidths = setColumnWidth(column.id, Math.round(startWidth + direction * delta));
     }
 
     function stopResize(nextEvent: globalThis.PointerEvent) {
@@ -268,6 +274,7 @@ function DataTableInner<T>({
       handle.removeEventListener("pointerup", stopResize);
       handle.removeEventListener("pointercancel", stopResize);
       if (handle.hasPointerCapture?.(nextEvent.pointerId)) handle.releasePointerCapture(nextEvent.pointerId);
+      onColumnWidthsCommit?.(latestColumnWidths);
     }
 
     handle.setPointerCapture?.(event.pointerId);
@@ -282,7 +289,8 @@ function DataTableInner<T>({
     event.preventDefault();
     const keyDirection = event.key === "ArrowRight" ? 1 : -1;
     const currentWidth = currentColumnWidths[column.id] ?? getColumnBaseWidth(column) ?? column.minWidth ?? 80;
-    setColumnWidth(column.id, Math.round(currentWidth + direction * keyDirection * 8));
+    const nextColumnWidths = setColumnWidth(column.id, Math.round(currentWidth + direction * keyDirection * 8));
+    onColumnWidthsCommit?.(nextColumnWidths);
   }
 
   function setSelectedRows(nextSelectedRowIds: string[]) {
@@ -326,7 +334,7 @@ function DataTableInner<T>({
       {caption ? <caption className="mds-table__caption">{caption}</caption> : null}
       <colgroup>
         {visibleColumns.map((column) => (
-          <col key={column.id} style={getColumnStyle(column, currentColumnWidths)} />
+          <col key={column.id} style={getColumnStyle(column, currentColumnWidths, totalGrowWeight)} />
         ))}
       </colgroup>
       <TableHead>
@@ -427,8 +435,9 @@ function DataTableInner<T>({
 
   function renderColumnContextMenu(column: DataColumn<T>, columnIndex: number) {
     if (!columnControls || contextMenu?.columnId !== column.id) return null;
+    if (typeof document === "undefined") return null;
 
-    return (
+    return createPortal(
       <span className="mds-table__context-control">
         <DropdownMenu
           trigger={<button className="mds-table__context-anchor" type="button" aria-hidden="true" tabIndex={-1} style={getContextMenuAnchorStyle(contextMenu)} />}
@@ -441,7 +450,8 @@ function DataTableInner<T>({
         >
           {renderColumnControlItems(column, columnIndex)}
         </DropdownMenu>
-      </span>
+      </span>,
+      document.body,
     );
   }
 
@@ -554,8 +564,11 @@ function getColumnClassName<T>(baseClassName: string, column: DataColumn<T>, wit
   );
 }
 
-function getColumnStyle<T>(column: DataColumn<T>, columnWidths: Record<string, number>) {
-  if (column.grow) return undefined;
+function getColumnStyle<T>(column: DataColumn<T>, columnWidths: Record<string, number>, totalGrowWeight: number) {
+  const growWeight = getColumnGrowWeight(column);
+  if (growWeight > 0) {
+    return totalGrowWeight > growWeight ? { width: `${(growWeight / totalGrowWeight) * 100}%` } : undefined;
+  }
 
   const width = columnWidths[column.id] ?? getColumnInitialWidth(column);
   return width ? { width: `${width}px` } : undefined;
@@ -603,7 +616,7 @@ function clampColumnWidth<T>(column: DataColumn<T>, width: number) {
 }
 
 function isColumnResizable<T>(column: DataColumn<T>, columnWidths: Record<string, number> | undefined, defaultColumnWidths: Record<string, number> | undefined) {
-  if (column.resizable === false || column.grow) return false;
+  if (column.resizable === false || getColumnGrowWeight(column) > 0) return false;
   return getColumnBaseWidth(column) !== undefined || columnWidths !== undefined || defaultColumnWidths !== undefined;
 }
 
@@ -617,7 +630,7 @@ function getBoundaryResizeTarget<T>(
     return { column, direction: -1 as const };
   }
 
-  if (column.grow && isColumnResizable(previousColumn, columnWidths, defaultColumnWidths)) {
+  if (getColumnGrowWeight(column) > 0 && isColumnResizable(previousColumn, columnWidths, defaultColumnWidths)) {
     return { column: previousColumn, direction: 1 as const };
   }
 
@@ -626,9 +639,19 @@ function getBoundaryResizeTarget<T>(
 
 function getTableContentMinWidth<T>(columns: Array<DataColumn<T>>, columnWidths: Record<string, number>) {
   return columns.reduce((total, column) => {
-    if (column.grow) return total + (column.minWidth ?? 0);
+    if (getColumnGrowWeight(column) > 0) return total + (column.minWidth ?? 0);
     return total + (columnWidths[column.id] ?? getColumnInitialWidth(column) ?? column.minWidth ?? 0);
   }, 0);
+}
+
+function getColumnGrowWeight<T>(column: DataColumn<T>) {
+  if (column.grow === true) return 1;
+  if (typeof column.grow === "number") return Math.max(0, column.grow);
+  return 0;
+}
+
+function getTotalGrowWeight<T>(columns: Array<DataColumn<T>>) {
+  return columns.reduce((total, column) => total + getColumnGrowWeight(column), 0);
 }
 
 function getTableStyle(style: CSSProperties | undefined, contentMinWidth: number | undefined) {

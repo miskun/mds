@@ -1,6 +1,8 @@
 import type { Preview } from "@storybook/react-vite";
 import { createElement } from "react";
+import { mdsStorybookTheme } from "./mdsTheme";
 import "../src/styles/mds.css";
+import "./preview.css";
 
 const preview: Preview = {
   globalTypes: {
@@ -68,6 +70,9 @@ const preview: Preview = {
         { name: "MDS Black", value: "#000000" },
         { name: "MDS Panel", value: "#0a0a0b" },
       ],
+    },
+    docs: {
+      theme: mdsStorybookTheme,
     },
     controls: {
       matchers: {

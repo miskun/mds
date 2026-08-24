@@ -12,8 +12,25 @@ const meta = {
     layout: "padded",
     docs: {
       description: {
-        component:
-          "DataTable adds controlled selection, sorting, row actions, column layout, loading, and empty states to table data.",
+        component: [
+          "DataTable is the MDS record table for product surfaces that need selection, sorting, row actions, loading states, empty states, and controlled column layout.",
+          "",
+          "### Column sizing",
+          "",
+          "Use `defaultWidth` for the starting width of a fixed column. Use controlled `columnWidths` when a product owns layout state.",
+          "",
+          "`minWidth` and `maxWidth` constrain resizable columns. When the table cannot fit the declared widths and minimums, the table wrapper scrolls horizontally instead of collapsing content past its floor.",
+          "",
+          "`grow` marks a column as flexible. `grow: true` equals `grow: 1`; numeric values act as weights when multiple columns share remaining width. Keep at least one grow column when the table should absorb container width changes.",
+          "",
+          "`resizable: false` removes the resize handle for a column. Boundary handles resize the column on the right; when that column is a grow column, the adjacent fixed column owns the width change and the grow column absorbs the remainder.",
+          "",
+          "### Controlled layout",
+          "",
+          "`columnOrder`, `visibleColumnIds`, `columnWidths`, `sort`, and `selectedRowIds` support controlled and uncontrolled usage. Use `onColumnWidthsChange` for live rendering during resize and `onColumnWidthsCommit` for persistence after a pointer resize ends or a keyboard resize step completes.",
+          "",
+          "Enable `columnControls` when MDS should provide the header context menu for sorting, moving, and hiding columns.",
+        ].join("\n"),
       },
     },
   },
@@ -60,7 +77,7 @@ export const SortAndSelect: Story = {
 
 export const ColumnLayout: Story = {
   parameters: storyDescription(
-    "Column order, visibility, widths, selection, and sorting can be controlled by the consumer. Enable column controls when MDS should provide the header menu interaction.",
+    "Column order, visibility, widths, selection, and sorting can be controlled by the consumer. Use live width changes for rendering and committed width changes for persistence.",
   ),
   render: () => {
     const layoutColumns = columns.map((column) => ({
@@ -117,6 +134,7 @@ export const ColumnLayout: Story = {
           onVisibleColumnIdsChange={setVisibleColumnIds}
           columnWidths={columnWidths}
           onColumnWidthsChange={setColumnWidths}
+          onColumnWidthsCommit={setColumnWidths}
           columnControls
           selectable
           selectedRowIds={selectedRowIds}
@@ -127,6 +145,35 @@ export const ColumnLayout: Story = {
           stickyHeader
         />
       </div>
+    );
+  },
+};
+
+export const WeightedGrowColumns: Story = {
+  parameters: storyDescription("Use weighted grow columns when one or more columns should absorb available table width after fixed columns keep their declared size."),
+  render: () => {
+    const sizingColumns = columns.map((column) => {
+      if (column.id === "name") return { ...column, grow: 2 };
+      if (column.id === "owner") return { ...column, grow: 1, defaultWidth: undefined, minWidth: 130 };
+      if (column.id === "stories") return { ...column, numeric: false, maxWidth: undefined };
+      return { ...column, resizable: true };
+    });
+
+    return (
+      <DataTable
+        label="Component inventory with weighted grow columns"
+        caption="Component inventory with fixed columns and weighted grow columns."
+        columns={sizingColumns}
+        data={rows}
+        getRowId={(row) => row.id}
+        getRowLabel={(row) => row.name}
+        defaultColumnWidths={{
+          stories: 96,
+          status: 130,
+          target: 140,
+        }}
+        columnControls
+      />
     );
   },
 };
