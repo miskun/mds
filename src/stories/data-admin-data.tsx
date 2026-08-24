@@ -23,6 +23,8 @@ export const columns: Array<DataColumn<ComponentRow>> = [
     header: "Component",
     accessor: "name",
     sortable: true,
+    defaultWidth: 220,
+    minWidth: 160,
     cell: (row) => (
       <div className="data-name">
         <strong>{row.name}</strong>
@@ -35,6 +37,8 @@ export const columns: Array<DataColumn<ComponentRow>> = [
     header: "Target",
     accessor: "target",
     sortable: true,
+    defaultWidth: 140,
+    minWidth: 110,
     cell: (row) => <Badge tone={row.target === "admin" ? "accent" : "neutral"}>{row.target}</Badge>,
   },
   {
@@ -42,8 +46,10 @@ export const columns: Array<DataColumn<ComponentRow>> = [
     header: "Status",
     accessor: "status",
     sortable: true,
+    defaultWidth: 130,
+    minWidth: 110,
     cell: (row) => <StatusDot tone={row.status === "stable" ? "success" : row.status === "review" ? "warning" : "neutral"} label={row.status} />,
   },
-  { id: "stories", header: "Stories", accessor: "stories", sortValue: "stories", sortable: true, align: "right" },
-  { id: "owner", header: "Owner", accessor: "owner", sortable: true },
+  { id: "stories", header: "Stories", accessor: "stories", sortValue: "stories", sortable: true, numeric: true, defaultWidth: 96, minWidth: 80 },
+  { id: "owner", header: "Owner", accessor: "owner", sortable: true, defaultWidth: 140, minWidth: 110, hideable: true },
 ];

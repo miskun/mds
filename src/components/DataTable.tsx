@@ -1,5 +1,5 @@
 import { forwardRef, useMemo, useState } from "react";
-import type { ForwardedRef, ReactElement, ReactNode, Ref } from "react";
+import type { CSSProperties, ForwardedRef, KeyboardEvent, PointerEvent, ReactElement, ReactNode, Ref, ThHTMLAttributes } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { Checkbox } from "./Checkbox";
 import { DropdownMenu, MenuItem } from "./DropdownMenu";
@@ -8,7 +8,7 @@ import { IconButton } from "./Button";
 import { Skeleton } from "./Skeleton";
 import { SortHeader, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./Table";
 import type { SortDirection, TableProps } from "./Table";
-import { getControllableValue } from "./utils";
+import { cx, getControllableValue } from "./utils";
 import "./data-table.css";
 
 export interface DataTableSort {
@@ -24,13 +24,20 @@ export interface DataColumn<T> {
   sortValue?: keyof T | ((row: T) => string | number);
   cell?: (row: T) => ReactNode;
   sortable?: boolean;
-  align?: "left" | "right";
+  align?: "left" | "right" | "center";
+  numeric?: boolean;
+  defaultWidth?: number;
+  minWidth?: number;
+  hideable?: boolean;
+  defaultHidden?: boolean;
 }
 
 export interface RowAction<T> {
   label: string;
   onSelect?: (row: T) => void;
 }
+
+export type DataTableRowHeight<T> = number | string | ((row: T) => number | string | undefined);
 
 export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   columns: Array<DataColumn<T>>;
@@ -47,6 +54,17 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   sort?: DataTableSort | null;
   defaultSort?: DataTableSort | null;
   onSortChange?: (sort: DataTableSort | null) => void;
+  columnOrder?: string[];
+  defaultColumnOrder?: string[];
+  visibleColumnIds?: string[];
+  defaultVisibleColumnIds?: string[];
+  columnWidths?: Record<string, number>;
+  defaultColumnWidths?: Record<string, number>;
+  onColumnWidthsChange?: (columnWidths: Record<string, number>) => void;
+  getColumnHeaderProps?: (column: DataColumn<T>, columnIndex: number) => ThHTMLAttributes<HTMLTableCellElement>;
+  rowHeight?: DataTableRowHeight<T>;
+  stickyHeader?: boolean;
+  surface?: "framed" | "flush";
   loading?: boolean;
   emptyTitle?: string;
   emptyDescription?: string;
@@ -67,6 +85,17 @@ function DataTableInner<T>({
   sort,
   defaultSort = null,
   onSortChange,
+  columnOrder,
+  defaultColumnOrder,
+  visibleColumnIds,
+  defaultVisibleColumnIds,
+  columnWidths,
+  defaultColumnWidths,
+  onColumnWidthsChange,
+  getColumnHeaderProps,
+  rowHeight,
+  stickyHeader,
+  surface = "framed",
   loading,
   emptyTitle = "No rows found",
   emptyDescription = "Adjust filters or add new records.",
@@ -74,9 +103,35 @@ function DataTableInner<T>({
 }: DataTableProps<T>, ref: ForwardedRef<HTMLTableElement>) {
   const [uncontrolledSort, setUncontrolledSort] = useState<DataTableSort | null>(defaultSort);
   const [uncontrolledSelectedRowIds, setUncontrolledSelectedRowIds] = useState<string[]>(defaultSelectedRowIds);
+  const [uncontrolledColumnOrder] = useState<string[]>(defaultColumnOrder ?? columns.map((column) => column.id));
+  const [uncontrolledVisibleColumnIds] = useState<string[]>(
+    defaultVisibleColumnIds ?? columns.filter((column) => !isColumnHiddenByDefault(column)).map((column) => column.id),
+  );
+  const [uncontrolledColumnWidths, setUncontrolledColumnWidths] = useState<Record<string, number>>(() =>
+    ({
+      ...Object.fromEntries(columns.filter((column) => column.defaultWidth).map((column) => [column.id, column.defaultWidth as number])),
+      ...defaultColumnWidths,
+    }),
+  );
   const currentSort = getControllableValue(sort, uncontrolledSort);
   const currentSelectedRowIds = getControllableValue(selectedRowIds, uncontrolledSelectedRowIds);
+  const currentColumnOrder = getControllableValue(columnOrder, uncontrolledColumnOrder);
+  const currentVisibleColumnIds = getControllableValue(visibleColumnIds, uncontrolledVisibleColumnIds);
+  const currentColumnWidths = getControllableValue(columnWidths, uncontrolledColumnWidths);
   const selectedIdSet = useMemo(() => new Set(currentSelectedRowIds), [currentSelectedRowIds]);
+  const visibleColumnIdSet = useMemo(() => new Set(currentVisibleColumnIds), [currentVisibleColumnIds]);
+  const visibleColumns = useMemo(() => {
+    const columnsById = new Map(columns.map((column) => [column.id, column]));
+    const orderedIds = [...currentColumnOrder, ...columns.map((column) => column.id).filter((columnId) => !currentColumnOrder.includes(columnId))];
+
+    return orderedIds
+      .map((columnId) => columnsById.get(columnId))
+      .filter((column): column is DataColumn<T> => column !== undefined && (!isColumnHideable(column) || visibleColumnIdSet.has(column.id)));
+  }, [columns, currentColumnOrder, visibleColumnIdSet]);
+  const hasColumnSizing =
+    columnWidths !== undefined ||
+    defaultColumnWidths !== undefined ||
+    visibleColumns.some((column) => currentColumnWidths[column.id] !== undefined || column.defaultWidth !== undefined);
 
   const sortedData = useMemo(() => {
     if (!currentSort) return data;
@@ -119,6 +174,45 @@ function DataTableInner<T>({
     onSortChange?.(nextSort);
   }
 
+  function setColumnWidth(columnId: string, width: number) {
+    const nextColumnWidths = { ...currentColumnWidths, [columnId]: width };
+    setUncontrolledColumnWidths(nextColumnWidths);
+    onColumnWidthsChange?.(nextColumnWidths);
+  }
+
+  function startColumnResize(event: PointerEvent<HTMLButtonElement>, column: DataColumn<T>) {
+    event.preventDefault();
+    const handle = event.currentTarget;
+    const startX = event.clientX;
+    const startWidth = currentColumnWidths[column.id] ?? handle.closest("th")?.getBoundingClientRect().width ?? column.defaultWidth ?? column.minWidth ?? 80;
+    const minWidth = column.minWidth ?? 48;
+
+    function resize(nextEvent: globalThis.PointerEvent) {
+      setColumnWidth(column.id, Math.max(minWidth, Math.round(startWidth + nextEvent.clientX - startX)));
+    }
+
+    function stopResize(nextEvent: globalThis.PointerEvent) {
+      handle.removeEventListener("pointermove", resize);
+      handle.removeEventListener("pointerup", stopResize);
+      handle.removeEventListener("pointercancel", stopResize);
+      if (handle.hasPointerCapture?.(nextEvent.pointerId)) handle.releasePointerCapture(nextEvent.pointerId);
+    }
+
+    handle.setPointerCapture?.(event.pointerId);
+    handle.addEventListener("pointermove", resize);
+    handle.addEventListener("pointerup", stopResize, { once: true });
+    handle.addEventListener("pointercancel", stopResize, { once: true });
+  }
+
+  function resizeColumnWithKeyboard(event: KeyboardEvent<HTMLButtonElement>, column: DataColumn<T>) {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+
+    event.preventDefault();
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    const currentWidth = currentColumnWidths[column.id] ?? event.currentTarget.closest("th")?.getBoundingClientRect().width ?? column.defaultWidth ?? column.minWidth ?? 80;
+    setColumnWidth(column.id, Math.max(column.minWidth ?? 48, Math.round(currentWidth + direction * 8)));
+  }
+
   function setSelectedRows(nextSelectedRowIds: string[]) {
     setUncontrolledSelectedRowIds(nextSelectedRowIds);
     onSelectedRowIdsChange?.(nextSelectedRowIds);
@@ -137,36 +231,57 @@ function DataTableInner<T>({
   }
 
   const tableAriaLabel = tableProps["aria-label"] ?? (caption ? undefined : label);
+  const tableClassName = tableProps.className;
+  const containerClassName = tableProps.containerClassName;
 
   return (
-    <Table ref={ref} {...tableProps} aria-label={tableAriaLabel}>
+    <Table
+      ref={ref}
+      {...tableProps}
+      className={tableClassName}
+      containerClassName={containerClassName}
+      surface={surface}
+      fixed={tableProps.fixed ?? hasColumnSizing}
+      stickyHeader={stickyHeader}
+      aria-label={tableAriaLabel}
+    >
       {caption ? <caption className="mds-table__caption">{caption}</caption> : null}
+      <colgroup>
+        {visibleColumns.map((column) => (
+          <col key={column.id} style={getColumnStyle(column, currentColumnWidths)} />
+        ))}
+      </colgroup>
       <TableHead>
         <TableRow>
-          {selectable ? (
-            <TableHeader className="mds-table__header--select">
-              <Checkbox aria-label={selectAllLabel} checked={allSelected} indeterminate={someSelected} onChange={toggleAll} />
-            </TableHeader>
-          ) : null}
-          {columns.map((column) =>
-            column.sortable ? (
+          {visibleColumns.map((column, columnIndex) => {
+            const headerProps = getColumnHeaderProps?.(column, columnIndex) ?? {};
+            const headerClassName = cx(
+              getColumnClassName("mds-table__header", column, selectable && columnIndex === 0, hasRowActions(columnIndex)),
+              headerProps.className,
+            );
+
+            return column.sortable ? (
               <SortHeader
                 key={column.id}
+                {...headerProps}
                 active={currentSort?.columnId === column.id}
                 direction={currentSort?.columnId === column.id ? currentSort.direction : null}
                 sortLabel={column.sortLabel ?? (typeof column.header === "string" ? column.header : column.id)}
                 onSort={() => toggleSort(column.id)}
-                className={column.align === "right" ? "mds-table__header--numeric" : undefined}
+                className={headerClassName}
+                leading={selectable && columnIndex === 0 ? renderSelectAllCheckbox() : undefined}
+                action={renderColumnResizer(column)}
               >
                 {column.header}
               </SortHeader>
             ) : (
-              <TableHeader key={column.id} className={column.align === "right" ? "mds-table__header--numeric" : undefined}>
+              <TableHeader key={column.id} {...headerProps} className={headerClassName}>
+                {selectable && columnIndex === 0 ? renderSelectAllCheckbox() : null}
                 {column.header}
+                {renderColumnResizer(column)}
               </TableHeader>
-            ),
-          )}
-          {rowActions?.length ? <TableHeader className="mds-table__header--actions" /> : null}
+            );
+          })}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -174,35 +289,68 @@ function DataTableInner<T>({
           const rowId = getRowId(row);
           const rowLabel = getRowLabel?.(row) ?? rowId;
           const selected = selectedIdSet.has(rowId);
+          const rowHeightStyle = getRowHeightStyle(rowHeight, row);
           return (
-            <TableRow key={rowId} aria-selected={selectable ? selected : undefined}>
-              {selectable ? (
-                <TableCell className="mds-table__cell--select">
-                  <Checkbox aria-label={`Select ${rowLabel}`} checked={selected} onChange={() => toggleRow(rowId)} />
-                </TableCell>
-              ) : null}
-              {columns.map((column) => (
-                <TableCell key={column.id} className={column.align === "right" ? "mds-table__cell--numeric" : undefined}>
+            <TableRow key={rowId} className={rowHeightStyle && "mds-table__row--fixed-height"} style={rowHeightStyle} aria-selected={selectable ? selected : undefined}>
+              {visibleColumns.map((column, columnIndex) => (
+                <TableCell key={column.id} className={getColumnClassName("mds-table__cell", column, selectable && columnIndex === 0, hasRowActions(columnIndex))}>
+                  {selectable && columnIndex === 0 ? (
+                    <span className="mds-table__select-control">
+                      <Checkbox aria-label={`Select ${rowLabel}`} checked={selected} onChange={() => toggleRow(rowId)} />
+                    </span>
+                  ) : null}
                   {renderCell(column, row)}
+                  {hasRowActions(columnIndex) ? renderRowActions(row, rowLabel) : null}
                 </TableCell>
               ))}
-              {rowActions?.length ? (
-                <TableCell className="mds-table__cell--actions">
-                  <DropdownMenu trigger={<IconButton label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
-                    {rowActions.map((action) => (
-                      <MenuItem key={action.label} onSelect={() => action.onSelect?.(row)}>
-                        {action.label}
-                      </MenuItem>
-                    ))}
-                  </DropdownMenu>
-                </TableCell>
-              ) : null}
             </TableRow>
           );
         })}
       </TableBody>
     </Table>
   );
+
+  function renderColumnResizer(column: DataColumn<T>) {
+    if (!column.defaultWidth && !columnWidths && !defaultColumnWidths) return null;
+
+    return (
+      <button
+        className="mds-table__resize"
+        type="button"
+        aria-label={`Resize ${getColumnLabel(column)} column`}
+        onPointerDown={(event) => startColumnResize(event, column)}
+        onKeyDown={(event) => resizeColumnWithKeyboard(event, column)}
+      />
+    );
+  }
+
+  function renderSelectAllCheckbox() {
+    return (
+      <span className="mds-table__select-control">
+        <Checkbox aria-label={selectAllLabel} checked={allSelected} indeterminate={someSelected} onChange={toggleAll} />
+      </span>
+    );
+  }
+
+  function renderRowActions(row: T, rowLabel: string) {
+    if (!rowActions?.length) return null;
+
+    return (
+      <span className="mds-table__action-control">
+        <DropdownMenu trigger={<IconButton label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+          {rowActions.map((action) => (
+            <MenuItem key={action.label} onSelect={() => action.onSelect?.(row)}>
+              {action.label}
+            </MenuItem>
+          ))}
+        </DropdownMenu>
+      </span>
+    );
+  }
+
+  function hasRowActions(columnIndex: number) {
+    return !!rowActions?.length && columnIndex === visibleColumns.length - 1;
+  }
 }
 
 export const DataTable = forwardRef(DataTableInner) as <T>(props: DataTableProps<T> & { ref?: Ref<HTMLTableElement> }) => ReactElement;
@@ -225,4 +373,41 @@ function getSortValue<T>(column: DataColumn<T>, row: T) {
   if (column.sortValue) return row[column.sortValue] as string | number;
   const value = renderCell(column, row);
   return typeof value === "number" || typeof value === "string" ? value : "";
+}
+
+function getColumnClassName<T>(baseClassName: string, column: DataColumn<T>, withSelect = false, withActions = false) {
+  const align = column.align ?? (column.numeric ? "right" : undefined);
+
+  return cx(
+    align === "right" && `${baseClassName}--right`,
+    align === "center" && `${baseClassName}--center`,
+    column.numeric && `${baseClassName}--numeric`,
+    column.numeric && "mds-numeric",
+    withSelect && `${baseClassName}--with-select`,
+    withActions && `${baseClassName}--with-actions`,
+  );
+}
+
+function getColumnStyle<T>(column: DataColumn<T>, columnWidths: Record<string, number>) {
+  const width = columnWidths[column.id] ?? column.defaultWidth;
+  return width ? { width: `${width}px` } : undefined;
+}
+
+function getColumnLabel<T>(column: DataColumn<T>) {
+  return typeof column.header === "string" ? column.header : column.sortLabel ?? column.id;
+}
+
+function isColumnHideable<T>(column: DataColumn<T>) {
+  return column.hideable !== false;
+}
+
+function isColumnHiddenByDefault<T>(column: DataColumn<T>) {
+  return isColumnHideable(column) && column.defaultHidden === true;
+}
+
+function getRowHeightStyle<T>(rowHeight: DataTableRowHeight<T> | undefined, row: T): CSSProperties | undefined {
+  if (rowHeight === undefined) return undefined;
+  const height = typeof rowHeight === "function" ? rowHeight(row) : rowHeight;
+  if (height === undefined) return undefined;
+  return { "--mds-table-row-height": typeof height === "number" ? `${height}px` : height } as CSSProperties;
 }

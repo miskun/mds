@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import type { HTMLAttributes, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { cx } from "./utils";
 import "./table.css";
@@ -8,12 +8,16 @@ export type SortDirection = "asc" | "desc" | null;
 
 export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   containerClassName?: string;
+  containerStyle?: CSSProperties;
+  surface?: "framed" | "flush";
+  fixed?: boolean;
+  stickyHeader?: boolean;
 }
 
-export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ containerClassName, className, ...props }, ref) {
+export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ containerClassName, containerStyle, className, surface = "framed", fixed, stickyHeader, ...props }, ref) {
   return (
-    <div className={cx("mds-table-wrap", containerClassName)}>
-      <table ref={ref} className={cx("mds-table", className)} {...props} />
+    <div className={cx("mds-table-wrap", `mds-table-wrap--${surface}`, containerClassName)} style={containerStyle}>
+      <table ref={ref} className={cx("mds-table", fixed && "mds-table--fixed", stickyHeader && "mds-table--sticky-header", className)} {...props} />
     </div>
   );
 });
@@ -43,11 +47,13 @@ export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> 
   direction?: SortDirection;
   sortLabel?: string;
   onSort?: () => void;
+  leading?: ReactNode;
+  action?: ReactNode;
   children: ReactNode;
 }
 
 export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(function SortHeader(
-  { active, direction, sortLabel, onSort, className, children, ...props },
+  { active, direction, sortLabel, onSort, leading, action, className, children, ...props },
   ref,
 ) {
   const Icon = active && direction === "asc" ? ArrowUp : active && direction === "desc" ? ArrowDown : ChevronsUpDown;
@@ -62,10 +68,12 @@ export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(func
 
   return (
     <TableHeader ref={ref} className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} {...props}>
+      {leading}
       <button className="mds-table__sort" type="button" aria-label={actionLabel} onClick={onSort}>
         <span>{children}</span>
         <Icon size={14} aria-hidden="true" />
       </button>
+      {action}
     </TableHeader>
   );
 });

@@ -26,7 +26,7 @@ export default defineConfig({
         "@radix-ui/react-tooltip",
       ],
       output: {
-        assetFileNames: "styles.css",
+        assetFileNames: (assetInfo) => (assetInfo.name?.endsWith(".css") ? "styles.css" : "assets/[name]-[hash][extname]"),
       },
     },
     sourcemap: true,

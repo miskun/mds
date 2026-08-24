@@ -8,6 +8,10 @@
   line-height: 1.55;
 }
 
+.mds-text--xxs {
+  font-size: var(--mds-font-size-xxs);
+}
+
 .mds-text--xs {
   font-size: var(--mds-font-size-xs);
 }

@@ -40,7 +40,7 @@ export const BasicTable: Story = {
             <TableHeader>Component</TableHeader>
             <TableHeader>Target</TableHeader>
             <TableHeader>Status</TableHeader>
-            <TableHeader className="mds-table__header--numeric">Stories</TableHeader>
+            <TableHeader className="mds-table__header--numeric mds-table__header--right">Stories</TableHeader>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -58,7 +58,7 @@ export const BasicTable: Story = {
               <TableCell>
                 <StatusDot tone={row.status === "stable" ? "success" : row.status === "review" ? "warning" : "neutral"} label={row.status} />
               </TableCell>
-              <TableCell className="mds-table__cell--numeric">{row.stories}</TableCell>
+              <TableCell className="mds-table__cell--numeric mds-table__cell--right">{row.stories}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -86,6 +86,39 @@ export const SortableHeaders: Story = {
           <TableCell>Admin</TableCell>
           <TableCell>Stable</TableCell>
         </TableRow>
+      </TableBody>
+    </Table>
+  ),
+};
+
+export const FlushFixedTable: Story = {
+  parameters: storyDescription("Use flush fixed tables when a data surface should run edge-to-edge and column widths are owned by the consumer."),
+  render: () => (
+    <Table surface="flush" fixed stickyHeader>
+      <colgroup>
+        <col style={{ width: 220 }} />
+        <col style={{ width: 120 }} />
+        <col style={{ width: 120 }} />
+      </colgroup>
+      <TableHead>
+        <TableRow>
+          <TableHeader>Symbol</TableHeader>
+          <TableHeader className="mds-table__header--numeric mds-table__header--right">Price</TableHeader>
+          <TableHeader className="mds-table__header--numeric mds-table__header--right">Change</TableHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {[
+          ["AAPL", "209.16", "+1.42%"],
+          ["MSFT", "441.88", "-0.28%"],
+          ["NVDA", "170.91", "+2.05%"],
+        ].map(([symbol, price, change]) => (
+          <TableRow key={symbol}>
+            <TableCell>{symbol}</TableCell>
+            <TableCell className="mds-table__cell--numeric mds-table__cell--right">{price}</TableCell>
+            <TableCell className="mds-table__cell--numeric mds-table__cell--right">{change}</TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   ),

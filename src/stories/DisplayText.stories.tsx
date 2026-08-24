@@ -43,6 +43,7 @@ export const TypographyScale: Story = {
             <Text>Default body copy for product surfaces.</Text>
             <Text tone="muted">Muted supporting copy.</Text>
             <Text tone="soft" size="sm">Soft metadata and secondary labels.</Text>
+            <Text tone="soft" size="xxs">Dense data qualifiers and table headers.</Text>
           </Stack>
         </Card>
         <Card title="Weight">

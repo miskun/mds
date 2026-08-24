@@ -33,6 +33,10 @@
   --mds-toolbar-gap: 10px;
   --mds-table-cell-padding-y: 9px;
   --mds-table-cell-padding-x: 14px;
+  --mds-table-row-height: auto;
+  --mds-table-selection-column-width: 40px;
+  --mds-table-selection-edge-inset: calc((var(--mds-table-selection-column-width) - var(--mds-choice-size)) / 2);
+  --mds-table-action-edge-inset: var(--mds-table-selection-edge-inset);
   --mds-option-row-height: 40px;
   --mds-nav-row-height: 36px;
   --mds-nav-icon-size: 16px;
@@ -91,6 +95,10 @@
   --mds-toolbar-gap: 8px;
   --mds-table-cell-padding-y: 7px;
   --mds-table-cell-padding-x: 12px;
+  --mds-table-row-height: auto;
+  --mds-table-selection-column-width: 38px;
+  --mds-table-selection-edge-inset: calc((var(--mds-table-selection-column-width) - var(--mds-choice-size)) / 2);
+  --mds-table-action-edge-inset: var(--mds-table-selection-edge-inset);
   --mds-option-row-height: 32px;
   --mds-nav-row-height: 28px;
   --mds-nav-icon-size: 15px;
@@ -149,6 +157,10 @@
   --mds-toolbar-gap: 12px;
   --mds-table-cell-padding-y: 12px;
   --mds-table-cell-padding-x: 16px;
+  --mds-table-row-height: auto;
+  --mds-table-selection-column-width: 48px;
+  --mds-table-selection-edge-inset: calc((var(--mds-table-selection-column-width) - var(--mds-choice-size)) / 2);
+  --mds-table-action-edge-inset: var(--mds-table-selection-edge-inset);
   --mds-option-row-height: 44px;
   --mds-nav-row-height: 44px;
   --mds-nav-icon-size: 18px;
@@ -207,6 +219,10 @@
   --mds-toolbar-gap: 10px;
   --mds-table-cell-padding-y: 9px;
   --mds-table-cell-padding-x: 14px;
+  --mds-table-row-height: auto;
+  --mds-table-selection-column-width: 40px;
+  --mds-table-selection-edge-inset: calc((var(--mds-table-selection-column-width) - var(--mds-choice-size)) / 2);
+  --mds-table-action-edge-inset: var(--mds-table-selection-edge-inset);
   --mds-option-row-height: 40px;
   --mds-nav-row-height: 36px;
   --mds-nav-icon-size: 16px;
@@ -265,6 +281,10 @@
   --mds-toolbar-gap: 16px;
   --mds-table-cell-padding-y: 14px;
   --mds-table-cell-padding-x: 18px;
+  --mds-table-row-height: auto;
+  --mds-table-selection-column-width: 50px;
+  --mds-table-selection-edge-inset: calc((var(--mds-table-selection-column-width) - var(--mds-choice-size)) / 2);
+  --mds-table-action-edge-inset: var(--mds-table-selection-edge-inset);
   --mds-option-row-height: 44px;
   --mds-nav-row-height: 44px;
   --mds-nav-icon-size: 17px;

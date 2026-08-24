@@ -31,9 +31,11 @@ import { Button, Card, Input } from "@miskun/design-system";
 import "@miskun/design-system/styles.css";
 ```
 
+The package builds library output during `prepare`, so unpublished git or `file:` installs have `dist` artifacts available after install.
+
 ## Foundations
 
-- Typography: Inter-first CSS stack
+- Typography: vendored Inter variable fonts with a system fallback stack
 - Theme: near-black surfaces, crisp borders, bright signal accent
 - Targets: desktop, mobile, admin, editorial
 - Stories: getting started, foundations, components, patterns, content, utilities, and data visualization
@@ -82,6 +84,7 @@ import "@miskun/design-system/styles.css";
 
 Source styles are split for maintainability:
 
+- `src/styles/fonts.css`: bundled Inter `@font-face` declarations
 - `src/styles/tokens.css`: base color, spacing, radius, and typography tokens
 - `src/styles/target.css`: target-specific scale and spacing aliases
 - `src/styles/base.css`: reset and document-level defaults

@@ -34,3 +34,8 @@
   font-size: var(--mds-font-size-lg);
   line-height: 1.55;
 }
+
+.mds-numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

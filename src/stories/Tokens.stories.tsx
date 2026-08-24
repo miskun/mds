@@ -69,9 +69,11 @@ const spacing = [
   ["Section padding", "--mds-section-padding", "Page section padding and editorial breathing room."],
   ["Table cell Y", "--mds-table-cell-padding-y", "Vertical table cell padding."],
   ["Table cell X", "--mds-table-cell-padding-x", "Horizontal table cell padding."],
+  ["Table selection", "--mds-table-selection-column-width", "Fixed checkbox column width for selectable tables."],
 ];
 
 const typography = [
+  ["XXS", "--mds-font-size-xxs", "11px", "Dense table headers and compact data qualifiers."],
   ["Extra small", "--mds-font-size-xs", "12px", "Badges, hints, compact metadata."],
   ["Small", "--mds-font-size-sm", "14px", "Labels, compact controls, secondary copy."],
   ["Medium", "--mds-font-size-md", "16px", "Default body and mobile control text."],
@@ -92,6 +94,7 @@ const namingRules = [
   ["Semantic aliases", "--mds-stack-gap, --mds-panel-padding", "Preferred for components and layout. These adapt by target."],
   ["Component tokens", "--mds-switch-height, --mds-badge-height", "Shared dimensions for repeated component families."],
   ["State tokens", "--mds-danger, --mds-success, --mds-focus", "Use for consistent status, validation, and focus treatment."],
+  ["Numeric utility", ".mds-numeric", "Use tabular figures for prices, counts, percentages, and aligned measurements."],
 ];
 
 export const Color: Story = {

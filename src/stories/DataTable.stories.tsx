@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { DataTable, DataTableSort } from "../components";
+import { Button, DataTable, DataTableSort } from "../components";
 import "./data-admin.css";
 import { columns, rows } from "./data-admin-data";
 
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "DataTable adds controlled selection, sorting, row actions, loading, and empty states to table data.",
+          "DataTable adds controlled selection, sorting, row actions, column layout, loading, and empty states to table data.",
       },
     },
   },
@@ -56,6 +56,79 @@ export const SortAndSelect: Story = {
       />
     );
   },
+};
+
+export const ColumnLayout: Story = {
+  parameters: storyDescription("Column order, visibility, and widths can be controlled by the consumer and persisted outside MDS."),
+  render: () => {
+    const [columnOrder, setColumnOrder] = useState(["name", "stories", "status", "target", "owner"]);
+    const [visibleColumnIds, setVisibleColumnIds] = useState(["name", "stories", "status", "target"]);
+    const [columnWidths, setColumnWidths] = useState<Record<string, number>>({
+      name: 240,
+      stories: 96,
+      status: 140,
+      target: 140,
+      owner: 150,
+    });
+    const repeatedRows = Array.from({ length: 4 }, (_, index) => rows.map((row) => ({ ...row, id: `${row.id}-${index + 1}` }))).flat();
+    const ownerVisible = visibleColumnIds.includes("owner");
+
+    return (
+      <div className="data-page data-page--plain">
+        <div className="mds-cluster">
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() =>
+              setColumnOrder(columnOrder[0] === "name" ? ["stories", "name", "status", "target", "owner"] : ["name", "stories", "status", "target", "owner"])
+            }
+          >
+            Swap first columns
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() =>
+              setVisibleColumnIds(ownerVisible ? visibleColumnIds.filter((columnId) => columnId !== "owner") : [...visibleColumnIds, "owner"])
+            }
+          >
+            {ownerVisible ? "Hide owner" : "Show owner"}
+          </Button>
+        </div>
+        <DataTable
+          label="Controlled component inventory"
+          caption="Component inventory with controlled column order, visibility, widths, and a sticky header."
+          columns={columns}
+          data={repeatedRows}
+          getRowId={(row) => row.id}
+          getRowLabel={(row) => row.name}
+          columnOrder={columnOrder}
+          visibleColumnIds={visibleColumnIds}
+          columnWidths={columnWidths}
+          onColumnWidthsChange={setColumnWidths}
+          containerStyle={{ maxHeight: 320 }}
+          stickyHeader
+          surface="flush"
+        />
+      </div>
+    );
+  },
+};
+
+export const RowHeight: Story = {
+  parameters: storyDescription("Rows fit content by default. Pass a fixed height or a row-based function when dense data needs stable row rhythm."),
+  render: () => (
+    <DataTable
+      label="Component inventory with stable row heights"
+      caption="Component inventory with stable row heights."
+      columns={columns}
+      data={rows}
+      getRowId={(row) => row.id}
+      getRowLabel={(row) => row.name}
+      rowHeight={(row) => (row.status === "review" ? 56 : 46)}
+      surface="flush"
+    />
+  ),
 };
 
 export const LoadingAndEmpty: Story = {
