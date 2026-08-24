@@ -341,6 +341,7 @@ function DataTableInner<T>({
             const headerAction = (
               <>
                 {renderColumnControls(column, columnIndex)}
+                {renderColumnContextMenu(column, columnIndex)}
                 {renderColumnResizer(column)}
               </>
             );
@@ -425,6 +426,15 @@ function DataTableInner<T>({
         <DropdownMenu trigger={<IconButton label={`Column options for ${columnLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
           {renderColumnControlItems(column, columnIndex)}
         </DropdownMenu>
+      </span>
+    );
+  }
+
+  function renderColumnContextMenu(column: DataColumn<T>, columnIndex: number) {
+    if (!columnControls || contextMenu?.columnId !== column.id) return null;
+
+    return (
+      <span className="mds-table__context-control">
         <DropdownMenu
           trigger={<button className="mds-table__context-anchor" type="button" aria-hidden="true" tabIndex={-1} style={getContextMenuAnchorStyle(contextMenu)} />}
           align="start"

@@ -173,6 +173,10 @@
   transform: translateY(-50%);
 }
 
+.mds-table__context-control {
+  position: static;
+}
+
 .mds-table__context-anchor {
   position: fixed;
   width: 1px;
