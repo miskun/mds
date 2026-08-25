@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { copyFileSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const fontFiles = [
@@ -32,6 +32,27 @@ if (!stylesWithoutInlinedFonts.includes(":root{")) {
 
 const fontsCss = readFileSync("src/styles/fonts.css", "utf8");
 writeFileSync(stylesPath, `${fontsCss}\n${stylesWithoutInlinedFonts}`);
+stripDeclarationCssImports("dist/types");
 
 const finalSize = (statSync(stylesPath).size / 1024).toFixed(1);
 console.log(`Final dist/styles.css: ${finalSize} kB with external font files.`);
+
+function stripDeclarationCssImports(directory) {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const entryPath = join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      stripDeclarationCssImports(entryPath);
+      continue;
+    }
+
+    if (!entry.name.endsWith(".d.ts")) continue;
+
+    const declaration = readFileSync(entryPath, "utf8");
+    const nextDeclaration = declaration.replace(/^import\s+["'][^"']+\.css["'];\n?/gm, "");
+
+    if (nextDeclaration !== declaration) {
+      writeFileSync(entryPath, nextDeclaration);
+    }
+  }
+}

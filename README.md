@@ -2,6 +2,14 @@
 
 Black-first React components for focused product interfaces.
 
+## Install
+
+```sh
+npm install @miskun/design-system react react-dom
+```
+
+React and React DOM are peer dependencies. For local sibling-project development, run `npm run build:lib` before testing consumers that read the package through `dist`.
+
 ## Run
 
 ```sh
