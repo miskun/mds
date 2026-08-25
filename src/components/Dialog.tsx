@@ -1,11 +1,12 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import type { ReactNode } from "react";
+import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react";
 import { X } from "lucide-react";
 import { IconButton } from "./Button";
 import { cx } from "./utils";
 import "./dialog.css";
 
-export interface DialogProps {
+export interface DialogProps extends Omit<ComponentPropsWithoutRef<typeof DialogPrimitive.Content>, "children" | "title"> {
   trigger: ReactNode;
   title: string;
   description?: string;
@@ -14,28 +15,31 @@ export interface DialogProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  className?: string;
   overlayClassName?: string;
 }
 
-export function Dialog({
-  trigger,
-  title,
-  description,
-  children,
-  footer,
-  open,
-  defaultOpen,
-  onOpenChange,
-  className,
-  overlayClassName,
-}: DialogProps) {
+export const Dialog = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DialogProps>(function Dialog(
+  {
+    trigger,
+    title,
+    description,
+    children,
+    footer,
+    open,
+    defaultOpen,
+    onOpenChange,
+    className,
+    overlayClassName,
+    ...contentProps
+  },
+  ref,
+) {
   return (
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
-        <DialogPrimitive.Content className={cx("mds-dialog", className)}>
+        <DialogPrimitive.Content ref={ref} className={cx("mds-dialog", className)} {...contentProps}>
           <DialogHeader title={title} description={description} />
           <div className="mds-dialog__body">{children}</div>
           {footer ? <footer className="mds-dialog__footer">{footer}</footer> : null}
@@ -46,32 +50,36 @@ export function Dialog({
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
-}
+});
 
 export interface DrawerProps extends Omit<DialogProps, "trigger"> {
   trigger: ReactNode;
   side?: "left" | "right";
 }
 
-export function Drawer({
-  trigger,
-  title,
-  description,
-  children,
-  footer,
-  side = "right",
-  open,
-  defaultOpen,
-  onOpenChange,
-  className,
-  overlayClassName,
-}: DrawerProps) {
+export const Drawer = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DrawerProps>(function Drawer(
+  {
+    trigger,
+    title,
+    description,
+    children,
+    footer,
+    side = "right",
+    open,
+    defaultOpen,
+    onOpenChange,
+    className,
+    overlayClassName,
+    ...contentProps
+  },
+  ref,
+) {
   return (
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
-        <DialogPrimitive.Content className={cx("mds-drawer", `mds-drawer--${side}`, className)}>
+        <DialogPrimitive.Content ref={ref} className={cx("mds-drawer", `mds-drawer--${side}`, className)} {...contentProps}>
           <DialogHeader title={title} description={description} />
           <div className="mds-dialog__body">{children}</div>
           {footer ? <footer className="mds-dialog__footer">{footer}</footer> : null}
@@ -82,7 +90,7 @@ export function Drawer({
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
-}
+});
 
 function DialogHeader({ title, description }: { title: string; description?: string }) {
   return (

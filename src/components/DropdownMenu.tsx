@@ -1,6 +1,6 @@
 import * as DropdownPrimitive from "@radix-ui/react-dropdown-menu";
 import { forwardRef } from "react";
-import type { ElementRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { cx } from "./utils";
 import "./checkbox.css";
@@ -9,29 +9,29 @@ import "./dropdown-menu.css";
 export const DropdownMenuRoot = DropdownPrimitive.Root;
 export const DropdownMenuTrigger = DropdownPrimitive.Trigger;
 
-export interface DropdownMenuProps {
+export interface DropdownMenuProps extends Omit<ComponentPropsWithoutRef<typeof DropdownPrimitive.Content>, "children"> {
   trigger: ReactNode;
   children: ReactNode;
-  align?: DropdownPrimitive.DropdownMenuContentProps["align"];
-  side?: DropdownPrimitive.DropdownMenuContentProps["side"];
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  className?: string;
 }
 
-export function DropdownMenu({ trigger, children, align = "start", side = "bottom", open, defaultOpen, onOpenChange, className }: DropdownMenuProps) {
+export const DropdownMenu = forwardRef<ElementRef<typeof DropdownPrimitive.Content>, DropdownMenuProps>(function DropdownMenu(
+  { trigger, children, align = "start", side = "bottom", sideOffset = 8, open, defaultOpen, onOpenChange, className, ...contentProps },
+  ref,
+) {
   return (
     <DropdownPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DropdownPrimitive.Trigger asChild>{trigger}</DropdownPrimitive.Trigger>
       <DropdownPrimitive.Portal>
-        <DropdownPrimitive.Content className={cx("mds-menu", className)} side={side} align={align} sideOffset={8}>
+        <DropdownPrimitive.Content ref={ref} className={cx("mds-menu", className)} side={side} align={align} sideOffset={sideOffset} {...contentProps}>
           {children}
         </DropdownPrimitive.Content>
       </DropdownPrimitive.Portal>
     </DropdownPrimitive.Root>
   );
-}
+});
 
 export interface MenuItemProps extends DropdownPrimitive.DropdownMenuItemProps {
   icon?: ReactNode;
@@ -85,16 +85,18 @@ export const MenuLabel = forwardRef<ElementRef<typeof DropdownPrimitive.Label>, 
   );
 });
 
-export interface MenuSubProps {
+export interface MenuSubProps extends Omit<ComponentPropsWithoutRef<typeof DropdownPrimitive.SubContent>, "children"> {
   trigger: ReactNode;
   children: ReactNode;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  className?: string;
 }
 
-export function MenuSub({ trigger, children, open, defaultOpen, onOpenChange, className }: MenuSubProps) {
+export const MenuSub = forwardRef<ElementRef<typeof DropdownPrimitive.SubContent>, MenuSubProps>(function MenuSub(
+  { trigger, children, open, defaultOpen, onOpenChange, className, sideOffset = 8, ...contentProps },
+  ref,
+) {
   return (
     <DropdownPrimitive.Sub open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <DropdownPrimitive.SubTrigger className="mds-menu__item">
@@ -102,10 +104,10 @@ export function MenuSub({ trigger, children, open, defaultOpen, onOpenChange, cl
         <ChevronRight className="mds-menu__chevron" size={14} />
       </DropdownPrimitive.SubTrigger>
       <DropdownPrimitive.Portal>
-        <DropdownPrimitive.SubContent className={cx("mds-menu", className)} sideOffset={8}>
+        <DropdownPrimitive.SubContent ref={ref} className={cx("mds-menu", className)} sideOffset={sideOffset} {...contentProps}>
           {children}
         </DropdownPrimitive.SubContent>
       </DropdownPrimitive.Portal>
     </DropdownPrimitive.Sub>
   );
-}
+});

@@ -1,28 +1,29 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import type { ReactNode } from "react";
+import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react";
 import { X } from "lucide-react";
 import { IconButton } from "./Button";
 import { cx } from "./utils";
 import "./popover.css";
 
-export interface PopoverProps {
+export interface PopoverProps extends Omit<ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>, "children" | "title"> {
   trigger: ReactNode;
   title?: string;
   children: ReactNode;
-  side?: PopoverPrimitive.PopoverContentProps["side"];
-  align?: PopoverPrimitive.PopoverContentProps["align"];
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  className?: string;
 }
 
-export function Popover({ trigger, title, children, side = "bottom", align = "start", open, defaultOpen, onOpenChange, className }: PopoverProps) {
+export const Popover = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, PopoverProps>(function Popover(
+  { trigger, title, children, side = "bottom", align = "start", sideOffset = 8, open, defaultOpen, onOpenChange, className, ...contentProps },
+  ref,
+) {
   return (
     <PopoverPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <PopoverPrimitive.Trigger asChild>{trigger}</PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Content className={cx("mds-popover", className)} side={side} align={align} sideOffset={8}>
+        <PopoverPrimitive.Content ref={ref} className={cx("mds-popover", className)} side={side} align={align} sideOffset={sideOffset} {...contentProps}>
           {title ? (
             <header className="mds-popover__header">
               <h3 className="mds-popover__title">{title}</h3>
@@ -36,4 +37,4 @@ export function Popover({ trigger, title, children, side = "bottom", align = "st
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
   );
-}
+});

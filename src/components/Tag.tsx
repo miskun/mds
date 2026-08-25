@@ -6,16 +6,17 @@ import "./tag.css";
 
 export interface TagProps extends HTMLAttributes<HTMLSpanElement> {
   removable?: boolean;
+  removeLabel?: string;
   onRemove?: () => void;
   children: ReactNode;
 }
 
-export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag({ removable, onRemove, className, children, ...props }, ref) {
+export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag({ removable, removeLabel = "Remove tag", onRemove, className, children, ...props }, ref) {
   return (
     <span ref={ref} className={cx("mds-tag", className)} {...props}>
       <span>{children}</span>
       {removable ? (
-        <button className="mds-tag__remove" type="button" aria-label={`Remove ${children}`} onClick={onRemove}>
+        <button className="mds-tag__remove" type="button" aria-label={removeLabel} onClick={onRemove}>
           <X size={12} />
         </button>
       ) : null}

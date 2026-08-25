@@ -73,8 +73,8 @@ export const FilterBar: Story = {
         <Panel variant="ghost" padding="sm">
           <Cluster gap="xs">
             <Badge tone="accent">3 filters</Badge>
-            <Tag removable onRemove={() => undefined}>Forms</Tag>
-            <Tag removable onRemove={() => undefined}>Stable</Tag>
+            <Tag removable removeLabel="Remove Forms filter" onRemove={() => undefined}>Forms</Tag>
+            <Tag removable removeLabel="Remove Stable filter" onRemove={() => undefined}>Stable</Tag>
             <Button size="sm" variant="ghost">Reset</Button>
           </Cluster>
         </Panel>
