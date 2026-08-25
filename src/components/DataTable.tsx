@@ -20,6 +20,7 @@ export interface DataTableSort {
 export interface DataColumn<T> {
   id: string;
   header: ReactNode;
+  headerVisible?: boolean;
   sortLabel?: string;
   accessor?: keyof T | ((row: T) => ReactNode);
   sortValue?: keyof T | ((row: T) => string | number);
@@ -385,6 +386,8 @@ function DataTableInner<T>({
               contextMenu?.columnId === column.id && "mds-table__header--menu-open",
               headerProps.className,
             );
+            const columnLabel = getColumnLabel(column);
+            const headerContent = getColumnHeaderContent(column);
             const headerAction = (
               <>
                 {hasGrowColumn ? renderColumnBoundaryResizer(column, visibleColumns[columnIndex - 1]) : renderColumnEdgeResizer(column)}
@@ -400,18 +403,25 @@ function DataTableInner<T>({
                 onKeyDown={onKeyDown}
                 active={currentSort?.columnId === column.id}
                 direction={currentSort?.columnId === column.id ? currentSort.direction : null}
-                sortLabel={column.sortLabel ?? (typeof column.header === "string" ? column.header : column.id)}
+                sortLabel={columnLabel}
                 onSort={() => toggleSort(column.id)}
                 className={headerClassName}
                 leading={selectable && columnIndex === 0 ? renderSelectAllCheckbox() : undefined}
                 action={headerAction}
               >
-                {column.header}
+                {headerContent}
               </SortHeader>
             ) : (
-              <TableHeader key={column.id} {...headerProps} onContextMenu={onContextMenu} onKeyDown={onKeyDown} className={headerClassName}>
+              <TableHeader
+                key={column.id}
+                aria-label={headerContent === null && !headerProps["aria-label"] ? columnLabel : headerProps["aria-label"]}
+                {...headerProps}
+                onContextMenu={onContextMenu}
+                onKeyDown={onKeyDown}
+                className={headerClassName}
+              >
                 {selectable && columnIndex === 0 ? renderSelectAllCheckbox() : null}
-                {column.header}
+                {headerContent}
                 {headerAction}
               </TableHeader>
             );
@@ -699,6 +709,10 @@ function getColumnStyle<T>(column: DataColumn<T>, columnWidths: Record<string, n
 
 function getColumnLabel<T>(column: DataColumn<T>) {
   return typeof column.header === "string" ? column.header : column.sortLabel ?? column.id;
+}
+
+function getColumnHeaderContent<T>(column: DataColumn<T>) {
+  return column.headerVisible === false ? null : column.header;
 }
 
 function isColumnHideable<T>(column: DataColumn<T>) {

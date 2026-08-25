@@ -28,6 +28,8 @@ const meta = {
           "",
           "`align` sets header and cell alignment for the whole column. Use `left`, `middle`, or `right`; numeric columns align right by default.",
           "",
+          "Set `headerVisible: false` when a narrow icon column needs a column name for sorting, accessibility, and column menus without printing header text.",
+          "",
           "### Controlled layout",
           "",
           "`columnOrder`, `visibleColumnIds`, `columnWidths`, `sort`, and `selectedRowIds` support controlled and uncontrolled usage. Use `onColumnWidthsChange` for live rendering during resize and `onColumnWidthsCommit` for persistence after a pointer resize ends or a keyboard resize step completes.",
@@ -62,6 +64,7 @@ const literalColumnWidths: Record<string, number> = {
 
 interface HoldingRow {
   id: string;
+  phase: "closed" | "partial" | "open";
   symbol: string;
   name: string;
   gain: number;
@@ -69,16 +72,28 @@ interface HoldingRow {
 }
 
 const holdingRows: HoldingRow[] = [
-  { id: "holding-001", symbol: "MSK", name: "Miskun Labs", gain: 100, today: 12 },
-  { id: "holding-002", symbol: "HLX", name: "Helix Works", gain: -5, today: -1.8 },
-  { id: "holding-003", symbol: "NRV", name: "Nerve Systems", gain: 3, today: 0.4 },
-  { id: "holding-004", symbol: "ORB", name: "Orbital Studio", gain: -20, today: -4.1 },
-  { id: "holding-005", symbol: "ZRO", name: "Zero Point", gain: 0, today: 0 },
-  { id: "holding-006", symbol: "ARC", name: "Arc Supply", gain: 12, today: 2.3 },
-  { id: "holding-007", symbol: "INF", name: "Infinity Fund", gain: Number.NEGATIVE_INFINITY, today: -9.7 },
+  { id: "holding-001", phase: "open", symbol: "MSK", name: "Miskun Labs", gain: 100, today: 12 },
+  { id: "holding-002", phase: "closed", symbol: "HLX", name: "Helix Works", gain: -5, today: -1.8 },
+  { id: "holding-003", phase: "partial", symbol: "NRV", name: "Nerve Systems", gain: 3, today: 0.4 },
+  { id: "holding-004", phase: "closed", symbol: "ORB", name: "Orbital Studio", gain: -20, today: -4.1 },
+  { id: "holding-005", phase: "closed", symbol: "ZRO", name: "Zero Point", gain: 0, today: 0 },
+  { id: "holding-006", phase: "partial", symbol: "ARC", name: "Arc Supply", gain: 12, today: 2.3 },
+  { id: "holding-007", phase: "partial", symbol: "INF", name: "Infinity Fund", gain: Number.NEGATIVE_INFINITY, today: -9.7 },
 ];
 
 const holdingColumns: Array<DataColumn<HoldingRow>> = [
+  {
+    id: "phase",
+    header: "Market phase",
+    headerVisible: false,
+    sortable: true,
+    align: "middle",
+    defaultWidth: 56,
+    minWidth: 48,
+    maxWidth: 64,
+    sortValue: (row: HoldingRow) => (row.phase === "open" ? 2 : row.phase === "partial" ? 1 : 0),
+    cell: (row: HoldingRow) => <span className={`data-phase data-phase--${row.phase}`} aria-label={row.phase} />,
+  },
   {
     id: "symbol",
     header: "Symbol",
@@ -158,6 +173,7 @@ export const NumericRows: Story = {
           sort={sort}
           onSortChange={setSort}
           onRowClick={setActiveRow}
+          columnControls
           getRowProps={(row) => ({
             "aria-label": `Open ${row.symbol} details`,
           })}

@@ -72,7 +72,7 @@ export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> 
   onSort?: () => void;
   leading?: ReactNode;
   action?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(function SortHeader(
@@ -88,12 +88,13 @@ export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(func
       : active && direction === "desc"
         ? `Clear ${label} sorting`
         : `Sort ${label} ascending`;
+  const hasChildren = children !== undefined && children !== null && children !== false;
 
   return (
     <TableHeader ref={ref} className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} {...props}>
       {leading}
-      <button className="mds-table__sort" type="button" aria-label={actionLabel} onClick={onSort}>
-        <span>{children}</span>
+      <button className={cx("mds-table__sort", !hasChildren && "mds-table__sort--icon-only")} type="button" aria-label={actionLabel} onClick={onSort}>
+        {hasChildren ? <span>{children}</span> : null}
         <Icon size={14} aria-hidden="true" />
       </button>
       {action}

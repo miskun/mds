@@ -39,6 +39,23 @@
   font-weight: 800;
 }
 
+.data-phase {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  border: 2px solid var(--mds-text-soft);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+.data-phase--partial {
+  background: linear-gradient(to right, var(--mds-text-soft) 50%, transparent 50%);
+}
+
+.data-phase--open {
+  background: var(--mds-text-soft);
+}
+
 .data-footer {
   display: flex;
   flex-wrap: wrap;
