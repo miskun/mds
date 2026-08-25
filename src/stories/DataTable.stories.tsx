@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Button, DataTable } from "../components";
+import { Button, DataTable, Panel } from "../components";
 import type { DataColumn, DataTableSort } from "../components";
 import "./data-admin.css";
 import { columns, rows } from "./data-admin-data";
@@ -314,6 +314,37 @@ export const LiteralWidthColumns: Story = {
           { label: "Archive" },
         ]}
       />
+    );
+  },
+};
+
+export const FlushActionsInPanel: Story = {
+  parameters: storyDescription("Flush tables can sit inside raised surfaces without forcing the sticky control column to a black body stripe."),
+  render: () => {
+    const panelColumns = columns.map((column) => {
+      if (column.id === "name") return { ...column, grow: true, minWidth: 180 };
+      if (column.id === "stories") return { ...column, numeric: false, defaultWidth: 96 };
+      return { ...column, defaultWidth: literalColumnWidths[column.id] };
+    });
+
+    return (
+      <Panel variant="raised" style={{ maxWidth: 560 }}>
+        <DataTable
+          label="Flush component inventory"
+          caption="Flush component inventory inside a raised panel."
+          columns={panelColumns}
+          data={rows}
+          getRowId={(row) => row.id}
+          getRowLabel={(row) => row.name}
+          columnControls
+          rowActions={[
+            { label: "Open" },
+            { label: "Duplicate" },
+            { label: "Archive" },
+          ]}
+          surface="flush"
+        />
+      </Panel>
     );
   },
 };

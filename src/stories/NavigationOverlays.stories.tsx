@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Bell, Bolt, ChevronDown, FileText, MoreHorizontal, PanelRight } from "lucide-react";
 import {
   Button,
@@ -116,17 +116,19 @@ export const FloatingLayer: Story = {
 };
 
 export const ModalSurfaces: Story = {
-  parameters: storyDescription("Dialog and drawer examples show controlled open state, trigger composition, form content, and footer actions."),
+  parameters: storyDescription("Dialog and drawer examples show controlled open state, triggerless focus return, trigger composition, form content, and footer actions."),
   render: () => {
+    const dialogButtonRef = useRef<HTMLButtonElement>(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     return (
       <div className="mds-cluster">
-        <Button onClick={() => setDialogOpen(true)}>Open dialog</Button>
+        <Button ref={dialogButtonRef} onClick={() => setDialogOpen(true)}>Open dialog</Button>
         <Dialog
           open={dialogOpen}
           onOpenChange={setDialogOpen}
+          returnFocusTo={dialogButtonRef}
           title="Publish component"
           description="Confirm the component is documented and ready to use."
           footer={

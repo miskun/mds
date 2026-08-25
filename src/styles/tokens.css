@@ -22,6 +22,7 @@
   --mds-ink: var(--mds-gray-2);
   --mds-panel: var(--mds-gray-1);
   --mds-panel-raised: var(--mds-gray-2);
+  --mds-surface-background: var(--mds-black);
   --mds-line: var(--mds-gray-7);
   --mds-line-strong: var(--mds-gray-8);
   --mds-text: var(--mds-gray-12);

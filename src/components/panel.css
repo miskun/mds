@@ -5,15 +5,21 @@
 }
 
 .mds-panel--default {
+  --mds-surface-background: var(--mds-panel);
+
   background: var(--mds-panel);
 }
 
 .mds-panel--raised {
+  --mds-surface-background: var(--mds-panel-raised);
+
   border-color: var(--mds-line-strong);
   background: var(--mds-panel-raised);
 }
 
 .mds-panel--ghost {
+  --mds-surface-background: transparent;
+
   background: transparent;
 }
 

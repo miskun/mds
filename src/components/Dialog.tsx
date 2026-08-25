@@ -1,6 +1,6 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { forwardRef } from "react";
-import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ElementRef, ReactNode, RefObject } from "react";
 import { X } from "lucide-react";
 import { IconButton } from "./Button";
 import { cx } from "./utils";
@@ -15,6 +15,7 @@ export interface DialogProps extends Omit<ComponentPropsWithoutRef<typeof Dialog
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  returnFocusTo?: RefObject<HTMLElement | null>;
   overlayClassName?: string;
 }
 
@@ -28,8 +29,10 @@ export const Dialog = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
     open,
     defaultOpen,
     onOpenChange,
+    returnFocusTo,
     className,
     overlayClassName,
+    onCloseAutoFocus,
     ...contentProps
   },
   ref,
@@ -39,7 +42,12 @@ export const Dialog = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
       {trigger ? <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger> : null}
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
-        <DialogPrimitive.Content ref={ref} className={cx("mds-dialog", className)} {...contentProps}>
+        <DialogPrimitive.Content
+          ref={ref}
+          className={cx("mds-dialog", className)}
+          onCloseAutoFocus={(event) => handleCloseAutoFocus(event, returnFocusTo, onCloseAutoFocus)}
+          {...contentProps}
+        >
           <DialogHeader title={title} description={description} />
           <div className="mds-dialog__body">{children}</div>
           {footer ? <footer className="mds-dialog__footer">{footer}</footer> : null}
@@ -52,8 +60,7 @@ export const Dialog = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
   );
 });
 
-export interface DrawerProps extends Omit<DialogProps, "trigger"> {
-  trigger?: ReactNode;
+export interface DrawerProps extends DialogProps {
   side?: "left" | "right";
 }
 
@@ -68,8 +75,10 @@ export const Drawer = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dra
     open,
     defaultOpen,
     onOpenChange,
+    returnFocusTo,
     className,
     overlayClassName,
+    onCloseAutoFocus,
     ...contentProps
   },
   ref,
@@ -79,7 +88,12 @@ export const Drawer = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dra
       {trigger ? <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger> : null}
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
-        <DialogPrimitive.Content ref={ref} className={cx("mds-drawer", `mds-drawer--${side}`, className)} {...contentProps}>
+        <DialogPrimitive.Content
+          ref={ref}
+          className={cx("mds-drawer", `mds-drawer--${side}`, className)}
+          onCloseAutoFocus={(event) => handleCloseAutoFocus(event, returnFocusTo, onCloseAutoFocus)}
+          {...contentProps}
+        >
           <DialogHeader title={title} description={description} />
           <div className="mds-dialog__body">{children}</div>
           {footer ? <footer className="mds-dialog__footer">{footer}</footer> : null}
@@ -99,4 +113,16 @@ function DialogHeader({ title, description }: { title: string; description?: str
       {description ? <DialogPrimitive.Description className="mds-dialog__description">{description}</DialogPrimitive.Description> : null}
     </header>
   );
+}
+
+function handleCloseAutoFocus(
+  event: Event,
+  returnFocusTo: RefObject<HTMLElement | null> | undefined,
+  onCloseAutoFocus: ComponentPropsWithoutRef<typeof DialogPrimitive.Content>["onCloseAutoFocus"] | undefined,
+) {
+  onCloseAutoFocus?.(event);
+  if (event.defaultPrevented || !returnFocusTo?.current) return;
+
+  event.preventDefault();
+  returnFocusTo.current.focus();
 }
