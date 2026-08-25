@@ -31,6 +31,7 @@ export interface ComboBoxProps extends Omit<HTMLAttributes<HTMLDivElement>, "def
   loading?: boolean;
   disabled?: boolean;
   clearable?: boolean;
+  controlClassName?: string;
 }
 
 export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function ComboBox(
@@ -52,6 +53,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
     clearable = true,
     id,
     className,
+    controlClassName,
     onBlur,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
@@ -151,7 +153,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   }
 
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={comboId} messageId={messageId}>
+    <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={comboId} messageId={messageId}>
       <div
         ref={ref}
         className={cx(
@@ -159,7 +161,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
           open && "mds-combo--open",
           invalidState && "mds-combo--invalid",
           disabled && "mds-combo--disabled",
-          className,
+          controlClassName,
         )}
         onBlur={(event) => {
           onBlur?.(event);

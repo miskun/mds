@@ -14,10 +14,12 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   error?: string;
   /** Marks the field invalid without requiring error text. */
   invalid?: boolean;
+  /** Class applied to the select element. */
+  controlClassName?: string;
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-  { label, hint, error, invalid, className, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, children, ...props },
+  { label, hint, error, invalid, className, controlClassName, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, children, ...props },
   ref,
 ) {
   const generatedId = useId();
@@ -27,12 +29,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
 
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={selectId} messageId={messageId}>
+    <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={selectId} messageId={messageId}>
       <span className="mds-select-wrap">
         <select
           ref={ref}
           id={selectId}
-          className={cx("mds-select", className)}
+          className={cx("mds-select", controlClassName)}
           required={required}
           aria-invalid={invalidState || undefined}
           aria-describedby={describedBy}

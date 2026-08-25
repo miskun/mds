@@ -9,6 +9,11 @@
 
 .mds-tree__node {
   min-width: 0;
+  list-style: none;
+}
+
+.mds-tree__node::marker {
+  content: "";
 }
 
 .mds-tree__item {
@@ -47,7 +52,12 @@
 }
 
 .mds-tree__item--current {
-  background: color-mix(in srgb, var(--mds-accent) 14%, transparent);
+  background: var(--mds-surface-accent-muted);
+  color: var(--mds-accent);
+}
+
+.mds-tree__item--current:hover {
+  background: var(--mds-surface-accent);
   color: var(--mds-accent);
 }
 

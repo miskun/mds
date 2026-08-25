@@ -6,6 +6,16 @@
   list-style: none;
 }
 
+.mds-nav__list > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mds-nav__list > li::marker {
+  content: "";
+}
+
 .mds-nav__item {
   display: grid;
   grid-template-columns: var(--mds-nav-icon-size) minmax(0, 1fr);
@@ -31,7 +41,12 @@
 }
 
 .mds-nav__item--active {
-  background: color-mix(in srgb, var(--mds-accent) 14%, transparent);
+  background: var(--mds-surface-accent-muted);
+  color: var(--mds-accent);
+}
+
+.mds-nav__item--active:hover {
+  background: var(--mds-surface-accent);
   color: var(--mds-accent);
 }
 

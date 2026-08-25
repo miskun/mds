@@ -180,3 +180,37 @@ export const ModalSurfaces: Story = {
     );
   },
 };
+
+export const ScrollableDialog: Story = {
+  parameters: storyDescription("Dialog bodies scroll when content is taller than the viewport while header, close, and footer actions remain reachable."),
+  render: () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <>
+        <Button onClick={() => setOpen(true)}>Open long dialog</Button>
+        <Dialog
+          open={open}
+          onOpenChange={setOpen}
+          title="Check long record"
+          description="Review all fields before confirming the record."
+          footer={
+            <>
+              <Button variant="secondary" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => setOpen(false)}>Check it</Button>
+            </>
+          }
+        >
+          <div className="mds-stack">
+            {Array.from({ length: 12 }, (_, index) => (
+              <Input key={index} label={`Record field ${index + 1}`} defaultValue={`Value ${index + 1}`} />
+            ))}
+            <Checkbox label="I verified the full record" />
+          </div>
+        </Dialog>
+      </>
+    );
+  },
+};

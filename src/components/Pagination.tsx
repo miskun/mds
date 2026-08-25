@@ -25,7 +25,13 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
           return (
             <span className="mds-pagination__slot" key={candidate}>
               {previous && candidate - previous > 1 ? <span className="mds-pagination__ellipsis">...</span> : null}
-              <Button size="sm" variant={candidate === page ? "primary" : "ghost"} aria-current={candidate === page ? "page" : undefined} onClick={() => onPageChange?.(candidate)}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className={cx("mds-pagination__page", candidate === page && "mds-pagination__page--current")}
+                aria-current={candidate === page ? "page" : undefined}
+                onClick={() => onPageChange?.(candidate)}
+              >
                 {candidate}
               </Button>
             </span>

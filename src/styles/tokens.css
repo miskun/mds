@@ -37,6 +37,7 @@
   --mds-text-success: var(--mds-success);
   --mds-text-warning: var(--mds-warning);
   --mds-text-danger: var(--mds-danger);
+  --mds-surface-accent-muted: color-mix(in srgb, var(--mds-accent) 14%, transparent);
   --mds-surface-accent: color-mix(in srgb, var(--mds-accent) 18%, transparent);
   --mds-surface-success: color-mix(in srgb, var(--mds-success) 16%, transparent);
   --mds-surface-warning: color-mix(in srgb, var(--mds-warning) 16%, transparent);

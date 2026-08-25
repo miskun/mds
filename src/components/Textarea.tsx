@@ -13,10 +13,12 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   error?: string;
   /** Marks the field invalid without requiring error text. */
   invalid?: boolean;
+  /** Class applied to the textarea element. */
+  controlClassName?: string;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-  { label, hint, error, invalid, className, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props },
+  { label, hint, error, invalid, className, controlClassName, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props },
   ref,
 ) {
   const generatedId = useId();
@@ -26,11 +28,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
 
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={textareaId} messageId={messageId}>
+    <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={textareaId} messageId={messageId}>
       <textarea
         ref={ref}
         id={textareaId}
-        className={cx("mds-textarea", className)}
+        className={cx("mds-textarea", controlClassName)}
         required={required}
         aria-invalid={invalidState || undefined}
         aria-describedby={describedBy}

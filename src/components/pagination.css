@@ -16,6 +16,17 @@
   gap: calc(var(--mds-control-gap) * 0.5);
 }
 
+.mds-pagination__page--current {
+  background: var(--mds-surface-accent-muted);
+  color: var(--mds-accent);
+}
+
+.mds-pagination__page--current:hover {
+  background: var(--mds-surface-accent);
+  border-color: transparent;
+  color: var(--mds-accent);
+}
+
 .mds-pagination__ellipsis {
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-sm);

@@ -25,6 +25,7 @@ export interface SelectFieldProps extends Omit<HTMLAttributes<HTMLDivElement>, "
   placeholder?: string;
   disabled?: boolean;
   clearable?: boolean;
+  controlClassName?: string;
 }
 
 export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function SelectField(
@@ -43,6 +44,7 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
     clearable = false,
     id,
     className,
+    controlClassName,
     onBlur,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
@@ -118,7 +120,7 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
   }
 
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={selectId} messageId={messageId}>
+    <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={selectId} messageId={messageId}>
       <div
         ref={ref}
         className={cx(
@@ -126,7 +128,7 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
           open && "mds-select-field--open",
           invalidState && "mds-select-field--invalid",
           disabled && "mds-select-field--disabled",
-          className,
+          controlClassName,
         )}
         onBlur={(event) => {
           onBlur?.(event);

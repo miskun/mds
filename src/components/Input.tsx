@@ -13,10 +13,12 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   /** Marks the field invalid without requiring error text. */
   invalid?: boolean;
+  /** Class applied to the input element. */
+  controlClassName?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { label, hint, error, invalid, className, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props },
+  { label, hint, error, invalid, className, controlClassName, id, required, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props },
   ref,
 ) {
   const generatedId = useId();
@@ -26,11 +28,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
 
   return (
-    <Field label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={inputId} messageId={messageId}>
+    <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={inputId} messageId={messageId}>
       <input
         ref={ref}
         id={inputId}
-        className={cx("mds-input", className)}
+        className={cx("mds-input", controlClassName)}
         required={required}
         aria-invalid={invalidState || undefined}
         aria-describedby={describedBy}

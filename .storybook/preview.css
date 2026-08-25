@@ -14,22 +14,27 @@ body {
   max-width: 1040px;
 }
 
-.sbdocs-content h1,
-.sbdocs-content h2,
-.sbdocs-content h3,
-.sbdocs-content h4,
+.sbdocs-content > h1,
+.sbdocs-content > h2,
+.sbdocs-content > h3,
+.sbdocs-content > h4,
 .sbdocs-title,
 .sbdocs-subtitle {
   color: var(--mds-text);
 }
 
-.sbdocs-content p,
-.sbdocs-content li,
-.sbdocs-content td {
+.sbdocs-content > p,
+.sbdocs-content > ul li,
+.sbdocs-content > ol li,
+.sbdocs-content > table td {
   color: var(--mds-text-muted);
 }
 
-.sbdocs-content a {
+.sbdocs-content > a,
+.sbdocs-content > p a,
+.sbdocs-content > ul a,
+.sbdocs-content > ol a,
+.sbdocs-content > table a {
   color: var(--mds-accent);
 }
 

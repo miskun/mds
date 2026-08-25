@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button, Card, Checkbox, Cluster, ComboBox, Field, Grid, Input, Panel, Stack, Textarea } from "../components";
 import "../showcase.css";
+import "./form-layouts.css";
 
 const meta = {
   title: "MDS/Components/Forms/Form layouts",
@@ -77,5 +78,28 @@ export const ValidationSection: Story = {
         <Checkbox label="I reviewed the release notes" error="Confirm review before publishing." />
       </Stack>
     </Panel>
+  ),
+};
+
+export const GridSpanningFields: Story = {
+  parameters: storyDescription("Field-wrapped controls apply className to the Field root, so layout classes can span grid columns while controlClassName targets the control surface."),
+  render: () => (
+    <Card eyebrow="Form layout" title="Grid placement" style={{ maxWidth: 720 }}>
+      <Grid minItemWidth="240px">
+        <Input label="First name" placeholder="Alex" />
+        <Input label="Last name" placeholder="Morgan" />
+        <ComboBox
+          className="form-layouts__span-all"
+          label="Primary workspace"
+          placeholder="Choose workspace"
+          options={[
+            { value: "product", label: "Product" },
+            { value: "design", label: "Design" },
+            { value: "engineering", label: "Engineering" },
+          ]}
+        />
+        <Textarea className="form-layouts__span-all" label="Notes" placeholder="Add migration notes" />
+      </Grid>
+    </Card>
   ),
 };
