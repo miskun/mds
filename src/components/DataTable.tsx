@@ -25,7 +25,7 @@ export interface DataColumn<T> {
   sortValue?: keyof T | ((row: T) => string | number);
   cell?: (row: T) => ReactNode;
   sortable?: boolean;
-  align?: "left" | "right" | "center";
+  align?: "left" | "middle" | "right" | "center";
   numeric?: boolean;
   width?: number;
   defaultWidth?: number;
@@ -670,16 +670,21 @@ function isInteractiveEventTarget(target: EventTarget | null, currentTarget: Eve
 }
 
 function getColumnClassName<T>(baseClassName: string, column: DataColumn<T>, withSelect = false, withActions = false) {
-  const align = column.align ?? (column.numeric ? "right" : undefined);
+  const align = getColumnAlign(column);
 
   return cx(
     align === "right" && `${baseClassName}--right`,
-    align === "center" && `${baseClassName}--center`,
+    align === "middle" && `${baseClassName}--middle`,
     column.numeric && `${baseClassName}--numeric`,
     column.numeric && "mds-numeric",
     withSelect && `${baseClassName}--with-select`,
     withActions && `${baseClassName}--with-actions`,
   );
+}
+
+function getColumnAlign<T>(column: DataColumn<T>) {
+  if (column.align === "center") return "middle";
+  return column.align ?? (column.numeric ? "right" : undefined);
 }
 
 function getColumnStyle<T>(column: DataColumn<T>, columnWidths: Record<string, number>, totalGrowWeight: number) {

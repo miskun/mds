@@ -127,6 +127,8 @@
   text-align: right;
 }
 
+.mds-table__cell--middle,
+.mds-table__header--middle,
 .mds-table__cell--center,
 .mds-table__header--center {
   text-align: center;
