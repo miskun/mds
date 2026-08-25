@@ -3,7 +3,7 @@ import type { HTMLAttributes, ReactNode } from "react";
 import { cx } from "./utils";
 import "./typography.css";
 
-export type TextTone = "default" | "muted" | "soft" | "accent" | "danger" | "success";
+export type TextTone = "default" | "muted" | "soft" | "accent" | "danger" | "success" | "warning";
 export type TextSize = "xxs" | "xs" | "sm" | "md" | "lg";
 export type TextWeight = "regular" | "medium" | "strong";
 export type TextElement = "p" | "span" | "div";

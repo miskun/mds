@@ -11,7 +11,7 @@
 
 .mds-alert__icon {
   display: inline-flex;
-  color: var(--mds-accent);
+  color: var(--mds-text-accent);
   margin-top: 1px;
 }
 
@@ -37,25 +37,25 @@
 }
 
 .mds-alert--success {
-  border-color: color-mix(in srgb, var(--mds-success) 36%, var(--mds-line));
+  border-color: var(--mds-border-success);
 }
 
 .mds-alert--success .mds-alert__icon {
-  color: var(--mds-success);
+  color: var(--mds-text-success);
 }
 
 .mds-alert--warning {
-  border-color: color-mix(in srgb, #ffcc66 44%, var(--mds-line));
+  border-color: var(--mds-border-warning);
 }
 
 .mds-alert--warning .mds-alert__icon {
-  color: #ffcc66;
+  color: var(--mds-text-warning);
 }
 
 .mds-alert--danger {
-  border-color: color-mix(in srgb, var(--mds-danger) 48%, var(--mds-line));
+  border-color: var(--mds-border-danger);
 }
 
 .mds-alert--danger .mds-alert__icon {
-  color: var(--mds-danger);
+  color: var(--mds-text-danger);
 }

@@ -38,6 +38,7 @@ export const StatusMetadata: Story = {
           <Badge>Neutral</Badge>
           <Badge tone="accent">Accent</Badge>
           <Badge tone="success">Success</Badge>
+          <Badge tone="warning">Warning</Badge>
           <Badge tone="danger">Danger</Badge>
         </Cluster>
         <Divider />
@@ -65,6 +66,7 @@ export const SemanticBadges: Story = {
       <Badge>Draft</Badge>
       <Badge tone="accent">Featured</Badge>
       <Badge tone="success">Stable</Badge>
+      <Badge tone="warning">Review</Badge>
       <Badge tone="danger">Deprecated</Badge>
     </Cluster>
   ),

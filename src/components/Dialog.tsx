@@ -7,7 +7,7 @@ import { cx } from "./utils";
 import "./dialog.css";
 
 export interface DialogProps extends Omit<ComponentPropsWithoutRef<typeof DialogPrimitive.Content>, "children" | "title"> {
-  trigger: ReactNode;
+  trigger?: ReactNode;
   title: string;
   description?: string;
   children: ReactNode;
@@ -36,7 +36,7 @@ export const Dialog = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
 ) {
   return (
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+      {trigger ? <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger> : null}
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
         <DialogPrimitive.Content ref={ref} className={cx("mds-dialog", className)} {...contentProps}>
@@ -53,7 +53,7 @@ export const Dialog = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
 });
 
 export interface DrawerProps extends Omit<DialogProps, "trigger"> {
-  trigger: ReactNode;
+  trigger?: ReactNode;
   side?: "left" | "right";
 }
 
@@ -76,7 +76,7 @@ export const Drawer = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dra
 ) {
   return (
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+      {trigger ? <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger> : null}
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={cx("mds-dialog__overlay", overlayClassName)} />
         <DialogPrimitive.Content ref={ref} className={cx("mds-drawer", `mds-drawer--${side}`, className)} {...contentProps}>

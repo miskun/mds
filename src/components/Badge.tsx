@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react";
 import { cx } from "./utils";
 import "./badge.css";
 
-export type BadgeTone = "neutral" | "accent" | "success" | "danger";
+export type BadgeTone = "neutral" | "accent" | "success" | "warning" | "danger";
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /** Semantic color treatment. */

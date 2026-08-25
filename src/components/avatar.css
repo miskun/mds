@@ -49,13 +49,13 @@
 }
 
 .mds-avatar--online .mds-avatar__status {
-  background: var(--mds-success);
+  background: var(--mds-text-success);
 }
 
 .mds-avatar--away .mds-avatar__status {
-  background: #ffcc66;
+  background: var(--mds-text-warning);
 }
 
 .mds-avatar--busy .mds-avatar__status {
-  background: var(--mds-danger);
+  background: var(--mds-text-danger);
 }

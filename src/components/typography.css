@@ -53,15 +53,19 @@
 }
 
 .mds-text--accent {
-  color: var(--mds-accent);
+  color: var(--mds-text-accent);
 }
 
 .mds-text--danger {
-  color: var(--mds-danger);
+  color: var(--mds-text-danger);
 }
 
 .mds-text--success {
-  color: var(--mds-success);
+  color: var(--mds-text-success);
+}
+
+.mds-text--warning {
+  color: var(--mds-text-warning);
 }
 
 .mds-title-text {
@@ -94,7 +98,7 @@
   border: 1px solid var(--mds-line);
   border-radius: var(--mds-radius-xs);
   background: var(--mds-ink);
-  color: var(--mds-accent);
+  color: var(--mds-text-accent);
   padding: 0 calc(var(--mds-control-gap) * 0.75);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.92em;

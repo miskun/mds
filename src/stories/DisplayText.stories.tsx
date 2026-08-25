@@ -57,6 +57,7 @@ export const TypographyScale: Story = {
           <Stack gap="sm">
             <Text tone="accent">Accent text</Text>
             <Text tone="success">Success text</Text>
+            <Text tone="warning">Warning text</Text>
             <Text tone="danger">Danger text</Text>
           </Stack>
         </Card>

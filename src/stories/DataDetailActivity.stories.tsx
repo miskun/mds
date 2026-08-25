@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { Clock, FileText, Settings } from "lucide-react";
 import {
   ActivityFeed,
@@ -79,4 +80,49 @@ export const ListAndDetail: Story = {
       </DetailPanel>
     </Grid>
   ),
+};
+
+export const ResizableDetail: Story = {
+  parameters: storyDescription("Resizable detail panels let desktop layouts expose a persistent inspection pane with controlled width persistence."),
+  render: () => {
+    const [width, setWidth] = useState(320);
+
+    return (
+      <Grid minItemWidth="320px">
+        <Stack>
+          {rows.slice(0, 4).map((row) => (
+            <ListItem
+              key={row.id}
+              title={row.name}
+              description={`${row.target} target maintained by ${row.owner}`}
+              meta={<StatusDot tone={row.status === "stable" ? "success" : "warning"} label={row.status} />}
+            />
+          ))}
+        </Stack>
+        <DetailPanel
+          title="Component details"
+          meta={`${width}px wide`}
+          resizable
+          width={width}
+          minWidth={260}
+          maxWidth={520}
+          onWidthChange={setWidth}
+          actions={<Button size="sm">Open</Button>}
+        >
+          <Stack>
+            <DescriptionList orientation="inline">
+              <DescriptionItem term="Owner">Miskun</DescriptionItem>
+              <DescriptionItem term="Target">admin</DescriptionItem>
+              <DescriptionItem term="Status">Review</DescriptionItem>
+            </DescriptionList>
+            <ActivityFeed>
+              <ActivityItem title="Width changed" meta="live" icon={<Settings size={13} />}>
+                Consumers can persist the committed width for desktop workspaces.
+              </ActivityItem>
+            </ActivityFeed>
+          </Stack>
+        </DetailPanel>
+      </Grid>
+    );
+  },
 };

@@ -123,10 +123,10 @@ export const ModalSurfaces: Story = {
 
     return (
       <div className="mds-cluster">
+        <Button onClick={() => setDialogOpen(true)}>Open dialog</Button>
         <Dialog
           open={dialogOpen}
           onOpenChange={setDialogOpen}
-          trigger={<Button>Open dialog</Button>}
           title="Publish component"
           description="Confirm the component is documented and ready to use."
           footer={

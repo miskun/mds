@@ -15,17 +15,17 @@
 }
 
 .mds-status--accent .mds-status__dot {
-  background: var(--mds-accent);
+  background: var(--mds-text-accent);
 }
 
 .mds-status--success .mds-status__dot {
-  background: var(--mds-success);
+  background: var(--mds-text-success);
 }
 
 .mds-status--warning .mds-status__dot {
-  background: #ffcc66;
+  background: var(--mds-text-warning);
 }
 
 .mds-status--danger .mds-status__dot {
-  background: var(--mds-danger);
+  background: var(--mds-text-danger);
 }

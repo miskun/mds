@@ -26,8 +26,21 @@ const colors = [
   ["Muted", "--mds-text-muted", "Secondary text and supporting metadata."],
   ["Soft text", "--mds-text-soft", "Subtle labels, hints, and low-emphasis copy."],
   ["Accent", "--mds-accent", "Primary action emphasis and focus signal."],
-  ["Danger", "--mds-danger", "Errors and destructive state."],
   ["Success", "--mds-success", "Positive status and completion state."],
+  ["Warning", "--mds-warning", "Caution, review, and recoverable risk state."],
+  ["Danger", "--mds-danger", "Errors and destructive state."],
+  ["Accent text", "--mds-text-accent", "Accent icons, links, and compact status text."],
+  ["Accent surface", "--mds-surface-accent", "Low-emphasis accent fills for badges and selected metadata."],
+  ["Accent border", "--mds-border-accent", "Accent borders for badges and emphasized surfaces."],
+  ["Success text", "--mds-text-success", "Success icons, labels, and inline status text."],
+  ["Success surface", "--mds-surface-success", "Low-emphasis success fills for badges and compact indicators."],
+  ["Success border", "--mds-border-success", "Success borders for badges and positive state surfaces."],
+  ["Warning text", "--mds-text-warning", "Warning icons, labels, and inline status text."],
+  ["Warning surface", "--mds-surface-warning", "Low-emphasis warning fills for badges and compact indicators."],
+  ["Warning border", "--mds-border-warning", "Warning borders for alerts, badges, and validation-adjacent UI."],
+  ["Danger text", "--mds-text-danger", "Danger icons, labels, and validation text."],
+  ["Danger surface", "--mds-surface-danger", "Low-emphasis danger fills for invalid and destructive states."],
+  ["Danger border", "--mds-border-danger", "Danger borders for alerts, badges, and destructive surfaces."],
 ];
 
 const grayScale = [
@@ -93,7 +106,7 @@ const namingRules = [
   ["Base tokens", "--mds-space-4, --mds-font-size-sm", "Raw scale values. Use directly only for low-level token definitions."],
   ["Semantic aliases", "--mds-stack-gap, --mds-panel-padding", "Preferred for components and layout. These adapt by target."],
   ["Component tokens", "--mds-switch-height, --mds-badge-height", "Shared dimensions for repeated component families."],
-  ["State tokens", "--mds-danger, --mds-success, --mds-focus", "Use for consistent status, validation, and focus treatment."],
+  ["State tokens", "--mds-danger, --mds-warning, --mds-success, --mds-focus", "Use for consistent status, validation, and focus treatment."],
   ["Numeric utility", ".mds-numeric", "Use tabular figures for prices, counts, percentages, and aligned measurements."],
 ];
 

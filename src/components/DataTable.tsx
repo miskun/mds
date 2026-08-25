@@ -341,6 +341,7 @@ function DataTableInner<T>({
   const tableClassName = cx(
     tableProps.className,
     usesFixedLayout && hasColumnSizing && (hasGrowColumn ? "mds-table--fill-widths" : "mds-table--literal-widths"),
+    hasControlColumn && "mds-table--sticky-control-column",
   );
   const tableStyle = getTableStyle(tableProps.style, usesFixedLayout && hasGrowColumn ? tableContentMinWidth : undefined, hasControlColumn);
   const containerClassName = tableProps.containerClassName;
