@@ -206,6 +206,10 @@
   white-space: nowrap;
 }
 
+.mds-table__header--sortable {
+  cursor: pointer;
+}
+
 .mds-table__context-control {
   position: static;
 }
@@ -248,7 +252,7 @@
   flex: none;
 }
 
-.mds-table__sort:hover,
+.mds-table__header--sortable:hover .mds-table__sort,
 .mds-table__header--menu-open .mds-table__sort {
   color: var(--mds-text);
 }

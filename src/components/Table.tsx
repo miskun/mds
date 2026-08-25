@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import type { CSSProperties, HTMLAttributes, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { cx } from "./utils";
 import "./table.css";
@@ -76,7 +76,7 @@ export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> 
 }
 
 export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(function SortHeader(
-  { active, direction, sortLabel, onSort, leading, action, className, children, ...props },
+  { active, direction, sortLabel, onSort, leading, action, className, children, onClick, ...props },
   ref,
 ) {
   const Icon = active && direction === "asc" ? ArrowUp : active && direction === "desc" ? ArrowDown : ChevronsUpDown;
@@ -90,8 +90,14 @@ export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(func
         : `Sort ${label} ascending`;
   const hasChildren = children !== undefined && children !== null && children !== false;
 
+  function handleHeaderClick(event: MouseEvent<HTMLTableCellElement>) {
+    onClick?.(event);
+    if (event.defaultPrevented || isHeaderInteractiveTarget(event.target, event.currentTarget)) return;
+    onSort?.();
+  }
+
   return (
-    <TableHeader ref={ref} className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} {...props}>
+    <TableHeader ref={ref} className={cx("mds-table__header--sortable", className)} aria-sort={ariaSort} onClick={handleHeaderClick} {...props}>
       {leading}
       <button className={cx("mds-table__sort", !hasChildren && "mds-table__sort--icon-only")} type="button" aria-label={actionLabel} onClick={onSort}>
         {hasChildren ? <span>{children}</span> : null}
@@ -101,3 +107,10 @@ export const SortHeader = forwardRef<HTMLTableCellElement, SortHeaderProps>(func
     </TableHeader>
   );
 });
+
+function isHeaderInteractiveTarget(target: EventTarget | null, currentTarget: EventTarget) {
+  if (!(target instanceof Element) || !(currentTarget instanceof Element)) return false;
+
+  const interactiveTarget = target.closest("a, button, input, select, textarea, [role='button'], [role='checkbox'], [role='link'], [role='menuitem'], [role='switch']");
+  return interactiveTarget !== null && interactiveTarget !== currentTarget && currentTarget.contains(interactiveTarget);
+}
