@@ -3,7 +3,7 @@ import { Badge, Button, Cluster, PageHeader, Stack, StatusDot } from "../compone
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Layout/PageHeader",
+  title: "MDS/Components/Layout/Page header",
   component: PageHeader,
   tags: ["autodocs"],
   parameters: {
@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "PageHeader gives pages a consistent title, description, metadata, and action area.",
+          "Page header gives pages a consistent title, description, metadata, and action area.",
       },
     },
   },
@@ -29,7 +29,7 @@ const storyDescription = (story: string) => ({
 });
 
 export const ProductPage: Story = {
-  parameters: storyDescription("PageHeader supports page-level actions and metadata without requiring a card wrapper."),
+  parameters: storyDescription("Page header supports page-level actions and metadata without requiring a card wrapper."),
   render: () => (
     <Stack>
       <PageHeader

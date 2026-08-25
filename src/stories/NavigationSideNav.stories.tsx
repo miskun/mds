@@ -4,7 +4,7 @@ import { Badge, Card, Grid, Panel, SideNav, SideNavItem, SideNavSection, Stack, 
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Navigation/SideNav",
+  title: "MDS/Components/Navigation/Side nav",
   component: SideNav,
   subcomponents: { SideNavSection, SideNavItem },
   tags: ["autodocs"],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "SideNav provides persistent structural navigation for apps, admin portals, settings areas, and documentation shells.",
+          "Side nav provides persistent structural navigation for apps, admin portals, settings areas, and documentation shells.",
       },
     },
   },
@@ -31,7 +31,7 @@ const storyDescription = (story: string) => ({
 });
 
 export const AppSidebar: Story = {
-  parameters: storyDescription("Use SideNav when navigation is a persistent region instead of a compact list inside content."),
+  parameters: storyDescription("Use side nav when navigation is a persistent region instead of a compact list inside content."),
   render: () => (
     <Grid minItemWidth="260px" style={{ maxWidth: 980 }}>
       <Panel padding="sm">
@@ -62,7 +62,7 @@ export const AppSidebar: Story = {
       <Card title="Current surface" eyebrow="Overview">
         <Stack gap="sm">
           <Text>
-            SideNav uses target tokens for row height, icon size, indentation, and typography, so the same component fits desktop, mobile, admin, and editorial shells.
+            Side nav uses target tokens for row height, icon size, indentation, and typography, so the same component fits desktop, mobile, admin, and editorial shells.
           </Text>
           <Text tone="muted">Current items use <code>aria-current="page"</code> for assistive technology.</Text>
         </Stack>

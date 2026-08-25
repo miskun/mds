@@ -7,9 +7,9 @@ const componentOptions = [
   { value: "button", label: "Button", description: "Primary action trigger", group: "Actions" },
   { value: "split-button", label: "Split button", description: "Action with secondary choices", group: "Actions" },
   { value: "input", label: "Input", description: "Single-line text field", group: "Forms" },
-  { value: "combo-box", label: "ComboBox", description: "Searchable selection control", group: "Forms" },
+  { value: "combo-box", label: "Combo box", description: "Searchable selection control", group: "Forms" },
   { value: "data-table", label: "Data table", description: "Sortable record table", group: "Data" },
-  { value: "tree-view", label: "TreeView", description: "Nested hierarchy navigation", group: "Navigation" },
+  { value: "tree-view", label: "Tree view", description: "Nested hierarchy navigation", group: "Navigation" },
   { value: "deprecated-menu", label: "Deprecated menu", description: "Unavailable for new work", group: "Navigation", disabled: true },
 ];
 

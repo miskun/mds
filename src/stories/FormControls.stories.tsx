@@ -90,7 +90,7 @@ export const TextWithNativeTypes: Story = {
 };
 
 export const DropdownFields: Story = {
-  parameters: storyDescription("Use SelectField for regular MDS-rendered dropdown fields. Use ComboBox when searching/filtering options matters."),
+  parameters: storyDescription("Use SelectField for regular MDS-rendered dropdown fields. Use ComboBox when searching or filtering options matters."),
   render: () => (
     <Stack style={{ maxWidth: 520 }}>
       <SelectField
@@ -121,7 +121,7 @@ export const DropdownFields: Story = {
         options={[
           { value: "button", label: "Button", description: "Primary action trigger" },
           { value: "input", label: "Input", description: "Single-line text field" },
-          { value: "combo-box", label: "ComboBox", description: "Searchable selection control" },
+          { value: "combo-box", label: "Combo box", description: "Searchable selection control" },
         ]}
       />
     </Stack>

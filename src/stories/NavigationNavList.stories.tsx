@@ -4,7 +4,7 @@ import { Card, Grid, NavItem, NavList, Panel, Stack, StatusDot } from "../compon
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Navigation/NavList",
+  title: "MDS/Components/Navigation/Nav list",
   component: NavList,
   subcomponents: { NavItem },
   tags: ["autodocs"],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "NavList presents compact vertical navigation for sidebars, settings areas, and product sections.",
+          "Nav list presents compact vertical navigation for sidebars, settings areas, and product sections.",
       },
     },
   },

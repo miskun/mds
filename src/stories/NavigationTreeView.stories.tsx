@@ -4,7 +4,7 @@ import { Card, Grid, Panel, Stack, Text, TreeItem, TreeView } from "../component
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Navigation/TreeView",
+  title: "MDS/Components/Navigation/Tree view",
   component: TreeView,
   subcomponents: { TreeItem },
   tags: ["autodocs"],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "TreeView presents nested navigation for files, documentation, settings, projects, and other hierarchical structures.",
+          "Tree view presents nested navigation for files, documentation, settings, projects, and other hierarchical structures.",
       },
     },
   },
@@ -46,8 +46,8 @@ export const DocumentationTree: Story = {
           </TreeItem>
           <TreeItem label="Components" level={1} icon={<Folder size={16} />} defaultExpanded>
             <TreeItem label="Navigation" level={2} icon={<Folder size={16} />} defaultExpanded>
-              <TreeItem href="#" label="SideNav" level={3} icon={<LayoutPanelTop size={16} />} current />
-              <TreeItem href="#" label="TreeView" level={3} icon={<Box size={16} />} />
+              <TreeItem href="#" label="Side nav" level={3} icon={<LayoutPanelTop size={16} />} current />
+              <TreeItem href="#" label="Tree view" level={3} icon={<Box size={16} />} />
             </TreeItem>
             <TreeItem href="#" label="Forms" level={2} icon={<FileText size={16} />} />
             <TreeItem href="#" label="Display" level={2} icon={<FileText size={16} />} />
@@ -70,7 +70,7 @@ export const DocumentationTree: Story = {
 };
 
 export const ProjectTree: Story = {
-  parameters: storyDescription("TreeView can also model project or file hierarchies in desktop and admin tools."),
+  parameters: storyDescription("Tree view can also model project or file hierarchies in desktop and admin tools."),
   render: () => (
     <Panel padding="sm" style={{ maxWidth: 420 }}>
       <TreeView label="Project files">
