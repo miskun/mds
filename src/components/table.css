@@ -214,6 +214,14 @@
   position: static;
 }
 
+.mds-table__menu-trigger:focus-visible {
+  outline: none;
+  background: var(--mds-panel-raised);
+  border-color: var(--mds-line);
+  box-shadow: none;
+  color: var(--mds-text);
+}
+
 .mds-table__context-anchor {
   position: fixed;
   width: 1px;

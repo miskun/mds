@@ -584,7 +584,10 @@ function DataTableInner<T>({
     const allColumnsVisible = hiddenColumnCount === 0;
 
     return (
-      <DropdownMenu trigger={<IconButton label="Manage columns" size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+      <DropdownMenu
+        trigger={<IconButton className="mds-table__menu-trigger" label="Manage columns" size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />}
+        align="end"
+      >
         <MenuLabel>Columns</MenuLabel>
         {hideableColumns.map((column) => {
           const visible = visibleColumnIdSet.has(column.id);
@@ -621,7 +624,10 @@ function DataTableInner<T>({
     if (!rowActions?.length) return null;
 
     return (
-      <DropdownMenu trigger={<IconButton label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />} align="end">
+      <DropdownMenu
+        trigger={<IconButton className="mds-table__menu-trigger" label={`Actions for ${rowLabel}`} size="sm" variant="ghost" icon={<MoreHorizontal size={14} />} />}
+        align="end"
+      >
         {rowActions.map((action) => (
           <MenuItem key={action.label} onSelect={() => action.onSelect?.(row)}>
             {action.label}
