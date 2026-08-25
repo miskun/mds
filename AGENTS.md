@@ -89,6 +89,16 @@ If a component needs a repeated size, spacing, or rhythm decision, add a semanti
 
 ## Verification
 
+For inner-loop MDS work, use Storybook and targeted checks without rebuilding package output after every small change.
+
+For commit-ready changes that may be consumed by a sibling project through the package entry, run:
+
+```sh
+npm run build:lib
+```
+
+This refreshes local `dist/` output without making every visual iteration heavier.
+
 Run:
 
 ```sh

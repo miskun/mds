@@ -16,6 +16,7 @@ Before committing:
 - Confirm generated build output is intentional before staging it.
 - Run a source hygiene sweep when comments or docs changed.
 - Run the relevant verification command for the changed surface.
+- Run `npm run build:lib` for commit-ready component or style changes that a sibling consumer may use through the MDS package entry.
 
 ## Message Style
 
