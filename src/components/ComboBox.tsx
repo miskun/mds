@@ -1,7 +1,8 @@
-import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from "react";
 import type { HTMLAttributes } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import { Field } from "./Field";
+import { FloatingPortal } from "./FloatingPortal";
 import { cx } from "./utils";
 import "./combo-box.css";
 
@@ -69,6 +70,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
   const messageId = error || hint ? `${comboId}-message` : undefined;
   const invalidState = invalid || Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
+  const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -152,10 +154,60 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
     return `${listboxId}-option-${index}`;
   }
 
+  useImperativeHandle(ref, () => rootRef.current as HTMLDivElement);
+
+  const listbox = (
+    <div className="mds-combo__listbox" id={listboxId} role="listbox" aria-multiselectable={multiple || undefined}>
+      {loading ? (
+        <div className="mds-combo__empty" role="status">Loading options</div>
+      ) : visibleOptions.length === 0 ? (
+        <div className="mds-combo__empty">{emptyMessage}</div>
+      ) : (
+        groupedOptions.map((group) => (
+          <div className="mds-combo__group" key={group.label}>
+            {group.label ? <div className="mds-combo__group-label">{group.label}</div> : null}
+            {group.options.map((option) => {
+              const optionIndex = visibleOptions.findIndex((visibleOption) => visibleOption.value === option.value);
+              const selected = selectedValues.includes(option.value);
+              const active = optionIndex === activeIndex;
+
+              return (
+                <button
+                  id={optionId(optionIndex)}
+                  className={cx("mds-combo__option", active && "mds-combo__option--active")}
+                  type="button"
+                  key={option.value}
+                  role="option"
+                  aria-selected={selected}
+                  aria-disabled={option.disabled || undefined}
+                  disabled={option.disabled}
+                  tabIndex={-1}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => selectOption(option)}
+                  onMouseEnter={() => {
+                    if (!option.disabled) {
+                      setActiveIndex(optionIndex);
+                    }
+                  }}
+                >
+                  <span className="mds-combo__check">{selected ? <Check size={14} aria-hidden="true" /> : null}</span>
+                  <span className="mds-combo__option-copy">
+                    <span className="mds-combo__option-label">{option.label}</span>
+                    {option.description ? <span className="mds-combo__option-description">{option.description}</span> : null}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ))
+      )}
+    </div>
+  );
+
   return (
     <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={comboId} messageId={messageId}>
       <div
-        ref={ref}
+        ref={rootRef}
         className={cx(
           "mds-combo",
           open && "mds-combo--open",
@@ -165,9 +217,11 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
         )}
         onBlur={(event) => {
           onBlur?.(event);
-          if (!event.currentTarget.contains(event.relatedTarget)) {
-            setOpen(false);
-          }
+          window.setTimeout(() => {
+            if (!rootRef.current?.contains(document.activeElement)) {
+              setOpen(false);
+            }
+          });
         }}
         {...props}
         aria-disabled={disabled || undefined}
@@ -261,55 +315,9 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(function Combo
             <ChevronDown size={16} aria-hidden="true" />
           </button>
         </div>
-        {open ? (
-          <div className="mds-combo__popover">
-            <div className="mds-combo__listbox" id={listboxId} role="listbox" aria-multiselectable={multiple || undefined}>
-              {loading ? (
-                <div className="mds-combo__empty" role="status">Loading options</div>
-              ) : visibleOptions.length === 0 ? (
-                <div className="mds-combo__empty">{emptyMessage}</div>
-              ) : (
-                groupedOptions.map((group) => (
-                  <div className="mds-combo__group" key={group.label}>
-                    {group.label ? <div className="mds-combo__group-label">{group.label}</div> : null}
-                    {group.options.map((option) => {
-                      const optionIndex = visibleOptions.findIndex((visibleOption) => visibleOption.value === option.value);
-                      const selected = selectedValues.includes(option.value);
-                      const active = optionIndex === activeIndex;
-
-                      return (
-                        <button
-                          id={optionId(optionIndex)}
-                          className={cx("mds-combo__option", active && "mds-combo__option--active")}
-                          type="button"
-                          key={option.value}
-                          role="option"
-                          aria-selected={selected}
-                          aria-disabled={option.disabled || undefined}
-                          disabled={option.disabled}
-                          tabIndex={-1}
-                          onMouseDown={(event) => event.preventDefault()}
-                          onMouseEnter={() => {
-                            if (!option.disabled) {
-                              setActiveIndex(optionIndex);
-                            }
-                          }}
-                          onClick={() => selectOption(option)}
-                        >
-                          <span className="mds-combo__check">{selected ? <Check size={14} aria-hidden="true" /> : null}</span>
-                          <span className="mds-combo__option-copy">
-                            <span className="mds-combo__option-label">{option.label}</span>
-                            {option.description ? <span className="mds-combo__option-description">{option.description}</span> : null}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        ) : null}
+        <FloatingPortal anchorRef={rootRef} className="mds-combo__popover" open={open}>
+          {listbox}
+        </FloatingPortal>
       </div>
     </Field>
   );

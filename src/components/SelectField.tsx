@@ -1,7 +1,8 @@
-import { forwardRef, useEffect, useId, useRef, useState } from "react";
+import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState } from "react";
 import type { HTMLAttributes } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 import { Field } from "./Field";
+import { FloatingPortal } from "./FloatingPortal";
 import { cx } from "./utils";
 import "./select-field.css";
 
@@ -60,6 +61,7 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
   const messageId = error || hint ? `${selectId}-message` : undefined;
   const invalidState = invalid || Boolean(error) || ariaInvalid === true || ariaInvalid === "true";
   const describedBy = [ariaDescribedBy, messageId].filter(Boolean).join(" ") || undefined;
+  const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -119,10 +121,48 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
     return `${listboxId}-option-${index}`;
   }
 
+  useImperativeHandle(ref, () => rootRef.current as HTMLDivElement);
+
+  const listbox = (
+    <div className="mds-select-field__listbox" id={listboxId} role="listbox">
+      {options.map((option, index) => {
+        const selected = option.value === currentValue;
+        const active = index === activeIndex;
+
+        return (
+          <button
+            id={optionId(index)}
+            className={cx("mds-select-field__option", active && "mds-select-field__option--active")}
+            type="button"
+            key={option.value}
+            role="option"
+            aria-selected={selected}
+            aria-disabled={option.disabled || undefined}
+            disabled={option.disabled}
+            tabIndex={-1}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => selectOption(option)}
+            onMouseEnter={() => {
+              if (!option.disabled) {
+                setActiveIndex(index);
+              }
+            }}
+          >
+            <span className="mds-select-field__check">{selected ? <Check size={14} aria-hidden="true" /> : null}</span>
+            <span className="mds-select-field__option-copy">
+              <span className="mds-select-field__option-label">{option.label}</span>
+              {option.description ? <span className="mds-select-field__option-description">{option.description}</span> : null}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
   return (
     <Field className={className} label={label} hint={hint} error={error} required={required} invalid={invalidState} htmlFor={selectId} messageId={messageId}>
       <div
-        ref={ref}
+        ref={rootRef}
         className={cx(
           "mds-select-field",
           open && "mds-select-field--open",
@@ -132,9 +172,11 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
         )}
         onBlur={(event) => {
           onBlur?.(event);
-          if (!event.currentTarget.contains(event.relatedTarget)) {
-            setOpen(false);
-          }
+          window.setTimeout(() => {
+            if (!rootRef.current?.contains(document.activeElement)) {
+              setOpen(false);
+            }
+          });
         }}
         {...props}
         aria-disabled={disabled || undefined}
@@ -205,43 +247,9 @@ export const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(function
             <ChevronDown size={16} aria-hidden="true" />
           </button>
         </div>
-        {open ? (
-          <div className="mds-select-field__popover">
-            <div className="mds-select-field__listbox" id={listboxId} role="listbox">
-              {options.map((option, index) => {
-                const selected = option.value === currentValue;
-                const active = index === activeIndex;
-
-                return (
-                  <button
-                    id={optionId(index)}
-                    className={cx("mds-select-field__option", active && "mds-select-field__option--active")}
-                    type="button"
-                    key={option.value}
-                    role="option"
-                    aria-selected={selected}
-                    aria-disabled={option.disabled || undefined}
-                    disabled={option.disabled}
-                    tabIndex={-1}
-                    onMouseDown={(event) => event.preventDefault()}
-                    onMouseEnter={() => {
-                      if (!option.disabled) {
-                        setActiveIndex(index);
-                      }
-                    }}
-                    onClick={() => selectOption(option)}
-                  >
-                    <span className="mds-select-field__check">{selected ? <Check size={14} aria-hidden="true" /> : null}</span>
-                    <span className="mds-select-field__option-copy">
-                      <span className="mds-select-field__option-label">{option.label}</span>
-                      {option.description ? <span className="mds-select-field__option-description">{option.description}</span> : null}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
+        <FloatingPortal anchorRef={rootRef} className="mds-select-field__popover" open={open}>
+          {listbox}
+        </FloatingPortal>
       </div>
     </Field>
   );

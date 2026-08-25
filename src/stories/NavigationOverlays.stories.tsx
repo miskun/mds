@@ -17,6 +17,7 @@ import {
   MenuSeparator,
   MenuSub,
   Popover,
+  SelectField,
   Tooltip,
 } from "../components";
 import "../showcase.css";
@@ -204,9 +205,27 @@ export const ScrollableDialog: Story = {
           }
         >
           <div className="mds-stack">
-            {Array.from({ length: 12 }, (_, index) => (
+            {Array.from({ length: 8 }, (_, index) => (
               <Input key={index} label={`Record field ${index + 1}`} defaultValue={`Value ${index + 1}`} />
             ))}
+            <SelectField
+              label="Review lane"
+              placeholder="Choose lane"
+              options={[
+                { value: "triage", label: "Triage" },
+                { value: "quality", label: "Quality" },
+                { value: "release", label: "Release" },
+              ]}
+            />
+            <ComboBox
+              label="Assignee"
+              placeholder="Search assignee"
+              options={[
+                { value: "miskun", label: "Miskun" },
+                { value: "studio", label: "Studio" },
+                { value: "ops", label: "Operations" },
+              ]}
+            />
             <Checkbox label="I verified the full record" />
           </div>
         </Dialog>

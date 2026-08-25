@@ -110,12 +110,9 @@
 }
 
 .mds-select-field__popover {
-  position: absolute;
-  z-index: 60;
-  top: calc(100% + var(--mds-control-gap));
-  left: 0;
-  width: 100%;
-  min-width: 260px;
+  position: fixed;
+  z-index: 90;
+  pointer-events: auto;
   border: 1px solid var(--mds-line);
   border-radius: var(--mds-radius-md);
   background: var(--mds-panel);
@@ -125,7 +122,7 @@
 .mds-select-field__listbox {
   display: grid;
   gap: calc(var(--mds-control-gap) * 0.5);
-  max-height: min(340px, 60vh);
+  max-height: min(var(--mds-floating-listbox-max-height, 340px), 60vh);
   overflow: auto;
   padding: calc(var(--mds-control-gap) * 0.5);
 }
