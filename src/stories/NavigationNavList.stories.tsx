@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { FileText, LayoutDashboard, Settings, User } from "lucide-react";
 import { Card, Grid, NavItem, NavList, Panel, Stack, StatusDot } from "../components";
 import "../showcase.css";
@@ -60,4 +61,34 @@ export const SidebarNavigation: Story = {
       </Card>
     </Grid>
   ),
+};
+
+export const StateNavigation: Story = {
+  parameters: storyDescription("Render nav items as buttons when the selected view is controlled by local state."),
+  render: () => {
+    const [view, setView] = useState("overview");
+
+    return (
+      <Grid minItemWidth="240px" style={{ maxWidth: 820 }}>
+        <Panel padding="sm">
+          <NavList label="State navigation">
+            <NavItem as="button" active={view === "overview"} icon={<LayoutDashboard size={16} />} onClick={() => setView("overview")}>
+              Overview
+            </NavItem>
+            <NavItem as="button" active={view === "components"} icon={<FileText size={16} />} onClick={() => setView("components")}>
+              Components
+            </NavItem>
+            <NavItem as="button" active={view === "settings"} icon={<Settings size={16} />} onClick={() => setView("settings")}>
+              Settings
+            </NavItem>
+          </NavList>
+        </Panel>
+        <Card title="Selected view">
+          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            {view}
+          </p>
+        </Card>
+      </Grid>
+    );
+  },
 };

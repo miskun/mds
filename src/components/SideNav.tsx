@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import type { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { cx } from "./utils";
 import "./side-nav.css";
 
@@ -13,11 +13,20 @@ export interface SideNavProps extends HTMLAttributes<HTMLElement> {
 }
 
 export const SideNav = forwardRef<HTMLElement, SideNavProps>(function SideNav(
-  { children, label = "Sidebar navigation", header, footer, className, ...props },
+  { children, label = "Sidebar navigation", header, footer, className, onKeyDown, ...props },
   ref,
 ) {
   return (
-    <nav ref={ref} className={cx("mds-side-nav", className)} aria-label={label} {...props}>
+    <nav
+      ref={ref}
+      className={cx("mds-side-nav", className)}
+      aria-label={label}
+      onKeyDown={(event) => {
+        moveSideNavFocus(event);
+        onKeyDown?.(event);
+      }}
+      {...props}
+    >
       {header ? <div className="mds-side-nav__header">{header}</div> : null}
       <div className="mds-side-nav__body">{children}</div>
       {footer ? <div className="mds-side-nav__footer">{footer}</div> : null}
@@ -42,7 +51,7 @@ export const SideNavSection = forwardRef<HTMLDivElement, SideNavSectionProps>(fu
   );
 });
 
-export interface SideNavItemProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+interface SideNavItemBaseProps {
   /** Marks the item as the current page. */
   current?: boolean;
   /** Optional leading icon. */
@@ -51,31 +60,71 @@ export interface SideNavItemProps extends AnchorHTMLAttributes<HTMLAnchorElement
   trailing?: ReactNode;
 }
 
-export const SideNavItem = forwardRef<HTMLAnchorElement, SideNavItemProps>(function SideNavItem(
-  { current, icon, trailing, className, children, ...props },
+export type SideNavItemProps =
+  | (SideNavItemBaseProps & AnchorHTMLAttributes<HTMLAnchorElement> & { as?: "a" })
+  | (SideNavItemBaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { as: "button" });
+
+export const SideNavItem = forwardRef<HTMLElement, SideNavItemProps>(function SideNavItem(
+  { as = "a", current, icon, trailing, className, children, ...props },
   ref,
 ) {
   const hasIcon = Boolean(icon);
   const hasTrailing = Boolean(trailing);
+  const itemProps = {
+    ref,
+    className: cx(
+      "mds-side-nav__item",
+      hasIcon && "mds-side-nav__item--with-icon",
+      hasTrailing && "mds-side-nav__item--with-trailing",
+      current && "mds-side-nav__item--current",
+      className,
+    ),
+    "aria-current": current ? "page" : undefined,
+    ...props,
+  };
 
   return (
     <li className="mds-side-nav__list-item">
-      <a
-        ref={ref}
-        className={cx(
-          "mds-side-nav__item",
-          hasIcon && "mds-side-nav__item--with-icon",
-          hasTrailing && "mds-side-nav__item--with-trailing",
-          current && "mds-side-nav__item--current",
-          className,
-        )}
-        aria-current={current ? "page" : undefined}
-        {...props}
-      >
-        {icon ? <span className="mds-side-nav__icon">{icon}</span> : null}
-        <span className="mds-side-nav__label">{children}</span>
-        {trailing ? <span className="mds-side-nav__trailing">{trailing}</span> : null}
-      </a>
+      {as === "button" ? (
+        <button type="button" {...(itemProps as ButtonHTMLAttributes<HTMLButtonElement>)}>
+          {icon ? <span className="mds-side-nav__icon">{icon}</span> : null}
+          <span className="mds-side-nav__label">{children}</span>
+          {trailing ? <span className="mds-side-nav__trailing">{trailing}</span> : null}
+        </button>
+      ) : (
+        <a {...(itemProps as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+          {icon ? <span className="mds-side-nav__icon">{icon}</span> : null}
+          <span className="mds-side-nav__label">{children}</span>
+          {trailing ? <span className="mds-side-nav__trailing">{trailing}</span> : null}
+        </a>
+      )}
     </li>
   );
 });
+
+function moveSideNavFocus(event: KeyboardEvent<HTMLElement>) {
+  moveNavigationFocus(event, ".mds-side-nav__item:is(a[href], button:not(:disabled))");
+}
+
+function moveNavigationFocus(event: KeyboardEvent<HTMLElement>, selector: string) {
+  const keys = ["ArrowDown", "ArrowUp", "Home", "End"];
+  if (!keys.includes(event.key)) return;
+
+  const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(selector));
+  if (!items.length) return;
+
+  event.preventDefault();
+
+  const currentIndex = items.findIndex((item) => item === document.activeElement);
+  const index = currentIndex >= 0 ? currentIndex : 0;
+  const nextIndex =
+    event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? items.length - 1
+        : event.key === "ArrowUp"
+          ? (index - 1 + items.length) % items.length
+          : (index + 1) % items.length;
+
+  items[nextIndex].focus();
+}

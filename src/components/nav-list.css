@@ -21,11 +21,17 @@
   grid-template-columns: var(--mds-nav-icon-size) minmax(0, 1fr);
   gap: var(--mds-control-gap);
   align-items: center;
+  width: 100%;
   min-height: var(--mds-nav-row-height);
+  border: 0;
   border-radius: var(--mds-radius-sm);
+  background: transparent;
   color: var(--mds-text-muted);
+  cursor: pointer;
+  font: inherit;
   font-size: var(--mds-control-font-size-md);
   padding: 0 var(--mds-control-padding-x-md);
+  text-align: start;
   text-decoration: none;
 }
 

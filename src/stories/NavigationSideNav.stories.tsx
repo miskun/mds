@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { BadgeCheck, Bell, Boxes, FileText, Home, Search, Settings, User } from "lucide-react";
 import { Badge, Card, Grid, Panel, SideNav, SideNavItem, SideNavSection, Stack, Text, Title } from "../components";
 import "../showcase.css";
@@ -85,4 +86,34 @@ export const SettingsNavigation: Story = {
       </SideNav>
     </Panel>
   ),
+};
+
+export const StateSections: Story = {
+  parameters: storyDescription("Render items as buttons when navigation changes local application state instead of URLs."),
+  render: () => {
+    const [section, setSection] = useState("overview");
+
+    return (
+      <Grid minItemWidth="260px" style={{ maxWidth: 900 }}>
+        <Panel padding="sm">
+          <SideNav label="State sections">
+            <SideNavSection heading="Portfolio">
+              <SideNavItem as="button" current={section === "overview"} icon={<Home size={16} />} onClick={() => setSection("overview")}>
+                Overview
+              </SideNavItem>
+              <SideNavItem as="button" current={section === "holdings"} icon={<Boxes size={16} />} onClick={() => setSection("holdings")}>
+                Holdings
+              </SideNavItem>
+              <SideNavItem as="button" current={section === "activity"} icon={<FileText size={16} />} onClick={() => setSection("activity")}>
+                Activity
+              </SideNavItem>
+            </SideNavSection>
+          </SideNav>
+        </Panel>
+        <Card title="Selected section" eyebrow="State">
+          <Text>{section}</Text>
+        </Card>
+      </Grid>
+    );
+  },
 };
