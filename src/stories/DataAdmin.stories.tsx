@@ -59,9 +59,9 @@ export const AdminTable: Story = {
     return (
       <div className="data-page">
         <div className="data-metrics">
-          <MetricCard label="Components" value="42" delta="+8 this week" />
-          <MetricCard label="Stable" value="26" delta="+4 shipped" />
-          <MetricCard label="Coverage" value="78%" delta="+12%" />
+          <MetricCard label="Components" value="42" delta="+8 this week" deltaTone="positive" />
+          <MetricCard label="Stable" value="26" delta="+4 shipped" deltaTone="positive" />
+          <MetricCard label="Coverage" value="78%" delta="+12%" deltaTone="positive" />
         </div>
         <Card>
           <div className="mds-stack">

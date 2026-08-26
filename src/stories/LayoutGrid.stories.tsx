@@ -33,10 +33,10 @@ export const ResponsiveGrid: Story = {
   render: () => (
     <Stack>
       <Grid minItemWidth="180px">
-        <MetricCard label="Revenue" value="$128k" delta="+18%" />
-        <MetricCard label="Activation" value="42%" delta="+7%" />
-        <MetricCard label="Incidents" value="3" delta="-2" />
-        <MetricCard label="Latency" value="84ms" delta="-11%" />
+        <MetricCard label="Revenue" value="$128k" delta="+18%" deltaTone="positive" />
+        <MetricCard label="Activation" value="42%" delta="+7%" deltaTone="positive" />
+        <MetricCard label="Incidents" value="3" delta="-2" deltaTone="negative" />
+        <MetricCard label="Latency" value="84ms" delta="-11%" deltaTone="negative" />
       </Grid>
 
       <Grid minItemWidth="260px">

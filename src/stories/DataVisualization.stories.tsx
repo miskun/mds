@@ -228,9 +228,9 @@ export const DashboardComposition: Story = {
       </div>
 
       <div className="viz-metrics">
-        <MetricCard label="Active users" value="18.4k" delta="+12%" />
-        <MetricCard label="Sessions" value="52.1k" delta="+8%" />
-        <MetricCard label="Errors" value="42" delta="-6%" />
+        <MetricCard label="Active users" value="18.4k" delta="+12%" deltaTone="positive" />
+        <MetricCard label="Sessions" value="52.1k" delta="+8%" deltaTone="positive" />
+        <MetricCard label="Errors" value="42" delta="-6%" deltaTone="negative" />
       </div>
 
       <ChartCard />
