@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Button, DataTable, Panel } from "../components";
+import { Button, DataTable, Panel, TableCellFrame, TableCellText, TableCellValue } from "../components";
 import type { DataColumn, DataTableSort } from "../components";
 import "./data-admin.css";
 import { columns, rows } from "./data-admin-data";
@@ -8,6 +8,7 @@ import { columns, rows } from "./data-admin-data";
 const meta = {
   title: "MDS/Components/Data/Data table",
   component: DataTable,
+  subcomponents: { TableCellText, TableCellValue, TableCellFrame },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -28,7 +29,11 @@ const meta = {
           "",
           "`align` sets header and cell alignment for the whole column. Use `left`, `middle`, or `right`; numeric columns align right by default.",
           "",
+          "Use `rowHeight=\"compact\"` or `rowHeight=\"twoLine\"` for semantic fixed-height rhythms, or pass a number when a product needs an exact row height.",
+          "",
           "Set `headerVisible: false` when a narrow icon column needs a column name for sorting, accessibility, and column menus without printing header text.",
+          "",
+          "Use `TableCellText` for primary and secondary text, `TableCellValue` for numeric fragments with semantic tone, and `TableCellFrame` for custom visuals that should align to the same cell rhythm.",
           "",
           "### Controlled layout",
           "",
@@ -69,16 +74,18 @@ interface HoldingRow {
   name: string;
   gain: number;
   today: number;
+  price: number;
+  sparkline: number[];
 }
 
 const holdingRows: HoldingRow[] = [
-  { id: "holding-001", phase: "open", symbol: "MSK", name: "Miskun Labs", gain: 100, today: 12 },
-  { id: "holding-002", phase: "closed", symbol: "HLX", name: "Helix Works", gain: -5, today: -1.8 },
-  { id: "holding-003", phase: "partial", symbol: "NRV", name: "Nerve Systems", gain: 3, today: 0.4 },
-  { id: "holding-004", phase: "closed", symbol: "ORB", name: "Orbital Studio", gain: -20, today: -4.1 },
-  { id: "holding-005", phase: "closed", symbol: "ZRO", name: "Zero Point", gain: 0, today: 0 },
-  { id: "holding-006", phase: "partial", symbol: "ARC", name: "Arc Supply", gain: 12, today: 2.3 },
-  { id: "holding-007", phase: "partial", symbol: "INF", name: "Infinity Fund", gain: Number.NEGATIVE_INFINITY, today: -9.7 },
+  { id: "holding-001", phase: "open", symbol: "MSK", name: "Miskun Labs", gain: 100, today: 12, price: 40.2, sparkline: [18, 24, 20, 28, 31, 29, 36] },
+  { id: "holding-002", phase: "closed", symbol: "HLX", name: "Helix Works", gain: -5, today: -1.8, price: 709.7, sparkline: [34, 31, 30, 25, 28, 23, 20] },
+  { id: "holding-003", phase: "partial", symbol: "NRV", name: "Nerve Systems", gain: 3, today: 0.4, price: 166.66, sparkline: [21, 22, 24, 23, 28, 29, 30] },
+  { id: "holding-004", phase: "closed", symbol: "ORB", name: "Orbital Studio", gain: -20, today: -4.1, price: 260.27, sparkline: [37, 34, 29, 25, 23, 19, 16] },
+  { id: "holding-005", phase: "closed", symbol: "ZRO", name: "Zero Point", gain: 0, today: 0, price: 495.03, sparkline: [20, 22, 21, 23, 22, 24, 23] },
+  { id: "holding-006", phase: "partial", symbol: "ARC", name: "Arc Supply", gain: 12, today: 2.3, price: 343.08, sparkline: [22, 24, 27, 26, 30, 33, 35] },
+  { id: "holding-007", phase: "partial", symbol: "INF", name: "Infinity Fund", gain: Number.NEGATIVE_INFINITY, today: -9.7, price: 16.65, sparkline: [35, 33, 28, 24, 18, 13, 8] },
 ];
 
 const holdingColumns: Array<DataColumn<HoldingRow>> = [
@@ -100,8 +107,41 @@ const holdingColumns: Array<DataColumn<HoldingRow>> = [
     sortable: true,
     grow: true,
     minWidth: 160,
-    cell: (row: HoldingRow) => row.symbol,
+    cell: (row: HoldingRow) => <TableCellText secondary={row.name}>{row.symbol}</TableCellText>,
     sortValue: (row: HoldingRow) => row.symbol,
+  },
+  {
+    id: "sparkline",
+    header: "Sparkline",
+    align: "middle",
+    defaultWidth: 130,
+    minWidth: 110,
+    cell: (row: HoldingRow) => (
+      <TableCellFrame>
+        <MiniSparkline values={row.sparkline} tone={row.today < 0 ? "negative" : "positive"} />
+      </TableCellFrame>
+    ),
+  },
+  {
+    id: "price",
+    header: "Price",
+    sortable: true,
+    numeric: true,
+    defaultWidth: 120,
+    minWidth: 100,
+    sortValue: (row: HoldingRow) => row.price,
+    cell: (row: HoldingRow) => (
+      <TableCellText
+        secondary={
+          <TableCellValue className="data-value-delta" tone={row.today < 0 ? "negative" : row.today > 0 ? "positive" : "muted"}>
+            {row.today > 0 ? "+" : ""}
+            {row.today.toFixed(1)}%
+          </TableCellValue>
+        }
+      >
+        <TableCellValue tone="neutral">€{row.price.toFixed(2)}</TableCellValue>
+      </TableCellText>
+    ),
   },
   {
     id: "gain",
@@ -112,7 +152,11 @@ const holdingColumns: Array<DataColumn<HoldingRow>> = [
     defaultWidth: 140,
     minWidth: 110,
     sortValue: (row: HoldingRow) => row.gain,
-    cell: (row: HoldingRow) => (row.gain === Number.NEGATIVE_INFINITY ? "-Infinity" : row.gain.toLocaleString()),
+    cell: (row: HoldingRow) => (
+      <TableCellValue tone={row.gain < 0 ? "negative" : row.gain > 0 ? "positive" : "muted"}>
+        {row.gain === Number.NEGATIVE_INFINITY ? "-Infinity" : row.gain.toLocaleString()}
+      </TableCellValue>
+    ),
   },
   {
     id: "today",
@@ -123,7 +167,11 @@ const holdingColumns: Array<DataColumn<HoldingRow>> = [
     defaultWidth: 120,
     minWidth: 100,
     sortValue: (row: HoldingRow) => row.today,
-    cell: (row: HoldingRow) => row.today.toFixed(1),
+    cell: (row: HoldingRow) => (
+      <TableCellValue tone={row.today < 0 ? "negative" : row.today > 0 ? "positive" : "muted"}>
+        {row.today.toFixed(1)}
+      </TableCellValue>
+    ),
   },
 ];
 
@@ -173,6 +221,7 @@ export const NumericRows: Story = {
           sort={sort}
           onSortChange={setSort}
           onRowClick={setActiveRow}
+          rowHeight="twoLine"
           columnControls
           getRowProps={(row) => ({
             "aria-label": `Open ${row.symbol} details`,
@@ -183,6 +232,25 @@ export const NumericRows: Story = {
     );
   },
 };
+
+function MiniSparkline({ values, tone }: { values: number[]; tone: "positive" | "negative" }) {
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const range = Math.max(1, max - min);
+  const points = values
+    .map((value, index) => {
+      const x = (index / Math.max(1, values.length - 1)) * 100;
+      const y = 30 - ((value - min) / range) * 28;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
+  return (
+    <svg className={`data-sparkline data-sparkline--${tone}`} viewBox="0 0 100 32" role="img" aria-label={`${tone} trend`}>
+      <polyline points={points} />
+    </svg>
+  );
+}
 
 export const ColumnLayout: Story = {
   parameters: storyDescription(

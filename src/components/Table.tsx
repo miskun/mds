@@ -1,5 +1,14 @@
 import { forwardRef, useLayoutEffect, useRef, useState } from "react";
-import type { CSSProperties, ForwardedRef, HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
+import type {
+  CSSProperties,
+  ForwardedRef,
+  HTMLAttributes,
+  MouseEvent,
+  ReactNode,
+  TableHTMLAttributes,
+  TdHTMLAttributes,
+  ThHTMLAttributes,
+} from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { cx } from "./utils";
 import "./table.css";
@@ -105,6 +114,28 @@ export const TableCellText = forwardRef<HTMLDivElement, TableCellTextProps>(func
       ) : null}
     </div>
   );
+});
+
+export interface TableCellFrameProps extends HTMLAttributes<HTMLDivElement> {
+  lines?: 1 | 2;
+}
+
+export const TableCellFrame = forwardRef<HTMLDivElement, TableCellFrameProps>(function TableCellFrame({ lines = 2, className, ...props }, ref) {
+  return <div ref={ref} className={cx("mds-table-cell-frame", lines === 1 && "mds-table-cell-frame--one-line", className)} {...props} />;
+});
+
+export type TableCellValueTone = "neutral" | "muted" | "positive" | "negative" | "success" | "warning" | "danger";
+
+export interface TableCellValueProps extends HTMLAttributes<HTMLSpanElement> {
+  tone?: TableCellValueTone;
+  numeric?: boolean;
+}
+
+export const TableCellValue = forwardRef<HTMLSpanElement, TableCellValueProps>(function TableCellValue(
+  { tone = "neutral", numeric = true, className, ...props },
+  ref,
+) {
+  return <span ref={ref} className={cx("mds-table-cell-value", `mds-table-cell-value--${tone}`, numeric && "mds-table-cell-value--numeric", className)} {...props} />;
 });
 
 export interface SortHeaderProps extends ThHTMLAttributes<HTMLTableCellElement> {

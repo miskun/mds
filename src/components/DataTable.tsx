@@ -43,7 +43,8 @@ export interface RowAction<T> {
   onSelect?: (row: T) => void;
 }
 
-export type DataTableRowHeight<T> = number | string | ((row: T) => number | string | undefined);
+export type DataTableRowHeightValue = "auto" | "compact" | "twoLine" | number | (string & {});
+export type DataTableRowHeight<T> = DataTableRowHeightValue | ((row: T) => DataTableRowHeightValue | undefined);
 
 export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   columns: Array<DataColumn<T>>;
@@ -741,7 +742,9 @@ function getPersistedVisibleColumnIds<T>(columns: Array<DataColumn<T>>, visibleC
 function getRowHeightStyle<T>(rowHeight: DataTableRowHeight<T> | undefined, row: T): CSSProperties | undefined {
   if (rowHeight === undefined) return undefined;
   const height = typeof rowHeight === "function" ? rowHeight(row) : rowHeight;
-  if (height === undefined) return undefined;
+  if (height === undefined || height === "auto") return undefined;
+  if (height === "compact") return { "--mds-table-row-height": "var(--mds-table-row-height-compact)" } as CSSProperties;
+  if (height === "twoLine") return { "--mds-table-row-height": "var(--mds-table-row-height-two-line)" } as CSSProperties;
   return { "--mds-table-row-height": typeof height === "number" ? `${height}px` : height } as CSSProperties;
 }
 

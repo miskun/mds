@@ -144,6 +144,17 @@
   min-width: 0;
 }
 
+.mds-table-cell-frame {
+  display: grid;
+  align-items: center;
+  min-width: 0;
+  min-height: var(--mds-table-cell-frame-height);
+}
+
+.mds-table-cell-frame--one-line {
+  min-height: var(--mds-table-cell-line-1-height);
+}
+
 .mds-table-cell-text__primary,
 .mds-table-cell-text__secondary {
   display: block;
@@ -155,6 +166,7 @@
 .mds-table-cell-text__primary {
   color: var(--mds-text);
   font-weight: 800;
+  line-height: var(--mds-table-cell-line-1-height);
 }
 
 .mds-table-cell-text__secondary {
@@ -162,7 +174,34 @@
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xxs);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: var(--mds-table-cell-line-2-height);
+}
+
+.mds-table-cell-value {
+  color: var(--mds-text);
+}
+
+.mds-table-cell-value--numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.mds-table-cell-value--muted {
+  color: var(--mds-text-soft);
+}
+
+.mds-table-cell-value--positive,
+.mds-table-cell-value--success {
+  color: var(--mds-text-success);
+}
+
+.mds-table-cell-value--warning {
+  color: var(--mds-text-warning);
+}
+
+.mds-table-cell-value--negative,
+.mds-table-cell-value--danger {
+  color: var(--mds-text-danger);
 }
 
 .mds-table__header--with-select,

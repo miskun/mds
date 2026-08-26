@@ -82,6 +82,9 @@ const spacing = [
   ["Section padding", "--mds-section-padding", "Page section padding and editorial breathing room."],
   ["Table cell Y", "--mds-table-cell-padding-y", "Vertical table cell padding."],
   ["Table cell X", "--mds-table-cell-padding-x", "Horizontal table cell padding."],
+  ["Table row compact", "--mds-table-row-height-compact", "Fixed compact data row rhythm."],
+  ["Table row two-line", "--mds-table-row-height-two-line", "Fixed row rhythm for primary and secondary cell content."],
+  ["Table cell frame", "--mds-table-cell-frame-height", "Shared content box for two-line text and custom cell visuals."],
   ["Table selection", "--mds-table-selection-column-width", "Fixed checkbox column width for selectable tables."],
 ];
 

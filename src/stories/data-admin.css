@@ -56,6 +56,29 @@
   background: var(--mds-text-soft);
 }
 
+.data-sparkline {
+  display: block;
+  width: 100%;
+  height: 32px;
+  overflow: visible;
+}
+
+.data-sparkline polyline {
+  fill: none;
+  stroke: var(--mds-text-success);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.data-sparkline--negative polyline {
+  stroke: var(--mds-text-danger);
+}
+
+.data-value-delta {
+  font-size: var(--mds-font-size-xxs);
+}
+
 .data-footer {
   display: flex;
   flex-wrap: wrap;

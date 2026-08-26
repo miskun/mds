@@ -35,7 +35,7 @@
   inset-inline-start: 0;
   width: 1px;
   content: "";
-  background: transparent;
+  background: color-mix(in srgb, var(--mds-line) 64%, transparent);
 }
 
 .mds-detail__resize--end::after {
