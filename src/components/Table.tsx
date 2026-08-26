@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
-import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
+import { forwardRef, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties, ForwardedRef, HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { cx } from "./utils";
 import "./table.css";
@@ -15,9 +15,51 @@ export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
 }
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ containerClassName, containerStyle, className, surface = "framed", fixed, stickyHeader, ...props }, ref) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement | null>(null);
+  const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
+
+  useLayoutEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    let frame = 0;
+    const updateOverflow = () => {
+      frame = 0;
+      setHasHorizontalOverflow(wrapper.scrollWidth > wrapper.clientWidth + 1);
+    };
+    const scheduleUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateOverflow);
+    };
+
+    updateOverflow();
+    wrapper.addEventListener("scroll", scheduleUpdate, { passive: true });
+
+    const resizeObserver = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(scheduleUpdate);
+    resizeObserver?.observe(wrapper);
+    if (tableRef.current) resizeObserver?.observe(tableRef.current);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      wrapper.removeEventListener("scroll", scheduleUpdate);
+      resizeObserver?.disconnect();
+    };
+  }, []);
+
+  function setTableRef(node: HTMLTableElement | null) {
+    tableRef.current = node;
+    assignRef(ref, node);
+  }
+
   return (
-    <div className={cx("mds-table-wrap", `mds-table-wrap--${surface}`, containerClassName)} style={containerStyle}>
-      <table ref={ref} className={cx("mds-table", fixed && "mds-table--fixed", stickyHeader && "mds-table--sticky-header", className)} {...props} />
+    <div
+      ref={wrapperRef}
+      className={cx("mds-table-wrap", `mds-table-wrap--${surface}`, containerClassName)}
+      data-mds-horizontal-overflow={hasHorizontalOverflow ? "true" : undefined}
+      style={containerStyle}
+    >
+      <table ref={setTableRef} className={cx("mds-table", fixed && "mds-table--fixed", stickyHeader && "mds-table--sticky-header", className)} {...props} />
     </div>
   );
 });
@@ -113,4 +155,13 @@ function isHeaderInteractiveTarget(target: EventTarget | null, currentTarget: Ev
 
   const interactiveTarget = target.closest("a, button, input, select, textarea, [role='button'], [role='checkbox'], [role='link'], [role='menuitem'], [role='switch']");
   return interactiveTarget !== null && interactiveTarget !== currentTarget && currentTarget.contains(interactiveTarget);
+}
+
+function assignRef<T>(ref: ForwardedRef<T>, value: T | null) {
+  if (typeof ref === "function") {
+    ref(value);
+    return;
+  }
+
+  if (ref) ref.current = value;
 }

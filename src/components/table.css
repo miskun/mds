@@ -215,7 +215,12 @@
   position: sticky;
   inset-inline-end: 0;
   z-index: 2;
-  box-shadow: -1px 0 0 var(--mds-line);
+  box-shadow: none;
+}
+
+.mds-table-wrap[data-mds-horizontal-overflow="true"] .mds-table--sticky-control-column .mds-table__control-header,
+.mds-table-wrap[data-mds-horizontal-overflow="true"] .mds-table--sticky-control-column .mds-table__control-cell {
+  box-shadow: -14px 0 22px -22px var(--mds-text-soft), -1px 0 0 color-mix(in srgb, var(--mds-line) 42%, transparent);
 }
 
 .mds-table--sticky-control-column .mds-table__control-header {
