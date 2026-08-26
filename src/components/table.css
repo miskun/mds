@@ -7,6 +7,7 @@
   --mds-table-sticky-header-background: var(--mds-panel);
   --mds-table-sticky-control-header-background: var(--mds-panel);
   --mds-table-sticky-control-cell-background: var(--mds-panel);
+  --mds-table-row-hover-background: color-mix(in srgb, var(--mds-text) 2.5%, var(--mds-panel));
 
   border: 1px solid var(--mds-line);
   border-radius: var(--mds-radius-md);
@@ -17,6 +18,7 @@
   --mds-table-sticky-header-background: var(--mds-black);
   --mds-table-sticky-control-header-background: var(--mds-black);
   --mds-table-sticky-control-cell-background: var(--mds-surface-background);
+  --mds-table-row-hover-background: color-mix(in srgb, var(--mds-text) 2.5%, var(--mds-surface-background));
 
   border: 0;
   border-radius: 0;
@@ -108,7 +110,7 @@
 }
 
 .mds-table__row:hover .mds-table__cell {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--mds-table-row-hover-background);
   color: var(--mds-text);
 }
 
@@ -254,21 +256,45 @@
   position: sticky;
   inset-inline-end: 0;
   z-index: 2;
+  overflow: visible;
   box-shadow: none;
 }
 
-.mds-table-wrap[data-mds-horizontal-overflow="true"] .mds-table--sticky-control-column .mds-table__control-header,
-.mds-table-wrap[data-mds-horizontal-overflow="true"] .mds-table--sticky-control-column .mds-table__control-cell {
-  box-shadow: -14px 0 22px -22px var(--mds-text-soft), -1px 0 0 color-mix(in srgb, var(--mds-line) 42%, transparent);
+.mds-table--sticky-control-column .mds-table__control-header::after,
+.mds-table--sticky-control-column .mds-table__control-cell::after {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 100%;
+  z-index: 1;
+  width: 28px;
+  content: "";
+  background: linear-gradient(to left, var(--mds-table-sticky-control-fade-background), transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mds-table-wrap[data-mds-horizontal-overflow="true"] .mds-table--sticky-control-column .mds-table__control-header::after,
+.mds-table-wrap[data-mds-horizontal-overflow="true"] .mds-table--sticky-control-column .mds-table__control-cell::after {
+  opacity: 1;
 }
 
 .mds-table--sticky-control-column .mds-table__control-header {
   z-index: 4;
+  --mds-table-sticky-control-fade-background: var(--mds-table-sticky-control-header-background);
+
   background: var(--mds-table-sticky-control-header-background);
 }
 
 .mds-table--sticky-control-column .mds-table__control-cell {
+  --mds-table-sticky-control-fade-background: var(--mds-table-sticky-control-cell-background);
+
   background: var(--mds-table-sticky-control-cell-background);
+}
+
+.mds-table--sticky-control-column .mds-table__row:hover .mds-table__control-cell {
+  --mds-table-sticky-control-fade-background: var(--mds-table-row-hover-background);
+
+  background: var(--mds-table-row-hover-background);
 }
 
 .mds-table__header--sortable {
