@@ -5,7 +5,6 @@
   width: fit-content;
   border-radius: var(--mds-radius-xs);
   color: var(--mds-text);
-  font-weight: 800;
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
   text-decoration-thickness: 1px;

@@ -17,11 +17,10 @@
   cursor: pointer;
   padding: 0 var(--mds-control-padding-x-sm);
   font-size: var(--mds-control-font-size-sm);
-  font-weight: 800;
 }
 
 .mds-tab:hover {
-  color: var(--mds-text);
+  color: var(--mds-accent);
 }
 
 .mds-tab:disabled {
@@ -36,6 +35,11 @@
 }
 
 .mds-tab--active {
-  background: var(--mds-panel-raised);
-  color: var(--mds-text);
+  background: var(--mds-surface-accent-muted);
+  color: var(--mds-accent);
+}
+
+.mds-tab--active:hover {
+  background: var(--mds-surface-accent-muted);
+  color: var(--mds-accent);
 }

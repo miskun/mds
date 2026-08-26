@@ -31,7 +31,6 @@
   color: var(--mds-text-muted);
   font: inherit;
   font-size: var(--mds-control-font-size-md);
-  font-weight: 800;
   text-align: start;
   text-decoration: none;
   cursor: pointer;
@@ -43,7 +42,7 @@
 
 .mds-tree__item:hover {
   background: var(--mds-panel-raised);
-  color: var(--mds-text);
+  color: var(--mds-accent);
 }
 
 .mds-tree__item:focus-visible {

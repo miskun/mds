@@ -25,14 +25,13 @@
   border-radius: var(--mds-radius-sm);
   color: var(--mds-text-muted);
   font-size: var(--mds-control-font-size-md);
-  font-weight: 800;
   padding: 0 var(--mds-control-padding-x-md);
   text-decoration: none;
 }
 
 .mds-nav__item:hover {
   background: var(--mds-panel-raised);
-  color: var(--mds-text);
+  color: var(--mds-accent);
 }
 
 .mds-nav__item:focus-visible {
