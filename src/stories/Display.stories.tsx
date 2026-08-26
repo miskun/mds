@@ -51,8 +51,10 @@ export const StatusMetadata: Story = {
         <Divider />
         <Cluster>
           <Tag>admin</Tag>
-          <Tag removable removeLabel="Remove desktop tag" onRemove={() => undefined}>desktop</Tag>
-          <Tag>editorial</Tag>
+          <Tag tone="accent" removable removeLabel="Remove desktop tag" onRemove={() => undefined}>desktop</Tag>
+          <Tag tone="success">stable</Tag>
+          <Tag tone="warning">qualified</Tag>
+          <Tag tone="danger">deprecated</Tag>
         </Cluster>
       </Stack>
     </Card>

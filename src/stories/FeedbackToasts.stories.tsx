@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Grid, Toast } from "../components";
+import { Button, Grid, Stack, Toast, ToastProvider, useToast } from "../components";
 import "./feedback-loading.css";
 
 const meta = {
   title: "MDS/Components/Feedback/Toasts",
   component: Toast,
+  subcomponents: { ToastProvider },
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -37,6 +38,19 @@ export const ActionToast: Story = {
   ),
 };
 
+export const ToastTones: Story = {
+  parameters: storyDescription("Use toast tones for temporary feedback where the state changes how urgently the message should be noticed."),
+  render: () => (
+    <Grid minItemWidth="280px">
+      <Toast title="Saved" tone="success">Portfolio settings updated.</Toast>
+      <Toast title="Review needed" tone="warning">One imported record has a caveat.</Toast>
+      <Toast title="Sync failed" tone="danger" onDismiss={() => undefined}>
+        Try again after checking the connection.
+      </Toast>
+    </Grid>
+  ),
+};
+
 export const ToastGroup: Story = {
   parameters: storyDescription("Use concise titles and avoid placing long workflows inside toast actions."),
   render: () => (
@@ -48,3 +62,42 @@ export const ToastGroup: Story = {
     </Grid>
   ),
 };
+
+export const ToastHost: Story = {
+  parameters: storyDescription("Wrap an app in ToastProvider and call useToast from actions that need temporary feedback."),
+  render: () => (
+    <ToastProvider duration={0}>
+      <ToastHostDemo />
+    </ToastProvider>
+  ),
+};
+
+function ToastHostDemo() {
+  const { showToast, clearToasts } = useToast();
+
+  return (
+    <Stack>
+      <Grid minItemWidth="180px">
+        <Button onClick={() => showToast({ title: "Saved", tone: "success", children: "Changes are ready." })}>Show success</Button>
+        <Button
+          variant="secondary"
+          onClick={() =>
+            showToast({
+              title: "Needs review",
+              tone: "warning",
+              children: "One value includes a qualification.",
+            })
+          }
+        >
+          Show warning
+        </Button>
+        <Button variant="danger" onClick={() => showToast({ title: "Failed", tone: "danger", children: "Could not complete the action." })}>
+          Show danger
+        </Button>
+      </Grid>
+      <Button size="sm" variant="ghost" onClick={clearToasts}>
+        Clear toasts
+      </Button>
+    </Stack>
+  );
+}
