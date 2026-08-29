@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { FileText, LayoutDashboard, Settings, User } from "lucide-react";
-import { Card, Grid, NavItem, NavList, Panel, Stack, StatusDot } from "../components";
+import { Card, Grid, NavItem, NavList, Panel, Stack, StatusDot, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -54,9 +54,9 @@ export const SidebarNavigation: Story = {
       <Card title="Overview">
         <Stack gap="sm">
           <StatusDot tone="success" label="Current page" />
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             The active item receives aria-current so assistive technology can identify the current location.
-          </p>
+          </Text>
         </Stack>
       </Card>
     </Grid>
@@ -84,9 +84,9 @@ export const StateNavigation: Story = {
           </NavList>
         </Panel>
         <Card title="Selected view">
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             {view}
-          </p>
+          </Text>
         </Card>
       </Grid>
     );

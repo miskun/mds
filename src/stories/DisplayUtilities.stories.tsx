@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, Cluster, Divider, Kbd, Stack } from "../components";
+import { Card, Cluster, Divider, Kbd, Stack, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -34,9 +34,9 @@ export const KeyboardHints: Story = {
   render: () => (
     <Card title="Command menu" style={{ maxWidth: 520 }}>
       <Cluster>
-        <span className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text as="span" tone="muted" size="md">
           Open command menu
-        </span>
+        </Text>
         <Kbd>⌘</Kbd>
         <Kbd>K</Kbd>
       </Cluster>

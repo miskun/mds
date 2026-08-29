@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Card, Pagination, Stack } from "../components";
+import { Card, Pagination, Stack, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -38,9 +38,9 @@ export const ResultPages: Story = {
       <Stack style={{ maxWidth: 760 }}>
         <Card title="Components">
           <Stack>
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            <Text tone="muted" size="md">
               Showing page {page} of 12.
-            </p>
+            </Text>
             <Pagination page={page} pageCount={12} onPageChange={setPage} />
           </Stack>
         </Card>

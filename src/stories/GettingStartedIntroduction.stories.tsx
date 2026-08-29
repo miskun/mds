@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ArrowRight } from "lucide-react";
-import { Badge, Button, Card, Input, MDSProvider } from "../components";
+import { Badge, Button, Card, Hero, Input, MDSProvider } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -16,13 +16,12 @@ type Story = StoryObj;
 export const Introduction: Story = {
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 880 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Miskun Design System</p>
-        <h1 className="mds-title">Build black-first React interfaces with target-aware ergonomics.</h1>
-        <p className="mds-subtitle">
-          Start with the provider and stylesheet, choose the product target, then compose components from the topical sections.
-        </p>
-      </header>
+      <Hero
+        as="header"
+        eyebrow="Miskun Design System"
+        title="Build black-first React interfaces with target-aware ergonomics."
+        description="Start with the provider and stylesheet, choose the product target, then compose components from the topical sections."
+      />
 
       <div className="mds-cluster">
         <Badge tone="accent">React</Badge>

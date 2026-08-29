@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, Cluster, Grid, Stack, StatusDot } from "../components";
+import { Card, Cluster, Eyebrow, Grid, Prose, Stack, StatusDot, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -42,25 +42,25 @@ export const Overview: Story = {
   parameters: storyDescription("Use this page as the entry point for the MDS component taxonomy."),
   render: () => (
     <Stack>
-      <header className="mds-stack">
-        <p className="mds-kicker">Components</p>
-        <h1 className="mds-title">Composable primitives for black-first product surfaces.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Components</Eyebrow>
+        <h1>Composable primitives for black-first product surfaces.</h1>
+        <p>
           Browse by purpose rather than implementation detail. Each group keeps examples, usage guidance, and API docs close to the component contract.
         </p>
-      </header>
+      </Prose>
 
       <Grid minItemWidth="260px">
         {groups.map(([name, description, examples]) => (
           <Card key={name} title={name} eyebrow="Group">
             <Stack gap="sm">
-              <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+              <Text tone="muted" size="md">
                 {description}
-              </p>
+              </Text>
               <Cluster gap="xs">
-                <span className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-sm)" }}>
+                <Text as="span" tone="muted" size="sm">
                   {examples}
-                </span>
+                </Text>
                 <StatusDot label="Docs" />
               </Cluster>
             </Stack>

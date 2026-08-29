@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ArrowUpRight, Command, Download, Search } from "lucide-react";
-import { Badge, Button, Card, Input, Switch, Tab, Tabs } from "./components";
+import { Badge, Button, Card, Hero, Input, Switch, Tab, Tabs } from "./components";
 import "./styles/mds.css";
 import "./showcase.css";
 
@@ -9,19 +9,17 @@ function App() {
   return (
     <main className="showcase">
       <section className="showcase__hero">
-        <div className="mds-stack">
-          <p className="mds-kicker">Miskun Design System</p>
-          <h1 className="mds-title">Black interface components for focused creative tools.</h1>
-          <p className="mds-subtitle">
-            MDS starts as a React component library with Storybook documentation, Inter typography, sharp dark surfaces,
-            and a signal-bright accent.
-          </p>
+        <Hero
+          eyebrow="Miskun Design System"
+          title="Black interface components for focused creative tools."
+          description="MDS starts as a React component library with Storybook documentation, Inter typography, sharp dark surfaces, and a signal-bright accent."
+        >
           <div className="mds-cluster">
             <Button icon={<Command size={16} />}>Open Storybook</Button>
             <Button variant="secondary" icon={<Download size={16} />}>Install Package</Button>
             <Button variant="ghost" icon={<ArrowUpRight size={16} />}>View Tokens</Button>
           </div>
-        </div>
+        </Hero>
       </section>
 
       <section className="showcase__grid">

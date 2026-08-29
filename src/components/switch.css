@@ -87,7 +87,7 @@
 .mds-switch__label {
   color: var(--mds-text);
   font-size: var(--mds-control-font-size-md);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
   line-height: 1.35;
 }
 
@@ -103,7 +103,7 @@
 
 .mds-switch__error {
   color: var(--mds-danger);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
 }
 
 .mds-switch--invalid .mds-switch__track {

@@ -12,7 +12,7 @@
   gap: var(--mds-inline-gap);
   color: var(--mds-text-muted);
   font-size: var(--mds-font-size-xs);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
   letter-spacing: 0.16em;
   line-height: 1.2;
   text-transform: uppercase;
@@ -27,7 +27,7 @@
 
 .mds-field__required {
   color: var(--mds-text-soft);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
   text-transform: uppercase;
 }
 
@@ -37,5 +37,5 @@
 
 .mds-field__error {
   color: var(--mds-danger);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
 }

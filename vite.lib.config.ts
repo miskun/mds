@@ -24,6 +24,7 @@ export default defineConfig({
         "@radix-ui/react-dropdown-menu",
         "@radix-ui/react-popover",
         "@radix-ui/react-tooltip",
+        "uplot",
       ],
       output: {
         assetFileNames: (assetInfo) => (assetInfo.name?.endsWith(".css") ? "styles.css" : "assets/[name]-[hash][extname]"),

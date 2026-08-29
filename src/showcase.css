@@ -30,7 +30,7 @@
   gap: var(--mds-inline-gap);
   color: var(--mds-text-muted);
   font-size: var(--mds-font-size-sm);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
 }
 
 .token__swatch {
@@ -54,7 +54,7 @@
   border-radius: var(--mds-radius-sm);
   background: var(--mds-ink);
   padding: var(--mds-list-item-padding);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
 }
 
 @media (max-width: 860px) {

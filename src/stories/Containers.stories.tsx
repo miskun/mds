@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { PanelRight } from "lucide-react";
-import { Button, Card, Dialog, Drawer, Grid, Panel, Popover, Stack, StatusDot } from "../components";
+import { Button, Card, Dialog, Drawer, Grid, Panel, Popover, Stack, StatusDot, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -38,24 +38,24 @@ export const Surfaces: Story = {
       <Panel>
         <Stack gap="sm">
           <strong>Panel</strong>
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             Use for simple bounded content without a built-in header.
-          </p>
+          </Text>
           <StatusDot tone="success" label="Surface only" />
         </Stack>
       </Panel>
       <Panel variant="raised">
         <Stack gap="sm">
           <strong>Raised panel</strong>
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             Use when a surface needs more separation from the page.
-          </p>
+          </Text>
         </Stack>
       </Panel>
       <Card eyebrow="Card" title="Structured surface">
-        <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text tone="muted" size="md">
           Use Card when the content has a clear title and optional action.
-        </p>
+        </Text>
       </Card>
     </Grid>
   ),
@@ -72,9 +72,9 @@ export const DisclosureSurfaces: Story = {
         <Panel>
           <Stack gap="sm">
             <strong>Disclosure containers</strong>
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            <Text tone="muted" size="md">
               Use popovers for compact contextual content, dialogs for blocking decisions, and drawers for secondary workflows.
-            </p>
+            </Text>
             <div className="mds-cluster">
               <Popover trigger={<Button variant="secondary">Open popover</Button>} title="Panel options">
                 <Stack gap="sm">

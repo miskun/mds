@@ -13,7 +13,7 @@
   background: linear-gradient(135deg, color-mix(in srgb, var(--mds-accent) 18%, transparent), var(--mds-panel-raised));
   color: var(--mds-text);
   font-size: calc(var(--mds-avatar-current-size) * 0.34);
-  font-weight: 900;
+  font-weight: var(--mds-font-weight-heavy);
   letter-spacing: 0;
   line-height: 1;
 }

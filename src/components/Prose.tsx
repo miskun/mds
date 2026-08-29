@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react";
 import { cx } from "./utils";
 import "./prose.css";
 
-export type ProseElement = "article" | "div" | "section";
+export type ProseElement = "article" | "div" | "header" | "section";
 
 export interface ProseProps extends HTMLAttributes<HTMLElement> {
   /** Element rendered by the prose wrapper. */

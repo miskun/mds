@@ -37,6 +37,16 @@
   --mds-text-success: var(--mds-success);
   --mds-text-warning: var(--mds-warning);
   --mds-text-danger: var(--mds-danger);
+  --mds-chart-series-1: #7dd3fc;
+  --mds-chart-series-2: #c084fc;
+  --mds-chart-series-3: #facc15;
+  --mds-chart-series-4: #34d399;
+  --mds-chart-series-5: #fb7185;
+  --mds-chart-grid: #26262a;
+  --mds-chart-axis: var(--mds-gray-9);
+  --mds-chart-axis-label: var(--mds-gray-10);
+  --mds-chart-cursor: var(--mds-gray-12);
+  --mds-chart-selection: rgba(215, 255, 63, 0.2);
   --mds-surface-accent-muted: color-mix(in srgb, var(--mds-accent) 14%, transparent);
   --mds-surface-accent: color-mix(in srgb, var(--mds-accent) 18%, transparent);
   --mds-surface-success: color-mix(in srgb, var(--mds-success) 16%, transparent);
@@ -80,4 +90,10 @@
   --mds-font-size-lg: 20px;
   --mds-font-size-xl: 28px;
   --mds-font-size-2xl: 40px;
+
+  --mds-font-weight-regular: 400;
+  --mds-font-weight-medium: 500;
+  --mds-font-weight-semibold: 600;
+  --mds-font-weight-bold: 700;
+  --mds-font-weight-heavy: 800;
 }

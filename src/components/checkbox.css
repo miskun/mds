@@ -95,7 +95,7 @@
 
 .mds-choice__label {
   font-size: var(--mds-control-font-size-md);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
   line-height: 1.35;
 }
 
@@ -111,7 +111,7 @@
 
 .mds-choice__error {
   color: var(--mds-danger);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
 }
 
 .mds-choice--invalid .mds-choice__box {

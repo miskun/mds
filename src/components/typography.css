@@ -1,6 +1,15 @@
+.mds-eyebrow,
 .mds-text,
 .mds-title-text {
   margin: 0;
+}
+
+.mds-eyebrow {
+  color: var(--mds-accent);
+  font-size: var(--mds-prose-eyebrow-size);
+  font-weight: var(--mds-font-weight-semibold);
+  line-height: var(--mds-prose-eyebrow-line-height);
+  text-transform: uppercase;
 }
 
 .mds-text {
@@ -29,15 +38,15 @@
 }
 
 .mds-text--regular {
-  font-weight: 400;
+  font-weight: var(--mds-font-weight-regular);
 }
 
 .mds-text--medium {
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
 }
 
 .mds-text--strong {
-  font-weight: 850;
+  font-weight: var(--mds-font-weight-bold);
 }
 
 .mds-text--default {
@@ -73,10 +82,14 @@
   letter-spacing: 0;
 }
 
+.mds-eyebrow + .mds-title-text {
+  margin-block-start: var(--mds-prose-eyebrow-gap);
+}
+
 .mds-title-text--page {
-  max-width: var(--mds-title-max);
-  font-size: var(--mds-title-size);
-  line-height: var(--mds-title-line-height);
+  max-width: var(--mds-prose-max-width);
+  font-size: var(--mds-prose-h1-size);
+  line-height: var(--mds-prose-h1-line-height);
 }
 
 .mds-title-text--section {

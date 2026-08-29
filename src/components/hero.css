@@ -1,0 +1,46 @@
+.mds-hero {
+  display: grid;
+  max-width: var(--mds-hero-title-max);
+  gap: var(--mds-stack-gap);
+}
+
+.mds-hero__content {
+  display: grid;
+  gap: var(--mds-field-gap);
+}
+
+.mds-hero__eyebrow,
+.mds-hero__title,
+.mds-hero__description {
+  margin: 0;
+}
+
+.mds-hero__eyebrow {
+  color: var(--mds-accent);
+  font-size: var(--mds-hero-eyebrow-size);
+  font-weight: var(--mds-font-weight-semibold);
+  letter-spacing: 0;
+  line-height: var(--mds-hero-eyebrow-line-height);
+  text-transform: uppercase;
+}
+
+.mds-hero__title {
+  max-width: var(--mds-hero-title-max);
+  color: var(--mds-text);
+  font-size: var(--mds-hero-title-size);
+  font-weight: var(--mds-font-weight-heavy);
+  line-height: var(--mds-hero-title-line-height);
+  letter-spacing: 0;
+}
+
+.mds-hero__description {
+  max-width: var(--mds-readable-width);
+  color: var(--mds-text-muted);
+  font-size: var(--mds-hero-description-size);
+  line-height: var(--mds-hero-description-line-height);
+}
+
+.mds-hero__actions,
+.mds-hero__body {
+  margin-top: var(--mds-field-gap);
+}

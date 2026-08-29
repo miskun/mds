@@ -33,7 +33,7 @@
 .mds-description-item__term {
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xs);
-  font-weight: 850;
+  font-weight: var(--mds-font-weight-semibold);
   text-transform: uppercase;
 }
 

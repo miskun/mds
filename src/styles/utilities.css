@@ -11,30 +11,6 @@
   align-items: center;
 }
 
-.mds-kicker {
-  margin: 0;
-  color: var(--mds-accent);
-  font-size: var(--mds-font-size-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.mds-title {
-  margin: 0;
-  max-width: var(--mds-title-max);
-  font-size: var(--mds-title-size);
-  line-height: var(--mds-title-line-height);
-  letter-spacing: 0;
-}
-
-.mds-subtitle {
-  margin: 0;
-  max-width: var(--mds-readable-width);
-  color: var(--mds-text-muted);
-  font-size: var(--mds-font-size-lg);
-  line-height: 1.55;
-}
-
 .mds-numeric {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";

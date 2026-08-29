@@ -4,7 +4,7 @@
   gap: var(--mds-control-gap);
   color: var(--mds-text-muted);
   font-size: var(--mds-font-size-sm);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-medium);
 }
 
 .mds-status__dot {

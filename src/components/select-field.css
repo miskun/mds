@@ -63,7 +63,7 @@
   justify-content: start;
   overflow: hidden;
   font-size: var(--mds-control-font-size-md);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
   outline: none;
   text-align: start;
   text-overflow: ellipsis;
@@ -178,7 +178,7 @@
 
 .mds-select-field__option-label {
   color: currentColor;
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
 }
 
 .mds-select-field__option-description {

@@ -14,12 +14,14 @@ import {
   DetailPanel,
   Dialog,
   Drawer,
+  Eyebrow,
   EmptyState,
   ComboBox,
   IconButton,
   Input,
   ListItem,
   Pagination,
+  Prose,
   Radio,
   RadioGroup,
   StatusDot,
@@ -97,13 +99,13 @@ export const Overview: Story = {
   parameters: storyDescription("Patterns document repeatable workflows that combine multiple components into product behavior."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 920 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Patterns</p>
-        <h1 className="mds-title">Reusable solutions that combine components.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Patterns</Eyebrow>
+        <h1>Reusable solutions that combine components.</h1>
+        <p>
           Components document individual primitives. Patterns document workflows, layout decisions, interaction behavior, and recovery paths.
         </p>
-      </header>
+      </Prose>
 
       <div className="mds-cluster">
         <StatusDot tone="success" label="Repeatable" />

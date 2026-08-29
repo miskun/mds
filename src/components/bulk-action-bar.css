@@ -10,7 +10,7 @@
   color: var(--mds-accent);
   padding: var(--mds-floating-padding) var(--mds-panel-padding);
   font-size: var(--mds-font-size-sm);
-  font-weight: 900;
+  font-weight: var(--mds-font-weight-semibold);
 }
 
 .mds-bulk-bar__actions {

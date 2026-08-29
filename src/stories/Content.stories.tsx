@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Alert, Badge, Button, Card, Checkbox, ComboBox, Dialog, EmptyState, Input, StatusDot, Switch, Tag, Textarea, Toast } from "../components";
+import { Alert, Badge, Button, Card, Checkbox, ComboBox, Dialog, EmptyState, Eyebrow, Input, Prose, StatusDot, Switch, Tag, Text, Textarea, Toast } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -47,13 +47,13 @@ export const Overview: Story = {
   parameters: storyDescription("Content guidelines keep labels, hints, errors, and state copy consistent across MDS examples and products."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Content</p>
-        <h1 className="mds-title">Clear interface copy for focused tools.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Content</Eyebrow>
+        <h1>Clear interface copy for focused tools.</h1>
+        <p>
           MDS copy should be concise, specific, and useful in context. Avoid explaining the UI when the component already communicates state.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="Principles" title="Write for the next action">
         <div className="token-doc__rows">
@@ -79,13 +79,13 @@ export const LabelsAndActions: Story = {
   parameters: storyDescription("Labels should identify the object. Actions should use verbs that match the result."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Labels and actions</p>
-        <h1 className="mds-title">Name controls by what users recognize.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Labels and actions</Eyebrow>
+        <h1>Name controls by what users recognize.</h1>
+        <p>
           Field labels are usually nouns. Button and menu labels are usually verbs.
         </p>
-      </header>
+      </Prose>
 
       <table className="token-doc__table">
         <thead>
@@ -132,13 +132,13 @@ export const HintsAndHelp: Story = {
   parameters: storyDescription("Hints should clarify impact or constraints. Skip hints when the label and component are already enough."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 720 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Hints and help</p>
-        <h1 className="mds-title">Help when it changes the decision.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Hints and help</Eyebrow>
+        <h1>Help when it changes the decision.</h1>
+        <p>
           Hints are most useful for consequences, constraints, formatting, and product-specific meaning.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="Good hint" title="Explains consequence">
         <Switch label="Show command hints" hint="Surface shortcuts next to frequent actions." defaultChecked />
@@ -159,13 +159,13 @@ export const ErrorMessages: Story = {
   parameters: storyDescription("Errors should name the problem and point to a recovery action."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 720 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Errors</p>
-        <h1 className="mds-title">Say what happened and how to recover.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Errors</Eyebrow>
+        <h1>Say what happened and how to recover.</h1>
+        <p>
           Avoid blame, codes, or vague failure text unless the code helps support.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="Validation" title="Field-level error">
         <div className="mds-stack">
@@ -196,13 +196,13 @@ export const EmptyAndLoadingStates: Story = {
   parameters: storyDescription("Empty and loading copy should preserve context and offer a useful next step when one exists."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 760 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Empty and loading</p>
-        <h1 className="mds-title">Explain the state, then offer recovery.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Empty and loading</Eyebrow>
+        <h1>Explain the state, then offer recovery.</h1>
+        <p>
           Empty states should say what is missing and how to move forward. Loading labels should name what is loading.
         </p>
-      </header>
+      </Prose>
 
       <EmptyState
         title="No matching components"
@@ -224,13 +224,13 @@ export const ConfirmationDialogs: Story = {
 
     return (
       <div className="mds-stack" style={{ maxWidth: 720 }}>
-        <header className="mds-stack">
-          <p className="mds-kicker">Confirmation dialogs</p>
-          <h1 className="mds-title">Confirm decisions with consequences.</h1>
-          <p className="mds-subtitle">
+        <Prose as="header">
+          <Eyebrow>Confirmation dialogs</Eyebrow>
+          <h1>Confirm decisions with consequences.</h1>
+          <p>
             Dialog titles should name the action. Body copy should explain what changes.
           </p>
-        </header>
+        </Prose>
 
         <Dialog
           open={open}
@@ -262,13 +262,13 @@ export const StatusText: Story = {
   parameters: storyDescription("Status text should use a small shared vocabulary and avoid introducing new synonyms for the same state."),
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 760 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Status text</p>
-        <h1 className="mds-title">Use the same words for the same states.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Status text</Eyebrow>
+        <h1>Use the same words for the same states.</h1>
+        <p>
           Stable, review, draft, and blocked cover most MDS documentation states.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="Vocabulary" title="Shared statuses">
         <div className="token-doc__rows">

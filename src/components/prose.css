@@ -15,9 +15,9 @@
 
 .mds-prose :where(h1, h2, h3, h4, h5, h6) {
   color: var(--mds-text);
-  font-weight: 850;
+  font-weight: var(--mds-font-weight-bold);
   letter-spacing: 0;
-  line-height: 1.08;
+  line-height: var(--mds-prose-heading-line-height);
 }
 
 .mds-prose > :where(h1, h2, h3, h4, h5, h6) + * {
@@ -28,9 +28,13 @@
   margin-block-start: var(--mds-prose-heading-gap);
 }
 
+.mds-prose > .mds-eyebrow + :where(h1, h2, h3, h4, h5, h6) {
+  margin-block-start: var(--mds-prose-eyebrow-gap);
+}
+
 .mds-prose h1 {
   font-size: var(--mds-prose-h1-size);
-  line-height: 1;
+  line-height: var(--mds-prose-h1-line-height);
 }
 
 .mds-prose h2 {
@@ -47,13 +51,13 @@
 
 .mds-prose :where(strong, b) {
   color: var(--mds-text);
-  font-weight: 850;
+  font-weight: var(--mds-font-weight-bold);
 }
 
 .mds-prose a {
   border-radius: var(--mds-radius-xs);
   color: var(--mds-accent);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
   text-decoration-thickness: 1px;
@@ -140,7 +144,7 @@
 
 .mds-prose th {
   color: var(--mds-text);
-  font-weight: 850;
+  font-weight: var(--mds-font-weight-semibold);
 }
 
 .mds-prose tr:last-child :where(th, td) {

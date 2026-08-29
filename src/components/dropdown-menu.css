@@ -19,7 +19,7 @@
   color: var(--mds-text-muted);
   cursor: pointer;
   font-size: var(--mds-control-font-size-sm);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
   outline: none;
   padding: 0 var(--mds-control-gap);
   user-select: none;
@@ -82,7 +82,7 @@
 .mds-menu__label {
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xs);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
   padding: var(--mds-control-gap);
   text-transform: uppercase;
 }

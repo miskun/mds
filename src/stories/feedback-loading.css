@@ -13,7 +13,7 @@
 .feedback-copy {
   color: var(--mds-text-muted);
   font-size: var(--mds-font-size-sm);
-  font-weight: 700;
+  font-weight: var(--mds-font-weight-medium);
 }
 
 @media (max-width: 760px) {

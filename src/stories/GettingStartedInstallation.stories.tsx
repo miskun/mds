@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card } from "../components";
+import { Card, Eyebrow, Prose } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -15,13 +15,13 @@ type Story = StoryObj;
 export const Installation: Story = {
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Installation</p>
-        <h1 className="mds-title">Import the package and the stylesheet once.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Installation</Eyebrow>
+        <h1>Import the package and the stylesheet once.</h1>
+        <p>
           MDS ships React components and a stable CSS entrypoint. React and React DOM are peer dependencies.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="Package" title="Install">
         <pre>{`npm install @miskun/design-system react react-dom`}</pre>

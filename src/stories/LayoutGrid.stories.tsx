@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card, Grid, MetricCard, Stack } from "../components";
+import { Button, Card, Grid, MetricCard, Stack, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -42,17 +42,17 @@ export const ResponsiveGrid: Story = {
       <Grid minItemWidth="260px">
         <Card title="Admin portals">
           <Stack gap="sm">
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            <Text tone="muted" size="md">
               Favor scannable rows, filters, tables, and compact summaries.
-            </p>
+            </Text>
             <Button variant="secondary">Open example</Button>
           </Stack>
         </Card>
         <Card title="Editorial">
           <Stack gap="sm">
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            <Text tone="muted" size="md">
               Use wider rhythm, readable text measure, and clear calls to action.
-            </p>
+            </Text>
             <Button variant="secondary">Open example</Button>
           </Stack>
         </Card>
@@ -66,19 +66,19 @@ export const FixedColumns: Story = {
   render: () => (
     <Grid columns={3}>
       <Card title="Plan">
-        <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text tone="muted" size="md">
           Define the page structure.
-        </p>
+        </Text>
       </Card>
       <Card title="Build">
-        <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text tone="muted" size="md">
           Compose primitives and components.
-        </p>
+        </Text>
       </Card>
       <Card title="Review">
-        <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text tone="muted" size="md">
           Check target behavior and accessibility.
-        </p>
+        </Text>
       </Card>
     </Grid>
   ),

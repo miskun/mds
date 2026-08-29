@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, ComboBox, Grid, Input, Stack, Switch } from "../components";
+import { Card, ComboBox, Eyebrow, Grid, Input, Prose, Stack, Switch } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -15,13 +15,13 @@ type Story = StoryObj;
 export const Introduction: Story = {
   render: () => (
     <Stack>
-      <header className="mds-stack">
-        <p className="mds-kicker">Forms</p>
-        <h1 className="mds-title">Field structure, controls, validation, and choice.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Forms</Eyebrow>
+        <h1>Field structure, controls, validation, and choice.</h1>
+        <p>
           Forms keep labels, hints, errors, required state, disabled state, and native semantics consistent across input workflows.
         </p>
-      </header>
+      </Prose>
       <Grid minItemWidth="280px">
         <Card title="Field controls" eyebrow="Text and select">
           <Stack gap="sm">

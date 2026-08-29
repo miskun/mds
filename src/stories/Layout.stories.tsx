@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Badge, Button, Card, Cluster, Inline, Stack, StatusDot, Tag } from "../components";
+import { Badge, Button, Card, Cluster, Inline, Stack, StatusDot, Tag, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -35,9 +35,9 @@ export const StackSpacing: Story = {
     <Stack style={{ maxWidth: 680 }}>
       <Card eyebrow="Stack" title="Vertical rhythm">
         <Stack gap="sm">
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             Use Stack for form sections, settings panels, docs pages, and any vertical composition.
-          </p>
+          </Text>
           <Inline gap="xs" wrap>
             <Badge tone="accent">gap sm</Badge>
             <StatusDot tone="success" label="Target-aware" />
@@ -89,16 +89,16 @@ export const InlineText: Story = {
     <Stack style={{ maxWidth: 680 }}>
       <Inline as="p" wrap>
         <StatusDot tone="warning" label="Review needed" />
-        <span className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text as="span" tone="muted" size="md">
           Last updated by Design Systems
-        </span>
+        </Text>
         <Tag>components</Tag>
       </Inline>
       <Card title="Inline with actions">
         <Inline wrap gap="sm">
-          <span className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text as="span" tone="muted" size="md">
             Invite reviewers before publishing.
-          </span>
+          </Text>
           <Button size="sm" variant="secondary">Invite</Button>
         </Inline>
       </Card>

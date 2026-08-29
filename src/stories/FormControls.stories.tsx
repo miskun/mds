@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ComboBox, Input, SelectField, Stack, Textarea } from "../components";
+import { ComboBox, Input, SelectField, Stack, Text, Textarea } from "../components";
 import "../showcase.css";
 
 const meta = {

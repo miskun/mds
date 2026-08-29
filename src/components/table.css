@@ -72,7 +72,7 @@
   position: relative;
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xxs);
-  font-weight: 900;
+  font-weight: var(--mds-font-weight-semibold);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -167,7 +167,7 @@
 
 .mds-table-cell-text__primary {
   color: var(--mds-text);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
   line-height: var(--mds-table-cell-line-1-height);
 }
 
@@ -175,7 +175,7 @@
   min-height: 1.2em;
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xxs);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-regular);
   line-height: var(--mds-table-cell-line-2-height);
 }
 

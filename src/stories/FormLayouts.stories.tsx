@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card, Checkbox, Cluster, ComboBox, Field, Grid, Input, Panel, Stack, Textarea } from "../components";
+import { Button, Card, Checkbox, Cluster, ComboBox, Field, Grid, Input, Panel, Stack, Text, Textarea } from "../components";
 import "../showcase.css";
 import "./form-layouts.css";
 

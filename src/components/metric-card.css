@@ -40,7 +40,7 @@
   overflow: hidden;
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xs);
-  font-weight: 900;
+  font-weight: var(--mds-font-weight-semibold);
   line-height: 1.2;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -100,7 +100,7 @@
   min-width: 0;
   color: var(--mds-text-muted);
   font-size: var(--mds-metric-delta-size);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
 }
 
 .mds-metric__support {
@@ -134,7 +134,7 @@
   overflow: hidden;
   color: var(--mds-text-soft);
   font-size: var(--mds-font-size-xxs);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-medium);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--mds-metric-context-max-lines);
   line-height: 1.35;

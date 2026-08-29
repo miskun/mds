@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FileText, Home } from "lucide-react";
-import { BreadcrumbItem, Breadcrumbs, Card, Stack } from "../components";
+import { BreadcrumbItem, Breadcrumbs, Card, Stack, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -46,9 +46,9 @@ export const PageTrail: Story = {
       </Breadcrumbs>
 
       <Card title="Current page">
-        <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text tone="muted" size="md">
           The final breadcrumb is still rendered as a link element for API consistency, but it is marked as the current page.
-        </p>
+        </Text>
       </Card>
     </Stack>
   ),

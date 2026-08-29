@@ -16,8 +16,8 @@
 
 .token-doc__header h1 {
   color: var(--mds-text);
-  font-size: var(--mds-title-size);
-  line-height: var(--mds-title-line-height);
+  font-size: var(--mds-prose-h1-size);
+  line-height: 1;
 }
 
 .token-doc__section {
@@ -32,11 +32,11 @@
   line-height: 1.3;
 }
 
-.token-doc__header p:not(.mds-kicker) {
+.token-doc__header p:not(.mds-eyebrow) {
   max-width: var(--mds-readable-width);
   color: var(--mds-text-muted);
-  font-size: var(--mds-font-size-lg);
-  line-height: 1.5;
+  font-size: var(--mds-prose-body-size);
+  line-height: var(--mds-prose-line-height);
 }
 
 .token-doc__swatches {
@@ -158,7 +158,7 @@
   padding: 0 var(--mds-control-padding-x-md);
   font: inherit;
   font-size: var(--mds-control-font-size-md);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
   text-decoration: none;
 }
 

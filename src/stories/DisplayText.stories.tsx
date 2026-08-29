@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, Code, Grid, Stack, Text, Title } from "../components";
+import { Card, Code, Eyebrow, Grid, Prose, Stack, Text, Title } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -33,7 +33,7 @@ export const TypographyScale: Story = {
   parameters: storyDescription("Use Text for body, metadata, and supporting copy. Use Title for document and section headings."),
   render: () => (
     <Stack>
-      <Title level={1} size="page">Design system typography</Title>
+      <Title level={1}>Design system typography</Title>
       <Text size="lg" tone="muted">
         Inter is the MDS typeface. Text primitives keep size, tone, and rhythm consistent across targets.
       </Text>
@@ -67,14 +67,31 @@ export const TypographyScale: Story = {
 };
 
 export const Titles: Story = {
-  parameters: storyDescription("Title separates semantic heading level from visual size."),
+  parameters: storyDescription("Title follows semantic heading level by default and can include the same eyebrow rhythm used by prose headers."),
   render: () => (
     <Stack>
-      <Title level={1} size="page">Page title</Title>
+      <Title level={1} eyebrow="Typography">Page title</Title>
       <Title level={2} size="section">Section title</Title>
       <Title level={3} size="subsection">Subsection title</Title>
       <Title level={4} size="compact">Compact title</Title>
     </Stack>
+  ),
+};
+
+export const EyebrowRhythm: Story = {
+  parameters: storyDescription("Title with eyebrow matches the prose pattern of eyebrow text followed by a heading."),
+  render: () => (
+    <Grid minItemWidth="280px">
+      <Card eyebrow="Title component" title="Component primitive">
+        <Title level={1} eyebrow="Typography">Page title</Title>
+      </Card>
+      <Card eyebrow="Prose" title="Native elements">
+        <Prose>
+          <Eyebrow>Typography</Eyebrow>
+          <h1>Page title</h1>
+        </Prose>
+      </Card>
+    </Grid>
   ),
 };
 

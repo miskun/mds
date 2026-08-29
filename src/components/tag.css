@@ -7,7 +7,7 @@
   border-radius: 999px;
   padding: 0 var(--mds-control-padding-x-sm);
   font-size: var(--mds-control-font-size-sm);
-  font-weight: 800;
+  font-weight: var(--mds-font-weight-semibold);
 }
 
 .mds-tag--neutral {

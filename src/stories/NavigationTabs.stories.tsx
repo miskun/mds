@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Card, Segment, SegmentedControl, Stack, Tab, Tabs } from "../components";
+import { Card, Segment, SegmentedControl, Stack, Tab, Tabs, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -43,9 +43,9 @@ export const SectionTabs: Story = {
         </Tab>
       </Tabs>
       <Card title="Usage">
-        <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+        <Text tone="muted" size="md">
           Use tabs when sections are peers and the selected section remains in the same context.
-        </p>
+        </Text>
       </Card>
     </Stack>
   ),
@@ -67,9 +67,9 @@ export const SegmentedViews: Story = {
           </Segment>
         </SegmentedControl>
         <Card title="Selected view">
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             {view}
-          </p>
+          </Text>
         </Card>
       </Stack>
     );

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Eyebrow } from "../components";
 import "./tokens.css";
 
 const meta = {
@@ -96,6 +97,14 @@ const typography = [
   ["Large", "--mds-font-size-lg", "20px", "Section leads and prominent copy."],
   ["XL", "--mds-font-size-xl", "28px", "Compact page headings."],
   ["2XL", "--mds-font-size-2xl", "40px", "Hero and editorial headings."],
+];
+
+const fontWeights = [
+  ["Regular", "--mds-font-weight-regular", "400", "Body copy, descriptions, secondary table text, and quiet helper copy."],
+  ["Medium", "--mds-font-weight-medium", "500", "Default labels, metadata, status text, tooltips, and chart legends."],
+  ["Semibold", "--mds-font-weight-semibold", "600", "Controls, badges, form labels, table headers, and selected chrome."],
+  ["Bold", "--mds-font-weight-bold", "700", "Card titles, prose headings, strong emphasis, and compact keyboard marks."],
+  ["Heavy", "--mds-font-weight-heavy", "800", "Page-scale display text, metric values, and rare identity marks."],
 ];
 
 const radii = [
@@ -231,7 +240,7 @@ export const Spacing: Story = {
 export const TypographyAndRadii: Story = {
   render: () => (
     <div className="token-doc">
-      <Header title="Typography + Radii" description="Inter-first type scale, compact radii, and consistent focus treatment." />
+      <Header title="Typography + Radii" description="Inter-first type scale, quiet font-weight hierarchy, compact radii, and consistent focus treatment." />
       <table className="token-doc__table">
         <thead>
           <tr>
@@ -245,6 +254,26 @@ export const TypographyAndRadii: Story = {
           {typography.map(([name, token, value, usage]) => (
             <tr key={token}>
               <td style={{ fontSize: `var(${token})`, color: "var(--mds-text)" }}>{name}</td>
+              <td>{token}</td>
+              <td>{value}</td>
+              <td>{usage}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <table className="token-doc__table">
+        <thead>
+          <tr>
+            <th>Weight</th>
+            <th>Token</th>
+            <th>Reference</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fontWeights.map(([name, token, value, usage]) => (
+            <tr key={token}>
+              <td style={{ color: "var(--mds-text)", fontWeight: `var(${token})` }}>{name}</td>
               <td>{token}</td>
               <td>{value}</td>
               <td>{usage}</td>
@@ -300,7 +329,7 @@ export const NamingRules: Story = {
 function Header({ title, description }: { title: string; description: string }) {
   return (
     <header className="token-doc__header">
-      <p className="mds-kicker">MDS Tokens</p>
+      <Eyebrow>MDS Tokens</Eyebrow>
       <h1>{title}</h1>
       <p>{description}</p>
     </header>

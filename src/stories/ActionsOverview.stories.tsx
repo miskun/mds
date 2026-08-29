@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card, Grid, IconButton, Stack } from "../components";
+import { Button, Card, Eyebrow, Grid, IconButton, Prose, Stack } from "../components";
 import { Plus } from "lucide-react";
 import "../showcase.css";
 
@@ -16,13 +16,13 @@ type Story = StoryObj;
 export const Introduction: Story = {
   render: () => (
     <Stack>
-      <header className="mds-stack">
-        <p className="mds-kicker">Actions</p>
-        <h1 className="mds-title">Controls that commit, navigate, or reveal choices.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Actions</Eyebrow>
+        <h1>Controls that commit, navigate, or reveal choices.</h1>
+        <p>
           Use action components when users need to do something explicit. Keep links for navigation and buttons for state-changing commands.
         </p>
-      </header>
+      </Prose>
       <Grid minItemWidth="260px">
         <Card title="Buttons" eyebrow="Primary surface">
           <Stack gap="sm">

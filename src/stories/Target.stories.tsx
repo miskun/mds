@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Search } from "lucide-react";
-import { Badge, Button, Card, ComboBox, Input, MDSProvider, Tab, Tabs } from "../components";
+import { Badge, Button, Card, ComboBox, Eyebrow, Input, MDSProvider, Tab, Tabs } from "../components";
 import "../showcase.css";
 import "./provider.css";
 
@@ -70,7 +70,7 @@ export const ProviderUsage: Story = {
   render: () => (
     <div className="provider-doc">
       <header className="provider-doc__header">
-        <p className="mds-kicker">MDS Provider</p>
+        <Eyebrow>MDS Provider</Eyebrow>
         <h1>Wrap an app or subtree with the selected target.</h1>
         <p>
           MDSProvider writes <code>data-mds-target</code> so component tokens resolve for desktop, mobile, admin, or editorial surfaces.

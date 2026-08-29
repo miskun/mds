@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Alert, Card, EmptyState, Grid, Progress, Stack, Toast } from "../components";
+import { Alert, Card, EmptyState, Eyebrow, Grid, Progress, Prose, Stack, Toast } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -15,13 +15,13 @@ type Story = StoryObj;
 export const Introduction: Story = {
   render: () => (
     <Stack>
-      <header className="mds-stack">
-        <p className="mds-kicker">Feedback</p>
-        <h1 className="mds-title">System state, recovery, loading, and confirmation.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Feedback</Eyebrow>
+        <h1>System state, recovery, loading, and confirmation.</h1>
+        <p>
           Feedback components explain what happened, what is happening, or what users can do next.
         </p>
-      </header>
+      </Prose>
       <Grid minItemWidth="280px">
         <Card title="Alerts" eyebrow="Recovery">
           <Alert tone="warning" title="Review required">Resolve validation issues before publishing.</Alert>

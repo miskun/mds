@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Badge, Card, Grid, Stack } from "../components";
+import { Badge, Card, Eyebrow, Grid, Prose, Stack, Text } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -37,13 +37,13 @@ export const Overview: Story = {
   name: "Overview",
   render: () => (
     <Stack style={{ maxWidth: 1040 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Foundations</p>
-        <h1 className="mds-title">The system rules behind every component.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Foundations</Eyebrow>
+        <h1>The system rules behind every component.</h1>
+        <p>
           Foundations explain how MDS turns a black-first visual language into target-aware components. Use this section for tokens, target behavior, typography, spacing, focus, and state rules.
         </p>
-      </header>
+      </Prose>
 
       <div className="mds-cluster">
         <Badge tone="accent">Black-first</Badge>
@@ -56,9 +56,9 @@ export const Overview: Story = {
         {foundationAreas.map(([title, description, location]) => (
           <Card key={title} eyebrow="Docs" title={title}>
             <Stack gap="sm">
-              <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+              <Text tone="muted" size="md">
                 {description}
-              </p>
+              </Text>
               <code>{location}</code>
             </Stack>
           </Card>
@@ -67,9 +67,9 @@ export const Overview: Story = {
 
       <Card eyebrow="Target model" title="Target describes product intent">
         <Stack>
-          <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+          <Text tone="muted" size="md">
             Viewport is screen size. Target is ergonomics: typography, spacing, control scale, hit area, and interaction comfort.
-          </p>
+          </Text>
           <div className="token-doc__rows">
             {targets.map(([target, use, intent]) => (
               <div className="token-doc__row" key={target}>
@@ -85,9 +85,9 @@ export const Overview: Story = {
       <Grid minItemWidth="240px">
         {rules.map(([title, description]) => (
           <Card key={title} eyebrow="Rule" title={title}>
-            <p className="mds-subtitle" style={{ fontSize: "var(--mds-font-size-md)" }}>
+            <Text tone="muted" size="md">
               {description}
-            </p>
+            </Text>
           </Card>
         ))}
       </Grid>

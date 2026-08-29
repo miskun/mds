@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card, Checkbox, ComboBox, Input, Switch } from "../components";
+import { Button, Card, Checkbox, ComboBox, Eyebrow, Input, Prose, Switch } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -15,13 +15,13 @@ type Story = StoryObj;
 export const UsingComponents: Story = {
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Using components</p>
-        <h1 className="mds-title">Compose primitives from the component sections.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Using components</Eyebrow>
+        <h1>Compose primitives from the component sections.</h1>
+        <p>
           Components pass native props through where possible and use shared target-aware spacing and sizing tokens.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="Example" title="Component form">
         <div className="mds-stack">

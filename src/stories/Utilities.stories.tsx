@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, Kbd, Tag } from "../components";
+import { Card, Eyebrow, Kbd, Prose, Tag } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -15,22 +15,20 @@ type Story = StoryObj;
 const utilities = [
   ["Stack", "mds-stack", "Vertical rhythm that follows target spacing."],
   ["Cluster", "mds-cluster", "Inline wrapping layout for toolbars and compact groups."],
-  ["Kicker", "mds-kicker", "Small uppercase section label."],
-  ["Title", "mds-title", "Large page or section heading."],
-  ["Subtitle", "mds-subtitle", "Supporting copy for headings."],
+  ["Numeric", "mds-numeric", "Tabular figures for aligned numeric values."],
 ];
 
 export const Overview: Story = {
   name: "Available helpers",
   render: () => (
     <div className="mds-stack" style={{ maxWidth: 860 }}>
-      <header className="mds-stack">
-        <p className="mds-kicker">Utilities</p>
-        <h1 className="mds-title">Small layout and text helpers for documentation and composition.</h1>
-        <p className="mds-subtitle">
+      <Prose as="header">
+        <Eyebrow>Utilities</Eyebrow>
+        <h1>Small layout and text helpers for documentation and composition.</h1>
+        <p>
           Utilities stay minimal. Components and target tokens should do most of the interface work.
         </p>
-      </header>
+      </Prose>
 
       <Card eyebrow="CSS utilities" title="Available helpers">
         <div className="token-doc__rows">
