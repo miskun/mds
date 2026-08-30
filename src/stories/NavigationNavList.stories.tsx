@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { FileText, LayoutDashboard, Settings, User } from "lucide-react";
 import { Card, Grid, NavItem, NavList, Panel, Stack, StatusDot, Text } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
@@ -91,4 +92,38 @@ export const StateNavigation: Story = {
       </Grid>
     );
   },
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Nav lists can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      canvas={
+        <NavList label="Canvas navigation">
+          <NavItem href="#" active icon={<LayoutDashboard size={16} />}>
+            Overview
+          </NavItem>
+          <NavItem href="#" icon={<FileText size={16} />}>
+            Components
+          </NavItem>
+          <NavItem href="#" icon={<Settings size={16} />}>
+            Tokens
+          </NavItem>
+        </NavList>
+      }
+      panel={
+        <NavList label="Panel navigation">
+          <NavItem href="#" active icon={<LayoutDashboard size={16} />}>
+            Overview
+          </NavItem>
+          <NavItem href="#" icon={<FileText size={16} />}>
+            Components
+          </NavItem>
+          <NavItem href="#" icon={<Settings size={16} />}>
+            Tokens
+          </NavItem>
+        </NavList>
+      }
+    />
+  ),
 };

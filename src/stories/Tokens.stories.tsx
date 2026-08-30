@@ -45,12 +45,12 @@ const colors = [
 ];
 
 const grayScale = [
-  ["Gray 1", "--mds-gray-1", "Default panel surface above pure black."],
-  ["Gray 2", "--mds-gray-2", "Inset controls and app chrome."],
-  ["Gray 3", "--mds-gray-3", "Subtle surface transition."],
-  ["Gray 4", "--mds-gray-4", "Panel surface."],
-  ["Gray 5", "--mds-gray-5", "Raised surface."],
-  ["Gray 6", "--mds-gray-6", "Reserved dark step."],
+  ["Gray 1", "--mds-gray-1", "Near-black base step above pure canvas."],
+  ["Gray 2", "--mds-gray-2", "Default panel surface and inset app chrome."],
+  ["Gray 3", "--mds-gray-3", "Raised panel surface."],
+  ["Gray 4", "--mds-gray-4", "Recessed control details."],
+  ["Gray 5", "--mds-gray-5", "Raised control details."],
+  ["Gray 6", "--mds-gray-6", "High control surface step."],
   ["Gray 7", "--mds-gray-7", "Default divider."],
   ["Gray 8", "--mds-gray-8", "Strong divider."],
   ["Gray 9", "--mds-gray-9", "Soft text."],

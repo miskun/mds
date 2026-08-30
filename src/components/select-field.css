@@ -12,26 +12,40 @@
   height: var(--mds-control-height-md);
   min-height: var(--mds-control-height-md);
   border: 0;
-  border-radius: var(--mds-radius-lg);
-  background: var(--mds-control-surface);
-  box-shadow: var(--mds-control-inset-shadow);
+  border-radius: var(--mds-control-well-radius);
+  background: var(--mds-control-well-surface);
+  box-shadow: var(--mds-control-well-shadow);
+  caret-color: var(--mds-control-well-caret-color);
   color: var(--mds-text);
   padding: 0 var(--mds-control-padding-x-md);
-  transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
+  text-shadow: var(--mds-control-well-text-shadow);
+  transition: var(--mds-control-well-transition);
 }
 
-.mds-select-field--open .mds-select-field__control {
-  background: var(--mds-control-surface-raised);
-  box-shadow: var(--mds-control-inset-shadow);
+.mds-select-field--open .mds-select-field__control,
+.mds-select-field:focus-within .mds-select-field__control {
+  background: var(--mds-control-well-surface-focus);
+  box-shadow: var(--mds-control-well-shadow-focus);
+  text-shadow: var(--mds-control-well-text-shadow-focus);
+  transition: var(--mds-control-well-transition-focus);
+}
+
+.mds-select-field__control:has(.mds-select-field__trigger--placeholder) {
+  color: color-mix(in srgb, var(--mds-text-soft) 48%, var(--mds-black));
+}
+
+.mds-select-field--open .mds-select-field__control:has(.mds-select-field__trigger--placeholder),
+.mds-select-field:focus-within .mds-select-field__control:has(.mds-select-field__trigger--placeholder) {
+  color: var(--mds-text);
 }
 
 .mds-select-field--invalid .mds-select-field__control {
-  background: var(--mds-control-surface-invalid);
+  background: var(--mds-control-well-surface-invalid);
 }
 
 .mds-select-field--invalid.mds-select-field--open .mds-select-field__control,
 .mds-select-field--invalid:focus-within .mds-select-field__control {
-  background: var(--mds-control-surface-invalid-raised);
+  background: var(--mds-control-well-surface-invalid-focus);
 }
 
 .mds-select-field--disabled {
@@ -40,7 +54,7 @@
 }
 
 .mds-select-field--disabled .mds-select-field__control {
-  background: var(--mds-control-surface);
+  background: var(--mds-control-well-surface);
   cursor: not-allowed;
 }
 
@@ -71,7 +85,8 @@
 }
 
 .mds-select-field__trigger--placeholder {
-  color: color-mix(in srgb, var(--mds-text-soft) 58%, var(--mds-black));
+  color: color-mix(in srgb, var(--mds-text-soft) 48%, var(--mds-black));
+  text-shadow: none;
 }
 
 .mds-select-field--invalid .mds-select-field__trigger--placeholder {
@@ -95,11 +110,15 @@
   grid-column: 3;
 }
 
-.mds-select-field__trigger:focus-visible,
 .mds-select-field__clear:focus-visible,
 .mds-select-field__toggle:focus-visible {
   outline: none;
   box-shadow: var(--mds-focus);
+}
+
+.mds-select-field__trigger:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .mds-select-field--disabled .mds-select-field__trigger,

@@ -11,7 +11,7 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Card = forwardRef<HTMLElement, CardProps>(function Card({ title, eyebrow, action, className, children, ...props }, ref) {
   return (
-    <section ref={ref} className={cx("mds-card", className)} {...props}>
+    <section ref={ref} data-mds-surface="panel" className={cx("mds-card", className)} {...props}>
       {(title || eyebrow || action) && (
         <header className="mds-card__header">
           <div>

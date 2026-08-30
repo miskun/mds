@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ComboBox, Input, SelectField, Stack, Text, Textarea } from "../components";
+import { Input, Stack, Textarea } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Forms/Text controls",
+  title: "MDS/Components/Controls/Inputs",
   component: Input,
   subcomponents: { Textarea },
   tags: ["autodocs"],
@@ -12,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Text controls share label, hint, error, invalid, disabled, and native prop passthrough patterns. Helper text is wired through ARIA relationships.",
+          "Inputs cover text, search, textarea, and native input types. They can be used in forms, tables, dialogs, toolbars, canvas regions, or raised panels.",
       },
     },
   },
@@ -64,8 +65,8 @@ export const Playground: Story = {
   },
 };
 
-export const TextFields: Story = {
-  parameters: storyDescription("Text controls expose the same label, hint, error, required, invalid, disabled, and native prop passthrough patterns."),
+export const States: Story = {
+  parameters: storyDescription("Inputs expose the same label, hint, error, required, invalid, disabled, and native prop passthrough patterns."),
   render: () => (
     <Stack style={{ maxWidth: 520 }}>
       <Input label="Name" placeholder="Miskun Design System" hint="Use concise labels and direct hints." required />
@@ -78,7 +79,7 @@ export const TextFields: Story = {
   ),
 };
 
-export const TextWithNativeTypes: Story = {
+export const NativeTypes: Story = {
   parameters: storyDescription("Input keeps native input types available while preserving MDS field structure."),
   render: () => (
     <Stack style={{ maxWidth: 520 }}>
@@ -89,41 +90,25 @@ export const TextWithNativeTypes: Story = {
   ),
 };
 
-export const DropdownFields: Story = {
-  parameters: storyDescription("Use SelectField for regular MDS-rendered dropdown fields. Use ComboBox when searching or filtering options matters."),
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Inputs inherit canvas or panel surface context without adding per-control surface props."),
   render: () => (
-    <Stack style={{ maxWidth: 520 }}>
-      <SelectField
-        label="Target"
-        defaultValue="admin"
-        options={[
-          { value: "desktop", label: "Desktop" },
-          { value: "mobile", label: "Mobile" },
-          { value: "admin", label: "Admin portal" },
-          { value: "editorial", label: "Editorial" },
-        ]}
-      />
-      <SelectField
-        label="Release target"
-        defaultValue=""
-        error="Select a target before publishing."
-        placeholder="Choose target"
-        options={[
-          { value: "desktop", label: "Desktop" },
-          { value: "mobile", label: "Mobile" },
-          { value: "admin", label: "Admin portal" },
-          { value: "editorial", label: "Editorial" },
-        ]}
-      />
-      <ComboBox
-        label="Component"
-        hint="Use ComboBox when option discovery matters."
-        options={[
-          { value: "button", label: "Button", description: "Primary action trigger" },
-          { value: "input", label: "Input", description: "Single-line text field" },
-          { value: "combo-box", label: "Combo box", description: "Searchable selection control" },
-        ]}
-      />
-    </Stack>
+    <SurfaceComparison
+      maxWidth={1120}
+      canvas={
+        <>
+          <Input label="Name" placeholder="Miskun Design System" />
+          <Input type="search" label="Search" placeholder="Search components" />
+          <Textarea label="Notes" placeholder="Direct canvas field" />
+        </>
+      }
+      panel={
+        <>
+          <Input label="Name" placeholder="Miskun Design System" />
+          <Input type="search" label="Search" placeholder="Search components" />
+          <Textarea label="Notes" placeholder="Panel field" />
+        </>
+      }
+    />
   ),
 };

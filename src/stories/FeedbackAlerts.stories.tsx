@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Alert } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "./feedback-loading.css";
 
 const meta = {
@@ -54,5 +55,34 @@ export const RecoveryAlert: Story = {
     <Alert tone="danger" title="Unable to publish">
       Fix validation errors and run the release checklist again.
     </Alert>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Alerts can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1080}
+      canvas={
+        <>
+          <Alert tone="info" title="Component indexed">
+            Search metadata has been refreshed.
+          </Alert>
+          <Alert tone="warning" title="Missing states">
+            Add disabled and invalid examples.
+          </Alert>
+        </>
+      }
+      panel={
+        <>
+          <Alert tone="info" title="Component indexed">
+            Search metadata has been refreshed.
+          </Alert>
+          <Alert tone="warning" title="Missing states">
+            Add disabled and invalid examples.
+          </Alert>
+        </>
+      }
+    />
   ),
 };

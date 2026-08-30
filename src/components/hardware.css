@@ -1,0 +1,736 @@
+.mds-hardware-workbench {
+  --mds-hardware-light-x: 50%;
+  --mds-hardware-light-y: 8%;
+  --mds-hardware-key-light: rgba(255, 255, 255, 0.11);
+  --mds-hardware-rim-light: rgba(255, 255, 255, 0.045);
+  --mds-hardware-cast-shadow: 10px 18px 26px rgba(0, 0, 0, 0.58);
+  --mds-hardware-scene-light:
+    radial-gradient(ellipse at var(--mds-hardware-light-x) var(--mds-hardware-light-y), rgba(226, 238, 238, 0.105), transparent 34%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.03), transparent 32% 74%, rgba(0, 0, 0, 0.08));
+  position: relative;
+  min-height: 760px;
+  overflow: hidden;
+  border-radius: var(--mds-radius-md);
+  background:
+    radial-gradient(circle at 50% 12%, rgba(166, 166, 173, 0.16), transparent 34%),
+    linear-gradient(180deg, #15191a, #030303 78%);
+  color: var(--mds-text);
+  isolation: isolate;
+  padding: clamp(24px, 5vw, 72px);
+}
+
+.mds-hardware-workbench::before,
+.mds-hardware-workbench::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.mds-hardware-workbench::before {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at var(--mds-hardware-light-x) var(--mds-hardware-light-y), rgba(214, 224, 224, 0.2), transparent 32%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.055), transparent 30% 72%, rgba(0, 0, 0, 0.04));
+  mix-blend-mode: screen;
+  opacity: 0.64;
+}
+
+.mds-hardware-workbench::after {
+  z-index: 3;
+  background:
+    radial-gradient(ellipse at 50% 28%, transparent 0 38%, rgba(0, 0, 0, 0.3) 78%),
+    linear-gradient(180deg, transparent 0 56%, rgba(0, 0, 0, 0.36));
+  mix-blend-mode: multiply;
+}
+
+.mds-hardware-workbench > :not(.mds-hardware-workbench__grid) {
+  position: relative;
+  z-index: 1;
+}
+
+.mds-hardware-workbench__grid {
+  position: absolute;
+  inset: -8%;
+  z-index: -2;
+  opacity: 0.92;
+  background:
+    linear-gradient(132deg, transparent 0 19%, rgba(255, 255, 255, 0.035) 19.15%, transparent 19.8% 100%),
+    linear-gradient(132deg, transparent 0 24%, rgba(0, 0, 0, 0.72) 24.15%, transparent 25% 100%),
+    linear-gradient(90deg, transparent 0 7%, rgba(255, 255, 255, 0.035) 7.1%, transparent 7.55% 22%, rgba(0, 0, 0, 0.7) 22.15%, transparent 23% 100%),
+    linear-gradient(90deg, transparent 0 72%, rgba(255, 255, 255, 0.03) 72.1%, transparent 72.55% 100%),
+    repeating-linear-gradient(90deg, transparent 0 72px, rgba(255, 255, 255, 0.018) 72px 74px, rgba(0, 0, 0, 0.5) 76px 82px, transparent 84px 150px);
+  filter: drop-shadow(0 20px 18px rgba(0, 0, 0, 0.74));
+}
+
+.mds-hardware-panel {
+  position: relative;
+  overflow: hidden;
+  max-width: 1040px;
+  margin: 0 auto;
+  border: 1px solid color-mix(in srgb, var(--mds-text) 6%, var(--mds-black));
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent 58%, rgba(0, 0, 0, 0.32) 100%),
+    var(--mds-surface-material);
+  background-size: auto, var(--mds-surface-material-size);
+  box-shadow:
+    0 36px 80px rgba(0, 0, 0, 0.82),
+    var(--mds-hardware-cast-shadow),
+    0 3px 0 rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.86);
+  padding: clamp(28px, 4vw, 56px) clamp(24px, 4vw, 40px) clamp(24px, 4vw, 34px);
+}
+
+.mds-hardware-panel::before {
+  position: absolute;
+  inset: 10px;
+  z-index: 2;
+  border: 1px solid rgba(0, 0, 0, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  content: "";
+  pointer-events: none;
+}
+
+.mds-hardware-panel::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--mds-hardware-scene-light);
+  background-attachment: fixed, fixed;
+  mix-blend-mode: screen;
+  opacity: 0.42;
+  content: "";
+  pointer-events: none;
+}
+
+.mds-hardware-panel__title {
+  position: relative;
+  z-index: 1;
+  margin-block: -8px 20px;
+  color: color-mix(in srgb, var(--mds-text) 68%, var(--mds-black));
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: var(--mds-font-weight-regular);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: center;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35),
+    0 -1px 0 rgba(0, 0, 0, 0.9),
+    0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+.mds-hardware-panel__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--mds-layout-gap);
+}
+
+.mds-hardware-bay {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--mds-text) 6%, var(--mds-black));
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 62%, rgba(0, 0, 0, 0.34)),
+    color-mix(in srgb, var(--mds-black) 20%, var(--mds-panel));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -16px 24px rgba(0, 0, 0, 0.26),
+    0 2px 0 rgba(0, 0, 0, 0.72),
+    8px 14px 24px rgba(0, 0, 0, 0.34);
+  padding: var(--mds-panel-padding);
+}
+
+.mds-hardware-bay::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.028),
+    inset 1px 0 0 rgba(255, 255, 255, 0.012),
+    inset -1px 0 0 rgba(0, 0, 0, 0.42),
+    inset 0 -18px 28px rgba(0, 0, 0, 0.32);
+  content: "";
+  pointer-events: none;
+}
+
+.mds-hardware-bay::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--mds-hardware-scene-light);
+  background-attachment: fixed, fixed;
+  content: "";
+  mix-blend-mode: screen;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.mds-hardware-bay__content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--mds-layout-gap);
+  min-width: 0;
+}
+
+.mds-hardware-label {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--mds-field-gap);
+  color: color-mix(in srgb, var(--mds-accent) 74%, var(--mds-text));
+  font-size: var(--mds-font-size-xxs);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--mds-accent) 32%, transparent);
+}
+
+.mds-hardware-list {
+  --mds-hardware-light: var(--mds-accent);
+  --mds-light-color: var(--mds-hardware-light);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.86);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 18%, rgba(0, 0, 0, 0.28)),
+    radial-gradient(circle at 52% 12%, color-mix(in srgb, var(--mds-hardware-light) 12%, transparent), transparent 42%),
+    #040404;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    inset 0 18px 24px color-mix(in srgb, var(--mds-hardware-light) 3.5%, transparent),
+    inset 0 -18px 28px rgba(0, 0, 0, 0.74),
+    0 8px 18px rgba(0, 0, 0, 0.52);
+}
+
+.mds-hardware-list::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--mds-hardware-light) 5%, transparent), transparent 26% 88%, color-mix(in srgb, var(--mds-hardware-light) 4.5%, transparent)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 20% 82%, rgba(0, 0, 0, 0.55));
+  content: "";
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mds-hardware-list__viewport {
+  position: relative;
+  display: grid;
+  max-height: 302px;
+  overflow-y: auto;
+  padding: 4px 8px 4px 0;
+  scrollbar-color: var(--mds-hardware-light) #080808;
+  scrollbar-width: thin;
+}
+
+.mds-hardware-list__viewport::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mds-hardware-list__viewport::-webkit-scrollbar-track {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.035), transparent),
+    #060606;
+  box-shadow: inset 1px 0 2px rgba(0, 0, 0, 0.86);
+}
+
+.mds-hardware-list__viewport::-webkit-scrollbar-thumb {
+  border: 2px solid #060606;
+  border-radius: 999px;
+  background: var(--mds-hardware-light);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--mds-hardware-light) 70%, transparent),
+    0 0 18px color-mix(in srgb, var(--mds-hardware-light) 28%, transparent);
+}
+
+.mds-hardware-list__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 20px;
+  align-items: center;
+  min-height: 30px;
+  padding-inline: 14px 4px;
+  color: color-mix(in srgb, var(--mds-hardware-light) 82%, var(--mds-text));
+  font-size: var(--mds-font-size-xs);
+  line-height: 1;
+  text-shadow: 0 0 9px color-mix(in srgb, var(--mds-hardware-light) 28%, transparent);
+  text-transform: uppercase;
+}
+
+.mds-hardware-list__item::after {
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  left: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--mds-hardware-light) 8%, transparent), transparent);
+  content: "";
+}
+
+.mds-hardware-list__item--selected {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--mds-hardware-light) 18%, transparent),
+      color-mix(in srgb, var(--mds-hardware-light) 8%, transparent) 72%,
+      transparent
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent);
+  color: color-mix(in srgb, var(--mds-hardware-light) 86%, white);
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--mds-hardware-light) 62%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.48),
+    0 0 18px color-mix(in srgb, var(--mds-hardware-light) 8%, transparent);
+}
+
+.mds-hardware-list__eyebrow {
+  color: color-mix(in srgb, currentColor 80%, var(--mds-black));
+}
+
+.mds-hardware-list__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mds-hardware-list__chevron {
+  justify-self: center;
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  opacity: 0.72;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.mds-hardware-list__item--selected .mds-hardware-list__chevron {
+  opacity: 1;
+  transform: translateY(2px) rotate(225deg);
+}
+
+.mds-hardware-display {
+  --mds-hardware-light: var(--mds-accent);
+  --mds-light-color: var(--mds-hardware-light);
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid rgba(0, 0, 0, 0.82);
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse at 42% 100%, color-mix(in srgb, var(--mds-hardware-light) 16%, transparent), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), transparent 44%, rgba(0, 0, 0, 0.44)),
+    color-mix(in srgb, var(--mds-black) 76%, var(--mds-gray-4));
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.055),
+    inset 0 -20px 28px rgba(0, 0, 0, 0.52),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.018),
+    0 8px 18px rgba(0, 0, 0, 0.48);
+  padding: var(--mds-control-padding-y-md) var(--mds-control-padding-x-md);
+}
+
+.mds-hardware-display::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 28%),
+    repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.012) 5px 6px);
+  content: "";
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.mds-hardware-display__eyebrow,
+.mds-hardware-display__readout,
+.mds-hardware-display__content {
+  position: relative;
+  z-index: 1;
+}
+
+.mds-hardware-display__eyebrow {
+  color: color-mix(in srgb, var(--mds-text-muted) 78%, var(--mds-black));
+  font-size: var(--mds-font-size-xxs);
+  font-weight: var(--mds-font-weight-semibold);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mds-hardware-display__readout {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: var(--mds-space-2);
+  row-gap: var(--mds-space-1);
+  margin-top: var(--mds-space-3);
+}
+
+.mds-hardware-display__value {
+  color: var(--mds-text);
+  min-width: 0;
+  font-size: clamp(19px, 2.2vw, 28px);
+  font-weight: var(--mds-font-weight-bold);
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
+}
+
+.mds-hardware-display__unit {
+  color: var(--mds-hardware-light);
+  font-size: var(--mds-font-size-sm);
+  font-weight: var(--mds-font-weight-semibold);
+  text-shadow: var(--mds-light-emission-sm);
+}
+
+.mds-hardware-button,
+.mds-hardware-pad {
+  --mds-hardware-light: var(--mds-accent);
+  --mds-light-color: var(--mds-hardware-light);
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--mds-text) 7%, var(--mds-black));
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 40%, rgba(0, 0, 0, 0.32)),
+    var(--mds-choice-surface);
+  color: var(--mds-text-muted);
+  cursor: pointer;
+  font: inherit;
+  box-shadow:
+    var(--mds-control-seat-gap-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.78),
+    4px 7px 14px rgba(0, 0, 0, 0.5);
+  transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 120ms ease;
+}
+
+.mds-hardware-button[data-tone="neutral"],
+.mds-hardware-pad[data-tone="neutral"] {
+  --mds-hardware-light: var(--mds-text-muted);
+}
+
+.mds-hardware-button::before,
+.mds-hardware-pad::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--mds-hardware-light) 42%, transparent), transparent 58%);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease;
+}
+
+.mds-hardware-button--active,
+.mds-hardware-pad--active {
+  border-color: color-mix(in srgb, var(--mds-hardware-light) 58%, var(--mds-black));
+  background:
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--mds-hardware-light) 78%, white) 0 14%, color-mix(in srgb, var(--mds-hardware-light) 58%, transparent) 15% 52%, transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--mds-hardware-light) 48%, white), color-mix(in srgb, var(--mds-hardware-light) 64%, var(--mds-black)));
+  color: color-mix(in srgb, var(--mds-black) 74%, var(--mds-hardware-light));
+  box-shadow:
+    0 0 1px color-mix(in srgb, var(--mds-hardware-light) 96%, white),
+    0 0 12px color-mix(in srgb, var(--mds-hardware-light) 84%, transparent),
+    0 0 26px color-mix(in srgb, var(--mds-hardware-light) 34%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -8px 14px color-mix(in srgb, var(--mds-black) 32%, transparent);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.mds-hardware-button--active::before,
+.mds-hardware-pad--active::before {
+  opacity: 1;
+}
+
+.mds-hardware-button:active,
+.mds-hardware-pad:active {
+  box-shadow:
+    var(--mds-control-seat-gap-shadow-pressed),
+    inset 0 2px 5px rgba(0, 0, 0, 0.38);
+  transform: translateY(var(--mds-control-press-travel));
+}
+
+.mds-hardware-button:focus-visible,
+.mds-hardware-pad:focus-visible {
+  outline: none;
+  box-shadow: var(--mds-focus), 0 0 14px color-mix(in srgb, var(--mds-hardware-light) 38%, transparent);
+}
+
+.mds-hardware-button > span {
+  position: relative;
+  z-index: 1;
+}
+
+.mds-hardware-button--sm {
+  min-width: calc(var(--mds-control-height-sm) * 1.22);
+  height: var(--mds-control-height-sm);
+  padding-inline: var(--mds-control-gap);
+  font-size: var(--mds-font-size-xs);
+}
+
+.mds-hardware-button--md {
+  min-width: calc(var(--mds-control-height-md) * 2.45);
+  height: var(--mds-control-height-md);
+  padding-inline: var(--mds-control-padding-x-md);
+  font-size: var(--mds-control-font-size-sm);
+}
+
+.mds-hardware-pad {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: clamp(64px, 8vw, 112px);
+}
+
+.mds-hardware-pad__label {
+  position: relative;
+  z-index: 1;
+  color: inherit;
+  font-size: var(--mds-font-size-xxs);
+  text-transform: uppercase;
+}
+
+.mds-hardware-knob {
+  --mds-hardware-light: var(--mds-accent);
+  --mds-light-color: var(--mds-hardware-light);
+  display: grid;
+  justify-items: center;
+  gap: var(--mds-field-gap);
+}
+
+.mds-hardware-knob[data-tone="neutral"] {
+  --mds-hardware-light: var(--mds-text-muted);
+}
+
+.mds-hardware-knob__scale {
+  position: absolute;
+  width: calc(var(--mds-hardware-knob-size) * 1.62);
+  height: calc(var(--mds-hardware-knob-size) * 1.62);
+  border-radius: 50%;
+  background: repeating-conic-gradient(from -130deg, color-mix(in srgb, var(--mds-text) 36%, transparent) 0 1deg, transparent 1deg 9deg);
+  clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 72%, 0 72%);
+  opacity: 0.8;
+  transform: translateY(calc(var(--mds-hardware-knob-size) * -0.31));
+}
+
+.mds-hardware-knob__body {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--mds-hardware-knob-size);
+  height: var(--mds-hardware-knob-size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.62), transparent 12%),
+    radial-gradient(circle at 68% 78%, rgba(0, 0, 0, 0.42), transparent 34%),
+    conic-gradient(from 210deg, #1c1c1e, var(--mds-hardware-light), color-mix(in srgb, var(--mds-hardware-light) 16%, var(--mds-black)), #3f4144, #0c0c0d, var(--mds-hardware-light), #1b1b1d);
+  box-shadow:
+    8px 16px 24px rgba(0, 0, 0, 0.72),
+    -2px -2px 5px rgba(255, 255, 255, 0.06),
+    inset 0 0 0 calc(var(--mds-hardware-knob-size) * 0.16) #141719,
+    inset 0 2px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.72);
+}
+
+.mds-hardware-knob__body::after {
+  width: calc(var(--mds-hardware-knob-size) * 0.42);
+  height: calc(var(--mds-hardware-knob-size) * 0.42);
+  border-radius: 50%;
+  background: #20262a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.7);
+  content: "";
+}
+
+.mds-hardware-knob__pointer {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 4px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--mds-hardware-light);
+  box-shadow: var(--mds-light-emission-sm);
+  transform: translateX(-50%) rotate(var(--mds-hardware-knob-angle));
+  transform-origin: 50% calc(var(--mds-hardware-knob-size) / 2 - 5px);
+}
+
+.mds-hardware-knob--sm { --mds-hardware-knob-size: 42px; }
+.mds-hardware-knob--md { --mds-hardware-knob-size: 66px; }
+.mds-hardware-knob--lg { --mds-hardware-knob-size: 152px; }
+
+.mds-hardware-slider {
+  --mds-hardware-light: var(--mds-accent);
+  --mds-light-color: var(--mds-hardware-light);
+  display: grid;
+  justify-items: center;
+  gap: var(--mds-field-gap);
+}
+
+.mds-hardware-slider__scale {
+  width: 100%;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--mds-text) 48%, transparent) 0 1px, transparent 1px 14px);
+}
+
+.mds-hardware-slider__rail {
+  position: relative;
+  border-radius: 999px;
+  background: #050505;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.mds-hardware-slider__fill {
+  position: absolute;
+  background: var(--mds-hardware-light);
+  box-shadow: var(--mds-light-emission-sm);
+}
+
+.mds-hardware-slider__thumb {
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--mds-text) 8%, var(--mds-black));
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #343739, #111214);
+  box-shadow:
+    5px 8px 14px rgba(0, 0, 0, 0.64),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.mds-hardware-slider--horizontal {
+  width: 100%;
+}
+
+.mds-hardware-slider--horizontal .mds-hardware-slider__scale {
+  height: 22px;
+}
+
+.mds-hardware-slider--horizontal .mds-hardware-slider__rail {
+  width: 100%;
+  height: 5px;
+}
+
+.mds-hardware-slider--horizontal .mds-hardware-slider__fill {
+  left: 0;
+  top: 1px;
+  width: calc(var(--mds-hardware-slider-value) * 100%);
+  height: 2px;
+}
+
+.mds-hardware-slider--horizontal .mds-hardware-slider__thumb {
+  top: 50%;
+  left: calc(var(--mds-hardware-slider-value) * 100%);
+  width: 52px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+}
+
+.mds-hardware-slider--vertical {
+  width: 80px;
+  min-height: 220px;
+}
+
+.mds-hardware-slider--vertical .mds-hardware-slider__scale {
+  position: absolute;
+  width: 58px;
+  height: 160px;
+  background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--mds-text) 36%, transparent) 0 1px, transparent 1px 13px);
+}
+
+.mds-hardware-slider--vertical .mds-hardware-slider__rail {
+  width: 14px;
+  height: 170px;
+}
+
+.mds-hardware-slider--vertical .mds-hardware-slider__fill {
+  bottom: calc(var(--mds-hardware-slider-value) * 100%);
+  left: 2px;
+  width: 10px;
+  height: 3px;
+}
+
+.mds-hardware-slider--vertical .mds-hardware-slider__thumb {
+  left: 50%;
+  bottom: calc(var(--mds-hardware-slider-value) * 100%);
+  width: 30px;
+  height: 8px;
+  transform: translate(-50%, 50%);
+}
+
+.mds-hardware-meter {
+  --mds-hardware-light: var(--mds-accent);
+  --mds-light-color: var(--mds-hardware-light);
+  border: 1px solid color-mix(in srgb, var(--mds-text) 7%, var(--mds-black));
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 50% 105%, color-mix(in srgb, var(--mds-hardware-light) 34%, transparent), transparent 65%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.45)),
+    #090806;
+  box-shadow:
+    inset 0 0 24px color-mix(in srgb, var(--mds-hardware-light) 12%, transparent),
+    inset 0 1px 2px rgba(255, 255, 255, 0.08),
+    0 8px 18px rgba(0, 0, 0, 0.62);
+}
+
+.mds-hardware-meter__glass {
+  position: relative;
+  overflow: hidden;
+}
+
+.mds-hardware-meter__glass::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.12), transparent 36%);
+  content: "";
+  pointer-events: none;
+}
+
+.mds-hardware-meter__face {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--mds-hardware-light);
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--mds-hardware-light) 42%, transparent));
+}
+
+.mds-hardware-meter__face path,
+.mds-hardware-meter__face line,
+.mds-hardware-meter__face circle {
+  stroke: currentColor;
+}
+
+.mds-hardware-meter__face path {
+  stroke-width: 2;
+}
+
+.mds-hardware-meter__tick {
+  stroke-width: 1.5;
+}
+
+.mds-hardware-meter__needle {
+  stroke: color-mix(in srgb, var(--mds-hardware-light) 42%, white);
+  stroke-width: 3;
+  transform: rotate(var(--mds-hardware-meter-angle));
+  transform-box: fill-box;
+  transform-origin: 160px 118px;
+}
+
+.mds-hardware-meter__face circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.mds-hardware-meter__face text {
+  fill: currentColor;
+  font-size: 20px;
+  font-weight: var(--mds-font-weight-regular);
+  letter-spacing: 0.04em;
+}

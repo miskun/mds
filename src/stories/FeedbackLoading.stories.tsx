@@ -5,6 +5,7 @@ import {
   Skeleton,
   Spinner,
 } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "./feedback-loading.css";
 
 const meta = {
@@ -52,5 +53,41 @@ export const Loading: Story = {
         </div>
       </div>
     </Card>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Loading primitives can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      canvas={
+        <>
+          <Progress label="Story coverage" value={68} />
+          <div className="mds-cluster">
+            <Spinner size="sm" />
+            <Spinner />
+            <Spinner size="lg" />
+          </div>
+          <div className="skeleton-stack">
+            <Skeleton variant="text" style={{ width: "60%" }} />
+            <Skeleton variant="block" />
+          </div>
+        </>
+      }
+      panel={
+        <>
+          <Progress label="Story coverage" value={68} />
+          <div className="mds-cluster">
+            <Spinner size="sm" />
+            <Spinner />
+            <Spinner size="lg" />
+          </div>
+          <div className="skeleton-stack">
+            <Skeleton variant="text" style={{ width: "60%" }} />
+            <Skeleton variant="block" />
+          </div>
+        </>
+      }
+    />
   ),
 };

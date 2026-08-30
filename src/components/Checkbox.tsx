@@ -14,7 +14,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   invalid?: boolean;
   /** Renders the native mixed checkbox state. */
   indeterminate?: boolean;
-  /** Check glyph color used when the checkbox is checked or mixed. */
+  /** LED color used when the checkbox is checked or mixed. */
   checkColor?: string;
 }
 

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Badge, Card, Cluster, Divider, Stack, StatusDot, Tag } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
@@ -71,5 +72,47 @@ export const SemanticBadges: Story = {
       <Badge tone="warning">Review</Badge>
       <Badge tone="danger">Deprecated</Badge>
     </Cluster>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Metadata primitives can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      canvas={
+        <>
+          <Cluster>
+            <Badge>Draft</Badge>
+            <Badge tone="success">Stable</Badge>
+            <Badge tone="warning">Review</Badge>
+          </Cluster>
+          <Cluster>
+            <StatusDot tone="success" label="Online" />
+            <StatusDot label="Idle" />
+          </Cluster>
+          <Cluster>
+            <Tag>admin</Tag>
+            <Tag tone="accent" removable removeLabel="Remove desktop tag" onRemove={() => undefined}>desktop</Tag>
+          </Cluster>
+        </>
+      }
+      panel={
+        <>
+          <Cluster>
+            <Badge>Draft</Badge>
+            <Badge tone="success">Stable</Badge>
+            <Badge tone="warning">Review</Badge>
+          </Cluster>
+          <Cluster>
+            <StatusDot tone="success" label="Online" />
+            <StatusDot label="Idle" />
+          </Cluster>
+          <Cluster>
+            <Tag>admin</Tag>
+            <Tag tone="accent" removable removeLabel="Remove desktop tag" onRemove={() => undefined}>desktop</Tag>
+          </Cluster>
+        </>
+      }
+    />
   ),
 };

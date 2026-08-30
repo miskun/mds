@@ -2,6 +2,14 @@
   --mds-switch-led: var(--mds-accent);
   --mds-light-color: var(--mds-switch-led);
   --mds-switch-label-line-height: calc(var(--mds-control-font-size-md) * 1.35);
+  --mds-switch-track-background: var(--mds-switch-context-track-background, var(--mds-gray-4));
+  --mds-switch-track-shadow: var(--mds-switch-context-track-shadow, inset 0 -10px 18px rgba(0, 0, 0, 0.22));
+  --mds-switch-thumb-background: var(--mds-choice-surface, var(--mds-gray-5));
+  --mds-switch-thumb-checked-background: var(--mds-choice-surface-checked, var(--mds-gray-6));
+  --mds-switch-thumb-shadow: var(--mds-choice-shadow, 0 7px 18px rgba(0, 0, 0, 0.36));
+  --mds-switch-thumb-checked-shadow: var(--mds-choice-shadow-checked, 0 8px 20px rgba(0, 0, 0, 0.42));
+  --mds-switch-thumb-x: 0px;
+  --mds-switch-thumb-y: 0px;
   display: inline-grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: start;
@@ -22,14 +30,13 @@
   --mds-switch-border-width: 0px;
   --mds-switch-visual-height: var(--mds-switch-height);
   --mds-switch-visual-width: calc(var(--mds-switch-visual-height) * 2);
-  --mds-switch-thumb-size: var(--mds-switch-visual-height);
-  --mds-switch-offset: 0px;
+  --mds-switch-offset: calc((var(--mds-switch-visual-height) - var(--mds-switch-thumb-size)) / 2);
   width: var(--mds-switch-visual-width);
   height: var(--mds-switch-height);
   margin-top: calc((var(--mds-switch-label-line-height) - var(--mds-switch-height)) / 2);
   border-radius: 999px;
-  background: var(--mds-gray-4);
-  box-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.22);
+  background: var(--mds-switch-track-background);
+  box-shadow: var(--mds-switch-track-shadow);
   transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
@@ -42,22 +49,21 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--mds-gray-5);
-  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.36);
+  background: var(--mds-switch-thumb-background);
+  box-shadow: var(--mds-switch-thumb-shadow);
+  transform: translate(var(--mds-switch-thumb-x), var(--mds-switch-thumb-y));
   transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
 .mds-switch__input:checked + .mds-switch__track .mds-switch__thumb {
-  transform: translateX(
-    calc(var(--mds-switch-visual-width) - var(--mds-switch-thumb-size) - (var(--mds-switch-offset) * 2) - (var(--mds-switch-border-width) * 2))
-  );
-  background: var(--mds-gray-6);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.42);
+  --mds-switch-thumb-x: calc(var(--mds-switch-visual-width) - var(--mds-switch-thumb-size) - (var(--mds-switch-offset) * 2) - (var(--mds-switch-border-width) * 2));
+  background: var(--mds-switch-thumb-checked-background);
+  box-shadow: var(--mds-switch-thumb-checked-shadow);
 }
 
 .mds-switch__led {
-  width: max(3px, calc(var(--mds-switch-thumb-size) * 0.2));
-  height: max(3px, calc(var(--mds-switch-thumb-size) * 0.2));
+  width: var(--mds-choice-indicator-size);
+  height: var(--mds-choice-indicator-size);
   border-radius: 50%;
   background: var(--mds-black);
   box-shadow: inset 0 0 0 1px var(--mds-gray-4);
@@ -66,11 +72,24 @@
 
 .mds-switch__input:checked + .mds-switch__track .mds-switch__led {
   background: var(--mds-switch-led);
-  box-shadow: 0 0 var(--mds-light-halo-md-blur) color-mix(in srgb, var(--mds-light-color) var(--mds-light-halo-opacity), transparent);
+  box-shadow: var(--mds-light-emission-md);
 }
 
 .mds-switch__input:focus-visible + .mds-switch__track {
   box-shadow: var(--mds-focus);
+}
+
+[data-mds-surface="canvas"] {
+  --mds-switch-context-track-background: var(--mds-gray-4);
+  --mds-switch-context-track-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.22);
+}
+
+[data-mds-surface="panel"] {
+  --mds-switch-context-track-background: color-mix(in srgb, var(--mds-black) 38%, var(--mds-surface-background));
+  --mds-switch-context-track-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.02),
+    inset 0 8px 16px rgba(0, 0, 0, 0.42);
 }
 
 .mds-switch__input:disabled + .mds-switch__track,

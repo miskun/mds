@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Button, DataTable, Panel, TableCellFrame, TableCellText, TableCellValue } from "../components";
 import type { DataColumn, DataTableSort } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "./data-admin.css";
 import { columns, rows } from "./data-admin-data";
 
@@ -431,5 +432,36 @@ export const LoadingAndEmpty: Story = {
         emptyDescription="Clear filters or create a new component."
       />
     </div>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("DataTable can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1280}
+      canvas={
+        <DataTable
+          label="Canvas table"
+          columns={columns}
+          data={rows.slice(0, 4)}
+          getRowId={(row) => row.id}
+          getRowLabel={(row) => row.name}
+          selectable
+          rowActions={[{ label: "Open" }, { label: "Archive" }]}
+        />
+      }
+      panel={
+        <DataTable
+          label="Panel table"
+          columns={columns}
+          data={rows.slice(0, 4)}
+          getRowId={(row) => row.id}
+          getRowLabel={(row) => row.name}
+          selectable
+          rowActions={[{ label: "Open" }, { label: "Archive" }]}
+        />
+      }
+    />
   ),
 };

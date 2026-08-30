@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Card, Segment, SegmentedControl, Stack, Tab, Tabs, Text } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
@@ -74,4 +75,39 @@ export const SegmentedViews: Story = {
       </Stack>
     );
   },
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Tabs and segmented controls can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1080}
+      canvas={
+        <>
+          <Tabs label="Canvas sections" defaultValue="usage">
+            <Tab value="usage">Usage</Tab>
+            <Tab value="api">API</Tab>
+            <Tab value="examples">Examples</Tab>
+          </Tabs>
+          <SegmentedControl label="Canvas view" defaultValue="table">
+            <Segment value="table">Table</Segment>
+            <Segment value="cards">Cards</Segment>
+          </SegmentedControl>
+        </>
+      }
+      panel={
+        <>
+          <Tabs label="Panel sections" defaultValue="usage">
+            <Tab value="usage">Usage</Tab>
+            <Tab value="api">API</Tab>
+            <Tab value="examples">Examples</Tab>
+          </Tabs>
+          <SegmentedControl label="Panel view" defaultValue="table">
+            <Segment value="table">Table</Segment>
+            <Segment value="cards">Cards</Segment>
+          </SegmentedControl>
+        </>
+      }
+    />
+  ),
 };

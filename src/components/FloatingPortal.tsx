@@ -11,6 +11,7 @@ interface FloatingPortalProps {
 }
 
 interface FloatingLayout {
+  surface?: string;
   style: CSSProperties;
   target?: string;
 }
@@ -44,6 +45,7 @@ export function FloatingPortal({ anchorRef, children, className, minWidth = 260,
       const left = Math.min(Math.max(viewportPadding, rect.left), maxLeft);
       const resolvedTarget = getComputedStyle(anchor).getPropertyValue("--mds-target").trim();
       const target = anchor.closest<HTMLElement>("[data-mds-target]")?.dataset.mdsTarget ?? resolvedTarget;
+      const surface = anchor.closest<HTMLElement>("[data-mds-surface]")?.dataset.mdsSurface;
 
       const style: FloatingStyle = {
         left,
@@ -53,7 +55,7 @@ export function FloatingPortal({ anchorRef, children, className, minWidth = 260,
         "--mds-floating-listbox-max-height": `${Math.min(340, availableHeight)}px`,
       };
 
-      setLayout({ target, style });
+      setLayout({ surface, target, style });
     }
 
     updateLayout();
@@ -71,7 +73,7 @@ export function FloatingPortal({ anchorRef, children, className, minWidth = 260,
   }
 
   return createPortal(
-    <div className={className} style={layout.style} data-mds-target={layout.target}>
+    <div className={className} style={layout.style} data-mds-target={layout.target} data-mds-surface={layout.surface}>
       {children}
     </div>,
     document.body,

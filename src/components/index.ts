@@ -17,6 +17,7 @@ export * from "./DropdownMenu";
 export * from "./EmptyState";
 export * from "./Field";
 export * from "./Hero";
+export * from "./Hardware";
 export * from "./Input";
 export * from "./Kbd";
 export * from "./Layout";

@@ -6,26 +6,29 @@
 .mds-choice__radio {
   border-radius: 50%;
   border: 0;
-  background: var(--mds-gray-5);
-  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.22);
+  background: var(--mds-choice-surface);
+  box-shadow: var(--mds-choice-shadow);
 }
 
 .mds-choice__radio::after {
-  width: max(3px, calc(var(--mds-choice-size) * 0.24));
-  height: max(3px, calc(var(--mds-choice-size) * 0.24));
+  position: relative;
+  width: var(--mds-choice-indicator-size);
+  height: var(--mds-choice-indicator-size);
   border-radius: 50%;
-  background: var(--mds-black);
+  background: var(--mds-choice-symbol-off);
   content: "";
-  box-shadow: inset 0 0 0 1px var(--mds-gray-4);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--mds-text) 5%, transparent),
+    inset 0 1px 1px rgba(0, 0, 0, 0.42);
   transition: background 160ms ease, box-shadow 160ms ease;
 }
 
 .mds-choice__input:checked + .mds-choice__radio {
-  background: var(--mds-gray-5);
-  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.22), 0 6px 14px rgba(0, 0, 0, 0.34);
+  background: var(--mds-choice-surface-checked);
+  box-shadow: var(--mds-choice-shadow-checked);
 }
 
 .mds-choice__input:checked + .mds-choice__radio::after {
   background: var(--mds-choice-accent);
-  box-shadow: 0 0 var(--mds-light-halo-sm-blur) color-mix(in srgb, var(--mds-light-color) var(--mds-light-halo-opacity), transparent);
+  box-shadow: var(--mds-light-emission-sm);
 }

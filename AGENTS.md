@@ -2,6 +2,20 @@
 
 MDS is a black-first React design system for four product targets: desktop, mobile, admin, and editorial.
 
+## Visual Language
+
+MDS should feel like precise modern hardware: black audio-equipment surfaces, instrument panels, and focused workstation controls. The goal is not to recreate a specific device, but to make digital components feel like physical mechanisms mounted into dark surfaces.
+
+- Express ordinary software primitives as physical roles: navigation as mode keys, actions as command keys, inputs as recessed wells, tables as readouts, alerts as annunciators, and status as LEDs.
+- Treat matte black grain as a quiet base material, not decoration.
+- Let surface context drive depth: canvas controls can read as standalone objects; panel controls should feel embedded into a raised plane.
+- Use subtle bevels, 1px seating gaps, and restrained inset shadows instead of bright panel borders.
+- Prefer decisive hardware geometry: sharp corners for square or rectangular parts, fully circular shapes for round parts, and avoid slight decorative rounding when a part should feel machined.
+- Treat selected state indicators as LEDs, not icons. Radio uses a round LED, checkbox uses a square LED, switch uses the same round LED size as radio, and off states should still show an unilluminated lens.
+- Match motion to mechanism: tact controls press down only slightly, switches move sideways, and text/select controls read as recessed wells.
+
+See `DESIGN.md` for the design-language guide.
+
 ## Core Model
 
 Use `target` as the public concept.
@@ -82,6 +96,9 @@ If a component needs a repeated size, spacing, or rhythm decision, add a semanti
 ## Storybook Rules
 
 - Add or update stories for every component change.
+- Organize component stories by primitive identity and mechanism. Controls belong under `MDS/Components/Controls`; forms document composition, layout, validation, helper text, and action rows; patterns document reusable workflows assembled from primitives.
+- Do not place a control only under Forms because it is commonly used in a form. Inputs, dropdowns, checkboxes, radios, switches, and buttons should remain reusable across forms, toolbars, tables, dialogs, canvas regions, and panels.
+- When a component changes appearance between canvas and panel, include a surface comparison story with both examples aligned using the same panel padding.
 - Use the global `MDS Target` toolbar to test targets.
 - Use Storybook viewport controls only for screen size.
 - Do not create stories that compare all targets side-by-side unless the story is specifically documentation for target behavior.

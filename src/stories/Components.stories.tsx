@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Component docs are grouped by the job each primitive performs: action, layout, container, navigation, display, feedback, forms, and data.",
+          "Component docs are grouped by what each primitive is and how it behaves: controls, forms, patterns, navigation, display, feedback, data, layout, and containers.",
       },
     },
   },
@@ -27,8 +27,9 @@ const storyDescription = (story: string) => ({
 });
 
 const groups = [
-  ["Actions", "Buttons and action triggers.", "Buttons"],
-  ["Forms", "Field layouts and input controls.", "Layouts, Text, Selects, Selection, Search and filter"],
+  ["Controls", "Interactive primitives organized by mechanism.", "Buttons, Inputs, Dropdowns, Checkboxes, Radios, Switches"],
+  ["Forms", "Composition patterns for collecting and validating values.", "Layouts, field groups, validation sections, action rows"],
+  ["Patterns", "Reusable workflows built from multiple primitives.", "Search and filter"],
   ["Navigation", "Wayfinding and movement through structure.", "Breadcrumbs, links, tabs, pagination, nav list, side nav, tree view"],
   ["Overlays", "Floating layers and modal surfaces.", "Tooltips, popovers, dropdown menus, dialogs, drawers"],
   ["Display", "Passive information and metadata.", "Avatars, description lists, metadata, prose, records, metrics, text, utilities"],
@@ -46,7 +47,7 @@ export const Overview: Story = {
         <Eyebrow>Components</Eyebrow>
         <h1>Composable primitives for black-first product surfaces.</h1>
         <p>
-          Browse by purpose rather than implementation detail. Each group keeps examples, usage guidance, and API docs close to the component contract.
+          Browse by primitive identity first, then by composition pattern. Controls are reusable mechanisms that can live in many places; forms document how controls are arranged, labeled, validated, and submitted.
         </p>
       </Prose>
 

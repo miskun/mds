@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Archive, Plus } from "lucide-react";
 import { BulkActionBar, Button, Card, Cluster, ComboBox, Input, Stack, TableToolbar } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "./data-admin.css";
 
 const meta = {
@@ -71,5 +72,48 @@ export const BulkActions: Story = {
       />
       <BulkActionBar selectedCount={0} actions={<Button size="sm">Hidden</Button>} />
     </Stack>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Data toolbars can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1180}
+      canvas={
+        <>
+          <TableToolbar title="Component inventory" actions={<Button icon={<Plus size={14} />}>New</Button>}>
+            <Input aria-label="Search components" placeholder="Search" />
+            <ComboBox
+              aria-label="Target filter"
+              defaultValue="all"
+              options={[
+                { value: "all", label: "All targets" },
+                { value: "admin", label: "Admin" },
+                { value: "desktop", label: "Desktop" },
+              ]}
+            />
+          </TableToolbar>
+          <BulkActionBar selectedCount={3} actions={<Button size="sm" variant="secondary" icon={<Archive size={14} />}>Archive</Button>} />
+        </>
+      }
+      panel={
+        <>
+          <TableToolbar title="Component inventory" actions={<Button icon={<Plus size={14} />}>New</Button>}>
+            <Input aria-label="Search components" placeholder="Search" />
+            <ComboBox
+              aria-label="Target filter"
+              defaultValue="all"
+              options={[
+                { value: "all", label: "All targets" },
+                { value: "admin", label: "Admin" },
+                { value: "desktop", label: "Desktop" },
+              ]}
+            />
+          </TableToolbar>
+          <BulkActionBar selectedCount={3} actions={<Button size="sm" variant="secondary" icon={<Archive size={14} />}>Archive</Button>} />
+        </>
+      }
+    />
   ),
 };

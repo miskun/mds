@@ -48,18 +48,23 @@ The package builds library output during `prepare`, so unpublished git or `file:
 - Targets: desktop, mobile, admin, editorial
 - Stories: getting started, foundations, components, patterns, content, utilities, and data visualization
 
+See [DESIGN.md](./DESIGN.md) for the MDS hardware-inspired visual language: inherited surfaces, quiet matte-grain material, sharp-or-circular geometry, tact motion, and LED state indicators.
+
 ## Components
 
 Current component groups:
 
-- Actions: `Button`, `IconButton`
-- Forms: `Field`, `Input`, `Textarea`, `Select`, `ComboBox`, `Checkbox`, `RadioGroup`, `Radio`, `Switch`
+- Controls: `Button`, `IconButton`, `Input`, `Textarea`, `Select`, `SelectField`, `ComboBox`, `Checkbox`, `RadioGroup`, `Radio`, `Switch`
+- Forms: `Field` plus layout, validation, helper text, grouped fields, and action rows composed from controls
+- Patterns: composed workflows such as search and filter
 - Navigation: `Breadcrumbs`, `BreadcrumbItem`, `Link`, `Tabs`, `Tab`, `SegmentedControl`, `Segment`, `Pagination`, `NavList`, `NavItem`, `SideNav`, `SideNavSection`, `SideNavItem`, `TreeView`, `TreeItem`
 - Overlays: `Tooltip`, `Popover`, `DropdownMenu`, `MenuItem`, `MenuCheckboxItem`, `MenuSeparator`, `MenuLabel`, `MenuSub`, `Dialog`, `Drawer`
 - Display: `Avatar`, `Badge`, `StatusDot`, `Tag`, `DescriptionList`, `DescriptionItem`, `MetricCard`, `ListItem`, `Text`, `Title`, `Code`, `Prose`, `Kbd`, `Divider`
 - Feedback: `Alert`, `Toast`, `EmptyState`, `Progress`, `Spinner`, `Skeleton`
 - Data: `Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeader`, `TableCell`, `SortHeader`, `DataTable`, `TableToolbar`, `BulkActionBar`, `DetailPanel`, `ActivityFeed`, `ActivityItem`
 - Layout and containers: `Stack`, `Cluster`, `Inline`, `Grid`, `PageHeader`, `Panel`, `Card`
+
+Storybook follows the same organization. A dropdown is documented under Controls because it is a selection mechanism, even when it appears inside a form, toolbar, filter bar, dialog, canvas region, or raised panel. Forms document composition rather than ownership of those controls.
 
 ## Target
 
@@ -81,6 +86,14 @@ Viewport and target are separate concerns:
 - Storybook viewport changes the canvas width and height.
 - `MDSProvider` target changes component ergonomics, typography, spacing, and control scale.
 - The Storybook `MDS Target` toolbar applies the same `data-mds-target` attribute that `MDSProvider` uses.
+
+## Surfaces
+
+MDS components inherit whether they sit directly on the black canvas or inside a raised panel surface. `MDSProvider` establishes the canvas surface, while `Panel` and `Card` establish panel surfaces for their descendants.
+
+Controls can use that inherited surface context to adjust depth without adding per-component props. For example, `Switch` keeps its direct-canvas object treatment on the app canvas, but inside a panel its track reads as recessed and its thumb stays level with the panel plane.
+
+Panel surfaces use a restrained matte-grain material treatment so controls can read like modern hardware without requiring product-specific artwork.
 
 ## Styles
 

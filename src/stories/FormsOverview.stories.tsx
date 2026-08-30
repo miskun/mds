@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, ComboBox, Eyebrow, Grid, Input, Prose, Stack, Switch } from "../components";
+import { Button, Card, Checkbox, Cluster, ComboBox, Eyebrow, Grid, Input, Prose, Stack, Textarea } from "../components";
 import "../showcase.css";
 
 const meta = {
@@ -17,13 +17,13 @@ export const Introduction: Story = {
     <Stack>
       <Prose as="header">
         <Eyebrow>Forms</Eyebrow>
-        <h1>Field structure, controls, validation, and choice.</h1>
+        <h1>Layouts for collecting and validating values.</h1>
         <p>
-          Forms keep labels, hints, errors, required state, disabled state, and native semantics consistent across input workflows.
+          Forms are compositions of controls. Inputs, dropdowns, checkboxes, radios, switches, and buttons live under Controls; Forms documents field grouping, validation, helper text, and action layout.
         </p>
       </Prose>
       <Grid minItemWidth="280px">
-        <Card title="Field controls" eyebrow="Text and select">
+        <Card title="Field Group" eyebrow="Layout">
           <Stack gap="sm">
             <Input label="Name" placeholder="Button" hint="Use concise component names." />
             <ComboBox
@@ -36,10 +36,18 @@ export const Introduction: Story = {
                 { value: "editorial", label: "Editorial" },
               ]}
             />
+            <Textarea label="Notes" placeholder="Document form-specific behavior" />
           </Stack>
         </Card>
-        <Card title="Selection" eyebrow="Choices">
-          <Switch label="Public component" hint="Show this component in release docs." defaultChecked />
+        <Card title="Validation Flow" eyebrow="Recovery">
+          <Stack gap="sm">
+            <Input label="Package name" defaultValue="@miskun/mds" error="This package name is already in use." />
+            <Checkbox label="I reviewed the release notes" error="Confirm review before publishing." />
+            <Cluster justify="end">
+              <Button variant="secondary">Cancel</Button>
+              <Button>Create</Button>
+            </Cluster>
+          </Stack>
         </Card>
       </Grid>
     </Stack>

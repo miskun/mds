@@ -69,26 +69,44 @@
   height: var(--mds-control-height-md);
   min-height: var(--mds-control-height-md);
   border: 0;
-  border-radius: var(--mds-radius-lg);
-  background: var(--mds-control-surface);
-  box-shadow: var(--mds-control-inset-shadow);
+  border-radius: var(--mds-control-well-radius);
+  background: var(--mds-control-well-surface);
+  box-shadow: var(--mds-control-well-shadow);
+  caret-color: var(--mds-control-well-caret-color);
   color: var(--mds-text);
   padding: 0 var(--mds-control-padding-x-md);
-  transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
+  text-shadow: var(--mds-control-well-text-shadow);
+  transition: var(--mds-control-well-transition);
 }
 
-.mds-combo--open .mds-combo__control {
-  background: var(--mds-control-surface-raised);
-  box-shadow: var(--mds-control-inset-shadow);
+.mds-combo--open .mds-combo__control,
+.mds-combo:focus-within .mds-combo__control {
+  background: var(--mds-control-well-surface-focus);
+  box-shadow: var(--mds-control-well-shadow-focus);
+  text-shadow: var(--mds-control-well-text-shadow-focus);
+  transition: var(--mds-control-well-transition-focus);
+}
+
+.mds-combo__control:has(.mds-combo__input:placeholder-shown) {
+  color: color-mix(in srgb, var(--mds-text-soft) 48%, var(--mds-black));
+}
+
+.mds-combo--open .mds-combo__control:has(.mds-combo__input:placeholder-shown),
+.mds-combo:focus-within .mds-combo__control:has(.mds-combo__input:placeholder-shown) {
+  color: var(--mds-text);
+}
+
+.mds-combo--open .mds-combo__input:placeholder-shown {
+  color: color-mix(in srgb, var(--mds-text-soft) 48%, var(--mds-black));
 }
 
 .mds-combo--invalid .mds-combo__control {
-  background: var(--mds-control-surface-invalid);
+  background: var(--mds-control-well-surface-invalid);
 }
 
 .mds-combo--invalid.mds-combo--open .mds-combo__control,
 .mds-combo--invalid:focus-within .mds-combo__control {
-  background: var(--mds-control-surface-invalid-raised);
+  background: var(--mds-control-well-surface-invalid-focus);
 }
 
 .mds-combo--disabled {
@@ -97,7 +115,7 @@
 }
 
 .mds-combo--disabled .mds-combo__control {
-  background: var(--mds-control-surface);
+  background: var(--mds-control-well-surface);
   cursor: not-allowed;
 }
 
@@ -127,7 +145,8 @@
 }
 
 .mds-combo__input::placeholder {
-  color: color-mix(in srgb, var(--mds-text-soft) 58%, var(--mds-black));
+  color: color-mix(in srgb, var(--mds-text-soft) 48%, var(--mds-black));
+  text-shadow: none;
 }
 
 .mds-combo--invalid .mds-combo__input::placeholder {

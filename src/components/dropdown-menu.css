@@ -63,10 +63,9 @@
 }
 
 .mds-menu__checkbox-box[data-state="indeterminate"]::after {
-  width: calc(var(--mds-choice-size) * 0.5);
-  height: 0;
-  border-width: 0 0 2px;
-  transform: none;
+  width: calc(var(--mds-choice-indicator-size) * 2);
+  height: 2px;
+  border-radius: 999px;
 }
 
 .mds-menu__chevron {

@@ -1,7 +1,11 @@
 .mds-card {
-  border: 1px solid var(--mds-line);
+  --mds-surface-background: var(--mds-panel);
+
+  border: 1px solid var(--mds-surface-border);
   border-radius: var(--mds-radius-md);
-  background: var(--mds-panel);
+  background: var(--mds-surface-material);
+  background-size: var(--mds-surface-material-size);
+  box-shadow: var(--mds-surface-shadow);
 }
 
 .mds-card__header {
@@ -10,7 +14,7 @@
   justify-content: space-between;
   gap: var(--mds-toolbar-gap);
   padding: var(--mds-panel-padding);
-  border-bottom: 1px solid var(--mds-line);
+  border-bottom: 1px solid var(--mds-surface-border);
 }
 
 .mds-card__eyebrow,

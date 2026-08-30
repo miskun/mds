@@ -1,20 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { ComboBox, Grid, Select, SelectField, Stack, Text } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const componentOptions = [
-  { value: "button", label: "Button", description: "Primary action trigger", group: "Actions" },
-  { value: "split-button", label: "Split button", description: "Action with secondary choices", group: "Actions" },
-  { value: "input", label: "Input", description: "Single-line text field", group: "Forms" },
-  { value: "combo-box", label: "Combo box", description: "Searchable selection control", group: "Forms" },
+  { value: "button", label: "Button", description: "Primary action trigger", group: "Controls" },
+  { value: "split-button", label: "Split button", description: "Action with secondary choices", group: "Controls" },
+  { value: "input", label: "Input", description: "Single-line text field", group: "Controls" },
+  { value: "combo-box", label: "Combo box", description: "Searchable selection control", group: "Controls" },
   { value: "data-table", label: "Data table", description: "Sortable record table", group: "Data" },
   { value: "tree-view", label: "Tree view", description: "Nested hierarchy navigation", group: "Navigation" },
   { value: "deprecated-menu", label: "Deprecated menu", description: "Unavailable for new work", group: "Navigation", disabled: true },
 ];
 
 const meta = {
-  title: "MDS/Components/Forms/Selects",
+  title: "MDS/Components/Controls/Dropdowns",
   component: ComboBox,
   subcomponents: { SelectField, Select },
   tags: ["autodocs"],
@@ -23,7 +24,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Selects cover MDS-rendered dropdowns, searchable selection workflows, and native browser selects with target-aware triggers, menu rows, validation, and helper text.",
+          "Dropdowns cover native selects, MDS-rendered selects, and searchable combo boxes. They can be used in forms, toolbars, filters, dialogs, canvas regions, or raised panels.",
       },
     },
   },
@@ -139,5 +140,54 @@ export const States: Story = {
         disabled
       />
     </Grid>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Select controls inherit canvas or panel surface context for direct visual comparison."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1120}
+      canvas={
+        <>
+          <Select label="Native target" defaultValue="admin">
+            <option value="desktop">Desktop</option>
+            <option value="mobile">Mobile</option>
+            <option value="admin">Admin portal</option>
+            <option value="editorial">Editorial</option>
+          </Select>
+          <SelectField
+            label="Rendered target"
+            defaultValue="desktop"
+            options={[
+              { value: "desktop", label: "Desktop" },
+              { value: "mobile", label: "Mobile" },
+              { value: "admin", label: "Admin portal" },
+            ]}
+          />
+          <ComboBox label="Component" options={componentOptions} placeholder="Search options" />
+        </>
+      }
+      panel={
+        <>
+          <Select label="Native target" defaultValue="admin">
+            <option value="desktop">Desktop</option>
+            <option value="mobile">Mobile</option>
+            <option value="admin">Admin portal</option>
+            <option value="editorial">Editorial</option>
+          </Select>
+          <SelectField
+            label="Rendered target"
+            defaultValue="desktop"
+            options={[
+              { value: "desktop", label: "Desktop" },
+              { value: "mobile", label: "Mobile" },
+              { value: "admin", label: "Admin portal" },
+            ]}
+          />
+          <ComboBox label="Component" options={componentOptions} placeholder="Search options" />
+        </>
+      }
+    />
   ),
 };

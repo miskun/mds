@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Search } from "lucide-react";
 import { Badge, Button, Card, Cluster, ComboBox, Input, Panel, Stack, Tag } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Forms/Search and filter controls",
+  title: "MDS/Components/Patterns/Search and filter",
   component: Input,
   tags: ["autodocs"],
   parameters: {
@@ -80,5 +81,50 @@ export const FilterBar: Story = {
         </Panel>
       </Stack>
     </Card>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Search and filter controls can be compared directly on canvas and inside raised panels."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1120}
+      canvas={
+        <>
+          <Input type="search" label="Query" placeholder="Search components" />
+          <ComboBox
+            label="Status"
+            defaultValue="stable"
+            options={[
+              { value: "stable", label: "Stable" },
+              { value: "review", label: "In review" },
+              { value: "draft", label: "Draft" },
+            ]}
+          />
+          <Cluster gap="xs">
+            <Button icon={<Search size={16} />}>Apply</Button>
+            <Button variant="secondary">Reset</Button>
+          </Cluster>
+        </>
+      }
+      panel={
+        <>
+          <Input type="search" label="Query" placeholder="Search components" />
+          <ComboBox
+            label="Status"
+            defaultValue="stable"
+            options={[
+              { value: "stable", label: "Stable" },
+              { value: "review", label: "In review" },
+              { value: "draft", label: "Draft" },
+            ]}
+          />
+          <Cluster gap="xs">
+            <Button icon={<Search size={16} />}>Apply</Button>
+            <Button variant="secondary">Reset</Button>
+          </Cluster>
+        </>
+      }
+    />
   ),
 };

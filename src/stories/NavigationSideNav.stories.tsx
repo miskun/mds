@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { BadgeCheck, Bell, Boxes, FileText, Home, Search, Settings, User } from "lucide-react";
 import { Badge, Card, Grid, Panel, SideNav, SideNavItem, SideNavSection, Stack, Text, Title } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
@@ -116,4 +117,35 @@ export const StateSections: Story = {
       </Grid>
     );
   },
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Side nav can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1080}
+      canvas={
+        <SideNav label="Canvas side navigation">
+          <SideNavSection heading="Workspace">
+            <SideNavItem href="#" current icon={<Home size={16} />}>Overview</SideNavItem>
+            <SideNavItem href="#" icon={<Boxes size={16} />} trailing={<Badge tone="accent">12</Badge>}>
+              Components
+            </SideNavItem>
+            <SideNavItem href="#" icon={<Search size={16} />}>Search</SideNavItem>
+          </SideNavSection>
+        </SideNav>
+      }
+      panel={
+        <SideNav label="Panel side navigation">
+          <SideNavSection heading="Workspace">
+            <SideNavItem href="#" current icon={<Home size={16} />}>Overview</SideNavItem>
+            <SideNavItem href="#" icon={<Boxes size={16} />} trailing={<Badge tone="accent">12</Badge>}>
+              Components
+            </SideNavItem>
+            <SideNavItem href="#" icon={<Search size={16} />}>Search</SideNavItem>
+          </SideNavSection>
+        </SideNav>
+      }
+    />
+  ),
 };

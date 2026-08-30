@@ -1,9 +1,10 @@
 .mds-segmented {
   display: inline-flex;
   gap: calc(var(--mds-control-gap) * 0.5);
-  border: 1px solid var(--mds-line);
+  border: 1px solid var(--mds-segmented-border);
   border-radius: var(--mds-radius-md);
-  background: var(--mds-ink);
+  background: var(--mds-segmented-surface);
+  box-shadow: var(--mds-segmented-shadow);
   padding: calc(var(--mds-control-gap) * 0.5);
 }
 

@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button, Card, Checkbox, Cluster, ComboBox, Field, Grid, Input, Panel, Stack, Text, Textarea } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 import "./form-layouts.css";
 
 const meta = {
-  title: "MDS/Components/Forms/Form layouts",
+  title: "MDS/Components/Forms/Layouts",
   component: Field,
   tags: ["autodocs"],
   parameters: {
@@ -12,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Form layouts compose fields, helper text, grouped controls, sections, and actions with target-aware spacing.",
+          "Form layouts compose controls, helper text, grouped fields, validation sections, and actions with target-aware spacing.",
       },
     },
   },
@@ -101,5 +102,58 @@ export const GridSpanningFields: Story = {
         <Textarea className="form-layouts__span-all" label="Notes" placeholder="Add migration notes" />
       </Grid>
     </Card>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Form layouts can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1180}
+      canvas={
+        <>
+          <Grid minItemWidth="220px">
+            <Input label="Name" placeholder="Component name" />
+            <ComboBox
+              label="Group"
+              defaultValue="forms"
+              options={[
+                { value: "actions", label: "Actions" },
+                { value: "forms", label: "Forms" },
+                { value: "layout", label: "Layout" },
+              ]}
+            />
+          </Grid>
+          <Textarea label="Description" placeholder="Add notes" />
+          <Checkbox label="Include in public docs" defaultChecked />
+          <Cluster justify="end">
+            <Button variant="secondary">Cancel</Button>
+            <Button>Create</Button>
+          </Cluster>
+        </>
+      }
+      panel={
+        <>
+          <Grid minItemWidth="220px">
+            <Input label="Name" placeholder="Component name" />
+            <ComboBox
+              label="Group"
+              defaultValue="forms"
+              options={[
+                { value: "actions", label: "Actions" },
+                { value: "forms", label: "Forms" },
+                { value: "layout", label: "Layout" },
+              ]}
+            />
+          </Grid>
+          <Textarea label="Description" placeholder="Add notes" />
+          <Checkbox label="Include in public docs" defaultChecked />
+          <Cluster justify="end">
+            <Button variant="secondary">Cancel</Button>
+            <Button>Create</Button>
+          </Cluster>
+        </>
+      }
+    />
   ),
 };

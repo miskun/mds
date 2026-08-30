@@ -1,25 +1,25 @@
 .mds-panel {
-  border: 1px solid var(--mds-line);
+  border: 1px solid var(--mds-surface-border);
   border-radius: var(--mds-radius-md);
   color: var(--mds-text);
+  box-shadow: var(--mds-surface-shadow);
 }
 
 .mds-panel--default {
   --mds-surface-background: var(--mds-panel);
 
-  background: var(--mds-panel);
+  background: var(--mds-surface-material);
+  background-size: var(--mds-surface-material-size);
 }
 
 .mds-panel--raised {
   --mds-surface-background: var(--mds-panel-raised);
 
-  border-color: var(--mds-line-strong);
-  background: var(--mds-panel-raised);
+  background: var(--mds-surface-material);
+  background-size: var(--mds-surface-material-size);
 }
 
 .mds-panel--ghost {
-  --mds-surface-background: transparent;
-
   background: transparent;
 }
 

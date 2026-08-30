@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ArrowRight, Copy, Settings } from "lucide-react";
 import { Button, Card, IconButton } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
-  title: "MDS/Components/Actions/Buttons",
+  title: "MDS/Components/Controls/Buttons",
   component: Button,
   subcomponents: { IconButton },
   tags: ["autodocs"],
@@ -71,6 +72,30 @@ export const Variants: Story = {
       <IconButton label="Copy" icon={<Copy size={16} />} />
       <IconButton label="Settings" variant="ghost" icon={<Settings size={16} />} />
     </div>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Buttons and icon buttons can be compared directly on the canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      canvas={
+        <div className="mds-cluster">
+          <Button icon={<ArrowRight size={16} />}>Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <IconButton label="Copy" icon={<Copy size={16} />} />
+        </div>
+      }
+      panel={
+        <div className="mds-cluster">
+          <Button icon={<ArrowRight size={16} />}>Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <IconButton label="Copy" icon={<Copy size={16} />} />
+        </div>
+      }
+    />
   ),
 };
 

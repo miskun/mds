@@ -8,19 +8,23 @@
   height: var(--mds-control-height-md);
   appearance: none;
   border: 0;
-  border-radius: var(--mds-radius-lg);
-  background: var(--mds-control-surface);
-  box-shadow: var(--mds-control-inset-shadow);
+  border-radius: var(--mds-control-well-radius);
+  background: var(--mds-control-well-surface);
+  box-shadow: var(--mds-control-well-shadow);
+  caret-color: var(--mds-control-well-caret-color);
   color: var(--mds-text);
   font-size: var(--mds-control-font-size-md);
   padding: 0 calc(var(--mds-control-padding-x-md) + var(--mds-control-icon-size-md) + var(--mds-control-gap)) 0 var(--mds-control-padding-x-md);
   outline: none;
-  transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
+  text-shadow: var(--mds-control-well-text-shadow);
+  transition: var(--mds-control-well-transition);
 }
 
 .mds-select:focus {
-  background: var(--mds-control-surface-raised);
-  box-shadow: var(--mds-control-inset-shadow);
+  background: var(--mds-control-well-surface-focus);
+  box-shadow: var(--mds-control-well-shadow-focus);
+  text-shadow: var(--mds-control-well-text-shadow-focus);
+  transition: var(--mds-control-well-transition-focus);
 }
 
 .mds-select:disabled {
@@ -30,12 +34,12 @@
 
 .mds-select[aria-invalid="true"],
 .mds-field--invalid .mds-select {
-  background: var(--mds-control-surface-invalid);
+  background: var(--mds-control-well-surface-invalid);
 }
 
 .mds-select[aria-invalid="true"]:focus,
 .mds-field--invalid .mds-select:focus {
-  background: var(--mds-control-surface-invalid-raised);
+  background: var(--mds-control-well-surface-invalid-focus);
 }
 
 .mds-select__icon {

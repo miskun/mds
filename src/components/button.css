@@ -59,14 +59,14 @@
 }
 
 .mds-button--secondary {
-  background: var(--mds-panel-raised);
-  border-color: var(--mds-line);
+  background: var(--mds-button-secondary-surface);
+  border-color: var(--mds-button-secondary-border);
   color: var(--mds-text);
 }
 
 .mds-button--secondary:hover {
-  border-color: var(--mds-line-strong);
-  background: var(--mds-gray-6);
+  border-color: var(--mds-button-secondary-border-hover);
+  background: var(--mds-button-secondary-surface-hover);
 }
 
 .mds-button--ghost {

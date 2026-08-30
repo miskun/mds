@@ -17,8 +17,15 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
   { variant = "default", padding = "md", className, children, ...props },
   ref,
 ) {
+  const surface = variant === "ghost" ? undefined : "panel";
+
   return (
-    <div ref={ref} className={cx("mds-panel", `mds-panel--${variant}`, `mds-panel--padding-${padding}`, className)} {...props}>
+    <div
+      ref={ref}
+      data-mds-surface={surface}
+      className={cx("mds-panel", `mds-panel--${variant}`, `mds-panel--padding-${padding}`, className)}
+      {...props}
+    >
       {children}
     </div>
   );

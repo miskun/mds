@@ -1,0 +1,312 @@
+.mds-hardware-demo {
+  display: grid;
+  gap: var(--mds-layout-gap);
+}
+
+.mds-hardware-demo__strip {
+  display: grid;
+  grid-template-columns: auto auto minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: var(--mds-layout-gap);
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 55%, rgba(0, 0, 0, 0.28)),
+    color-mix(in srgb, var(--mds-black) 18%, var(--mds-panel));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 2px 0 rgba(0, 0, 0, 0.74);
+  padding: var(--mds-control-gap);
+}
+
+.mds-hardware-demo__preset {
+  --mds-light-color: var(--mds-accent);
+  justify-self: center;
+  min-width: min(280px, 100%);
+  border: 1px solid color-mix(in srgb, var(--mds-accent) 32%, var(--mds-black));
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 38% 50%, color-mix(in srgb, var(--mds-accent) 28%, transparent), transparent 45%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 52%, rgba(0, 0, 0, 0.32)),
+    color-mix(in srgb, var(--mds-accent) 8%, var(--mds-gray-3));
+  color: color-mix(in srgb, var(--mds-accent) 74%, var(--mds-text));
+  font-size: var(--mds-control-font-size-sm);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: var(--mds-control-height-md);
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 22px color-mix(in srgb, var(--mds-accent) 14%, transparent);
+}
+
+.mds-hardware-demo__steps,
+.mds-hardware-demo__knobs,
+.mds-hardware-demo__mini,
+.mds-hardware-demo__pads {
+  display: grid;
+  grid-auto-flow: column;
+  gap: var(--mds-control-gap);
+  align-items: center;
+}
+
+.mds-hardware-demo__columns {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(280px, 1.15fr) minmax(240px, 1fr);
+  gap: var(--mds-layout-gap);
+}
+
+.mds-hardware-demo__right-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--mds-layout-gap);
+  align-items: start;
+}
+
+.mds-hardware-demo__switches {
+  display: grid;
+  gap: var(--mds-control-gap);
+  padding-top: 34px;
+}
+
+.mds-hardware-demo__switches span {
+  --mds-light-color: var(--mds-accent);
+  display: block;
+  width: 48px;
+  height: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+  background: #050505;
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.mds-hardware-demo__switches span::after {
+  display: block;
+  width: var(--mds-choice-indicator-size);
+  height: var(--mds-choice-indicator-size);
+  margin: 8px auto;
+  border-radius: 50%;
+  background: var(--mds-choice-symbol-off);
+  content: "";
+}
+
+.mds-hardware-demo__switches .is-active::after {
+  background: var(--mds-accent);
+  box-shadow: var(--mds-light-emission-sm);
+}
+
+.mds-hardware-demo__pads {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: row;
+  margin-top: var(--mds-layout-gap);
+}
+
+.mds-hardware-demo__parts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--mds-layout-gap);
+}
+
+.mds-hardware-portfolio {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: var(--mds-layout-gap);
+}
+
+.mds-hardware-portfolio__rail {
+  display: grid;
+  align-content: start;
+  gap: var(--mds-control-gap);
+  border: 1px solid rgba(0, 0, 0, 0.78);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 54%, rgba(0, 0, 0, 0.34)),
+    color-mix(in srgb, var(--mds-black) 28%, var(--mds-panel));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    inset 0 -18px 24px rgba(0, 0, 0, 0.34),
+    8px 14px 22px rgba(0, 0, 0, 0.34);
+  padding: var(--mds-control-gap);
+}
+
+.mds-hardware-portfolio__rail .mds-hardware-button {
+  justify-self: stretch;
+  width: 100%;
+}
+
+.mds-hardware-portfolio__main {
+  display: grid;
+  gap: var(--mds-layout-gap);
+  min-width: 0;
+}
+
+.mds-hardware-portfolio__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--mds-control-gap);
+}
+
+.mds-hardware-portfolio__annunciator {
+  --mds-light-color: var(--mds-warning);
+  display: flex;
+  align-items: center;
+  gap: var(--mds-space-3);
+  min-height: var(--mds-control-height-lg);
+  border: 1px solid color-mix(in srgb, var(--mds-warning) 34%, var(--mds-black));
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 0 50%, color-mix(in srgb, var(--mds-warning) 16%, transparent), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 60%, rgba(0, 0, 0, 0.38)),
+    #040404;
+  color: color-mix(in srgb, var(--mds-warning) 64%, var(--mds-text));
+  font-size: var(--mds-font-size-sm);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 0 20px color-mix(in srgb, var(--mds-warning) 7%, transparent);
+  padding-inline: var(--mds-control-padding-x-md);
+}
+
+.mds-hardware-portfolio__annunciator > span:first-child {
+  flex: 0 0 auto;
+  width: var(--mds-choice-indicator-size);
+  height: var(--mds-choice-indicator-size);
+  border-radius: 50%;
+  background: var(--mds-warning);
+  box-shadow: var(--mds-light-emission-sm);
+}
+
+.mds-hardware-portfolio__annunciator strong {
+  color: var(--mds-text);
+  font-weight: var(--mds-font-weight-semibold);
+}
+
+.mds-hardware-portfolio__scope {
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  border: 1px solid rgba(0, 0, 0, 0.84);
+  border-radius: 12px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 0, color-mix(in srgb, var(--mds-danger) 8%, transparent), transparent 58%),
+    #030303;
+  background-size: 20% 100%, 100% 25%, auto, auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -28px 38px rgba(0, 0, 0, 0.62),
+    0 8px 18px rgba(0, 0, 0, 0.42);
+}
+
+.mds-hardware-portfolio__scope svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--mds-danger);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--mds-danger) 38%, transparent));
+}
+
+.mds-hardware-portfolio__scope-fill {
+  fill: url("#portfolioTraceFill");
+}
+
+.mds-hardware-portfolio__scope-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+.mds-hardware-portfolio__table {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.86);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 28%, rgba(0, 0, 0, 0.36)),
+    #030303;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    inset 0 -18px 30px rgba(0, 0, 0, 0.58);
+}
+
+.mds-hardware-portfolio__row {
+  display: grid;
+  grid-template-columns: minmax(170px, 1.4fr) minmax(90px, 0.7fr) minmax(90px, 0.7fr) minmax(70px, 0.5fr);
+  align-items: center;
+  gap: var(--mds-control-gap);
+  min-height: 42px;
+  border-bottom: 1px solid color-mix(in srgb, var(--mds-text) 8%, transparent);
+  color: var(--mds-text);
+  font-size: var(--mds-font-size-sm);
+  padding-inline: var(--mds-control-padding-x-md);
+}
+
+.mds-hardware-portfolio__row--head {
+  min-height: 34px;
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xxs);
+  font-weight: var(--mds-font-weight-semibold);
+  text-transform: uppercase;
+}
+
+.mds-hardware-portfolio__row:last-child {
+  border-bottom: 0;
+}
+
+.mds-hardware-portfolio__row strong,
+.mds-hardware-portfolio__row small {
+  display: block;
+}
+
+.mds-hardware-portfolio__row small {
+  margin-top: 3px;
+  color: var(--mds-text-soft);
+  font-size: var(--mds-font-size-xxs);
+}
+
+.mds-hardware-portfolio__row .is-positive {
+  color: var(--mds-success);
+  text-shadow: 0 0 9px color-mix(in srgb, var(--mds-success) 28%, transparent);
+}
+
+.mds-hardware-portfolio__row .is-negative {
+  color: var(--mds-danger);
+  text-shadow: 0 0 9px color-mix(in srgb, var(--mds-danger) 28%, transparent);
+}
+
+.mds-hardware-portfolio__commands {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mds-layout-gap);
+  color: var(--mds-text-muted);
+  font-size: var(--mds-font-size-xs);
+}
+
+.mds-hardware-portfolio__commands > div {
+  display: flex;
+  gap: var(--mds-control-gap);
+}
+
+@media (max-width: 900px) {
+  .mds-hardware-demo__strip,
+  .mds-hardware-demo__columns,
+  .mds-hardware-demo__parts,
+  .mds-hardware-portfolio,
+  .mds-hardware-portfolio__metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .mds-hardware-demo__steps,
+  .mds-hardware-demo__preset {
+    justify-self: stretch;
+  }
+
+  .mds-hardware-portfolio__commands {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

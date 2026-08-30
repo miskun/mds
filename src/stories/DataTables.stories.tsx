@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Badge, Card, SortHeader, StatusDot, Table, TableBody, TableCell, TableCellText, TableHead, TableHeader, TableRow } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "./data-admin.css";
 import { rows } from "./data-admin-data";
 
@@ -119,4 +120,36 @@ export const FlushFixedTable: Story = {
       </TableBody>
     </Table>
   ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Table primitives can be compared on canvas and inside a raised panel."),
+  render: () => {
+    const table = (
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>Component</TableHeader>
+            <TableHeader>Status</TableHeader>
+            <TableHeader className="mds-table__header--numeric mds-table__header--right">Stories</TableHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.slice(0, 3).map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>
+                <TableCellText secondary={row.id}>{row.name}</TableCellText>
+              </TableCell>
+              <TableCell>
+                <StatusDot tone={row.status === "stable" ? "success" : row.status === "review" ? "warning" : "neutral"} label={row.status} />
+              </TableCell>
+              <TableCell className="mds-table__cell--numeric mds-table__cell--right">{row.stories}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    );
+
+    return <SurfaceComparison maxWidth={1180} canvas={table} panel={table} />;
+  },
 };

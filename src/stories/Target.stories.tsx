@@ -73,7 +73,7 @@ export const ProviderUsage: Story = {
         <Eyebrow>MDS Provider</Eyebrow>
         <h1>Wrap an app or subtree with the selected target.</h1>
         <p>
-          MDSProvider writes <code>data-mds-target</code> so component tokens resolve for desktop, mobile, admin, or editorial surfaces.
+          MDSProvider writes <code>data-mds-target</code> for target scale and establishes the default canvas surface for inherited component styling.
         </p>
       </header>
       <Card eyebrow="Provider" title="Application root">

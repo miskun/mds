@@ -20,9 +20,13 @@
 
   --mds-black: #000000;
   --mds-ink: var(--mds-gray-2);
-  --mds-panel: var(--mds-gray-1);
-  --mds-panel-raised: var(--mds-gray-2);
+  --mds-panel: var(--mds-gray-2);
+  --mds-panel-raised: var(--mds-gray-3);
   --mds-surface-background: var(--mds-black);
+  --mds-surface-border: var(--mds-line);
+  --mds-surface-material: var(--mds-surface-background);
+  --mds-surface-material-size: auto;
+  --mds-surface-shadow: none;
   --mds-line: var(--mds-gray-7);
   --mds-line-strong: var(--mds-gray-8);
   --mds-text: var(--mds-gray-12);
@@ -61,12 +65,40 @@
   --mds-light-halo-opacity: 88%;
   --mds-light-halo-sm-blur: 7px;
   --mds-light-halo-md-blur: 12px;
+  --mds-light-emission-sm:
+    0 0 1px color-mix(in srgb, var(--mds-light-color) 96%, white),
+    0 0 var(--mds-light-halo-sm-blur) color-mix(in srgb, var(--mds-light-color) var(--mds-light-halo-opacity), transparent),
+    0 0 calc(var(--mds-light-halo-sm-blur) * 2) color-mix(in srgb, var(--mds-light-color) 34%, transparent);
+  --mds-light-emission-md:
+    0 0 1px color-mix(in srgb, var(--mds-light-color) 96%, white),
+    0 0 var(--mds-light-halo-md-blur) color-mix(in srgb, var(--mds-light-color) var(--mds-light-halo-opacity), transparent),
+    0 0 calc(var(--mds-light-halo-md-blur) * 1.8) color-mix(in srgb, var(--mds-light-color) 32%, transparent);
   --mds-control-surface: var(--mds-gray-4);
   --mds-control-surface-raised: var(--mds-gray-6);
   --mds-control-surface-invalid: color-mix(in srgb, var(--mds-danger) 15%, var(--mds-black));
   --mds-control-surface-invalid-raised: color-mix(in srgb, var(--mds-danger) 22%, var(--mds-black));
   --mds-control-inset-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.22);
   --mds-control-raised-shadow: 0 7px 18px rgba(0, 0, 0, 0.34);
+  --mds-control-well-surface: var(--mds-control-surface);
+  --mds-control-well-surface-focus: var(--mds-control-surface-raised);
+  --mds-control-well-surface-invalid: var(--mds-control-surface-invalid);
+  --mds-control-well-surface-invalid-focus: var(--mds-control-surface-invalid-raised);
+  --mds-control-well-radius-target: var(--mds-radius-lg);
+  --mds-control-well-radius: var(--mds-control-well-radius-target);
+  --mds-control-well-shadow: var(--mds-control-inset-shadow);
+  --mds-control-well-shadow-focus: var(--mds-control-inset-shadow);
+  --mds-control-well-text-shadow: none;
+  --mds-control-well-text-shadow-focus: none;
+  --mds-control-well-caret-color: currentColor;
+  --mds-control-well-transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
+  --mds-control-well-transition-focus: box-shadow 60ms ease-out, background 60ms ease-out, opacity 160ms ease;
+  --mds-control-seat-gap-shadow: 0 0 0 0 transparent;
+  --mds-control-seat-gap-shadow-checked: var(--mds-control-seat-gap-shadow);
+  --mds-control-seat-gap-shadow-pressed: var(--mds-control-seat-gap-shadow);
+  --mds-control-press-travel: 0.5px;
+  --mds-control-press-transition: transform 120ms ease;
+  --mds-choice-cap-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%, rgba(0, 0, 0, 0.18));
+  --mds-choice-symbol-off: color-mix(in srgb, var(--mds-text) 8%, var(--mds-black));
 
   --mds-space-1: 4px;
   --mds-space-2: 8px;
@@ -96,4 +128,165 @@
   --mds-font-weight-semibold: 600;
   --mds-font-weight-bold: 700;
   --mds-font-weight-heavy: 800;
+}
+
+[data-mds-surface="canvas"] {
+  --mds-surface-background: var(--mds-black);
+  --mds-surface-border: var(--mds-line);
+  --mds-surface-material: var(--mds-surface-background);
+  --mds-surface-material-size: auto;
+  --mds-surface-shadow: none;
+  --mds-control-surface: var(--mds-gray-4);
+  --mds-control-surface-raised: var(--mds-gray-6);
+  --mds-control-surface-invalid: color-mix(in srgb, var(--mds-danger) 15%, var(--mds-black));
+  --mds-control-surface-invalid-raised: color-mix(in srgb, var(--mds-danger) 22%, var(--mds-black));
+  --mds-control-inset-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.22);
+  --mds-control-raised-shadow: 0 7px 18px rgba(0, 0, 0, 0.34);
+  --mds-control-well-surface: var(--mds-control-surface);
+  --mds-control-well-surface-focus: var(--mds-control-surface-raised);
+  --mds-control-well-surface-invalid: var(--mds-control-surface-invalid);
+  --mds-control-well-surface-invalid-focus: var(--mds-control-surface-invalid-raised);
+  --mds-control-well-radius: var(--mds-control-well-radius-target);
+  --mds-control-well-shadow: var(--mds-control-inset-shadow);
+  --mds-control-well-shadow-focus: var(--mds-control-inset-shadow);
+  --mds-control-well-text-shadow: none;
+  --mds-control-well-text-shadow-focus: none;
+  --mds-control-well-caret-color: currentColor;
+  --mds-control-well-transition: box-shadow 160ms ease, background 160ms ease, opacity 160ms ease;
+  --mds-control-well-transition-focus: box-shadow 60ms ease-out, background 60ms ease-out, opacity 160ms ease;
+  --mds-control-seat-gap-shadow: 0 0 0 0 transparent;
+  --mds-control-seat-gap-shadow-checked: var(--mds-control-seat-gap-shadow);
+  --mds-control-seat-gap-shadow-pressed: var(--mds-control-seat-gap-shadow);
+  --mds-control-press-travel: 0.5px;
+  --mds-control-press-transition: transform 120ms ease;
+  --mds-choice-cap-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%, rgba(0, 0, 0, 0.18));
+  --mds-choice-symbol-off: color-mix(in srgb, var(--mds-text) 8%, var(--mds-black));
+  --mds-choice-surface: var(--mds-gray-5);
+  --mds-choice-surface-checked: var(--mds-gray-5);
+  --mds-choice-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.56),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.24),
+    0 4px 10px rgba(0, 0, 0, 0.28);
+  --mds-choice-shadow-checked:
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.52),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.2),
+    0 5px 12px rgba(0, 0, 0, 0.32);
+  --mds-choice-shadow-pressed:
+    inset 0 1px 1px rgba(255, 255, 255, 0.035),
+    inset 0 2px 5px rgba(0, 0, 0, 0.34);
+  --mds-segmented-surface: var(--mds-ink);
+  --mds-segmented-border: var(--mds-line);
+  --mds-segmented-shadow: none;
+  --mds-button-secondary-surface: var(--mds-panel-raised);
+  --mds-button-secondary-surface-hover: var(--mds-gray-6);
+  --mds-button-secondary-border: var(--mds-line);
+  --mds-button-secondary-border-hover: var(--mds-line-strong);
+}
+
+[data-mds-surface="panel"] {
+  --mds-surface-border: color-mix(in srgb, var(--mds-text) 4%, var(--mds-surface-background));
+  --mds-surface-material:
+    radial-gradient(ellipse at 28% 0%, rgba(255, 255, 255, 0.032), transparent 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 22%, rgba(0, 0, 0, 0.18) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' seed='17'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .07'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E"),
+    var(--mds-surface-background);
+  --mds-surface-material-size: auto, auto, 320px 320px, auto;
+  --mds-surface-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.028),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.48);
+  --mds-control-surface: color-mix(in srgb, var(--mds-black) 76%, var(--mds-surface-background));
+  --mds-control-surface-raised: color-mix(in srgb, var(--mds-black) 68%, var(--mds-surface-background));
+  --mds-control-surface-invalid: color-mix(in srgb, var(--mds-danger) 12%, color-mix(in srgb, var(--mds-black) 80%, var(--mds-surface-background)));
+  --mds-control-surface-invalid-raised: color-mix(in srgb, var(--mds-danger) 16%, color-mix(in srgb, var(--mds-black) 72%, var(--mds-surface-background)));
+  --mds-control-inset-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.035),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.015),
+    inset 0 10px 18px rgba(0, 0, 0, 0.42);
+  --mds-control-raised-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.52),
+    0 1px 1px rgba(255, 255, 255, 0.035);
+  --mds-control-well-surface:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 15%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.016), transparent 25%),
+    linear-gradient(104deg, transparent 0 19%, rgba(255, 255, 255, 0.012) 31%, transparent 44%),
+    repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.006) 5px 6px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.005), transparent 34%, rgba(0, 0, 0, 0.62)),
+    var(--mds-control-surface);
+  --mds-control-well-surface-focus:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.058), transparent 16%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.024), transparent 26%),
+    linear-gradient(104deg, transparent 0 17%, rgba(255, 255, 255, 0.02) 31%, transparent 46%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, currentColor 5%, transparent), transparent 58%),
+    repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.008) 5px 6px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.007), transparent 34%, rgba(0, 0, 0, 0.56)),
+    var(--mds-control-surface);
+  --mds-control-well-surface-invalid:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.038), transparent 15%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.016), transparent 25%),
+    linear-gradient(104deg, transparent 0 19%, rgba(255, 255, 255, 0.012) 31%, transparent 44%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--mds-danger) 10%, transparent), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.006) 5px 6px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.005), transparent 34%, rgba(0, 0, 0, 0.62)),
+    var(--mds-control-surface-invalid);
+  --mds-control-well-surface-invalid-focus:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.054), transparent 16%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.023), transparent 26%),
+    linear-gradient(104deg, transparent 0 17%, rgba(255, 255, 255, 0.019) 31%, transparent 46%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, currentColor 5%, transparent), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.008) 5px 6px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.007), transparent 34%, rgba(0, 0, 0, 0.56)),
+    var(--mds-control-surface-invalid);
+  --mds-control-well-radius: var(--mds-control-well-radius-target);
+  --mds-control-well-shadow:
+    var(--mds-control-seat-gap-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.028),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.82),
+    inset 0 12px 20px rgba(0, 0, 0, 0.62);
+  --mds-control-well-shadow-focus:
+    var(--mds-control-seat-gap-shadow),
+    inset 0 0 0 1px color-mix(in srgb, currentColor 12%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.038),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.76),
+    inset 0 12px 20px rgba(0, 0, 0, 0.52),
+    0 0 18px color-mix(in srgb, currentColor 5%, transparent);
+  --mds-control-well-text-shadow: 0 0 6px color-mix(in srgb, currentColor 7%, transparent);
+  --mds-control-well-text-shadow-focus: 0 0 10px color-mix(in srgb, currentColor 14%, transparent);
+  --mds-control-well-caret-color: currentColor;
+  --mds-control-seat-gap-shadow: 0 0 0 1px color-mix(in srgb, var(--mds-black) 68%, var(--mds-surface-background));
+  --mds-control-seat-gap-shadow-checked: 0 0 0 1px color-mix(in srgb, var(--mds-black) 58%, var(--mds-surface-background));
+  --mds-control-seat-gap-shadow-pressed: 0 0 0 1px color-mix(in srgb, var(--mds-black) 72%, var(--mds-surface-background));
+  --mds-control-press-travel: 0.5px;
+  --mds-control-press-transition: transform 120ms ease;
+  --mds-choice-cap-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 44%, rgba(0, 0, 0, 0.15));
+  --mds-choice-symbol-off: color-mix(in srgb, var(--mds-text) 6%, var(--mds-surface-background));
+  --mds-choice-surface: var(--mds-surface-background);
+  --mds-choice-surface-checked: color-mix(in srgb, var(--mds-text) 4%, var(--mds-surface-background));
+  --mds-choice-shadow:
+    var(--mds-control-seat-gap-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.075),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.52),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.16),
+    0 1px 1px rgba(255, 255, 255, 0.03);
+  --mds-choice-shadow-checked:
+    var(--mds-control-seat-gap-shadow-checked),
+    inset 0 1px 1px rgba(255, 255, 255, 0.095),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.12),
+    0 1px 1px rgba(255, 255, 255, 0.035);
+  --mds-choice-shadow-pressed:
+    var(--mds-control-seat-gap-shadow-pressed),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.025);
+  --mds-segmented-surface: color-mix(in srgb, var(--mds-black) 36%, var(--mds-surface-background));
+  --mds-segmented-border: color-mix(in srgb, var(--mds-text) 5%, var(--mds-surface-background));
+  --mds-segmented-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.035),
+    inset 0 8px 16px rgba(0, 0, 0, 0.34);
+  --mds-button-secondary-surface: color-mix(in srgb, var(--mds-text) 3%, var(--mds-surface-background));
+  --mds-button-secondary-surface-hover: color-mix(in srgb, var(--mds-text) 6%, var(--mds-surface-background));
+  --mds-button-secondary-border: color-mix(in srgb, var(--mds-text) 7%, var(--mds-surface-background));
+  --mds-button-secondary-border-hover: color-mix(in srgb, var(--mds-text) 11%, var(--mds-surface-background));
 }

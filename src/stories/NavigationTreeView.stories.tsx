@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Box, FileText, Folder, LayoutPanelTop, Settings } from "lucide-react";
 import { Card, Grid, Panel, Stack, Text, TreeItem, TreeView } from "../components";
+import { SurfaceComparison } from "./SurfaceComparison";
 import "../showcase.css";
 
 const meta = {
@@ -84,5 +85,36 @@ export const ProjectTree: Story = {
         <TreeItem href="#" label="package.json" level={1} icon={<FileText size={16} />} />
       </TreeView>
     </Panel>
+  ),
+};
+
+export const SurfaceContext: Story = {
+  parameters: storyDescription("Tree view can be compared on canvas and inside a raised panel."),
+  render: () => (
+    <SurfaceComparison
+      maxWidth={1080}
+      canvas={
+        <TreeView label="Canvas tree">
+          <TreeItem label="src" level={1} icon={<Folder size={16} />} defaultExpanded>
+            <TreeItem label="components" level={2} icon={<Folder size={16} />} defaultExpanded>
+              <TreeItem href="#" label="TreeView.tsx" level={3} icon={<FileText size={16} />} current />
+              <TreeItem href="#" label="SideNav.tsx" level={3} icon={<LayoutPanelTop size={16} />} />
+            </TreeItem>
+          </TreeItem>
+          <TreeItem href="#" label="package.json" level={1} icon={<FileText size={16} />} />
+        </TreeView>
+      }
+      panel={
+        <TreeView label="Panel tree">
+          <TreeItem label="src" level={1} icon={<Folder size={16} />} defaultExpanded>
+            <TreeItem label="components" level={2} icon={<Folder size={16} />} defaultExpanded>
+              <TreeItem href="#" label="TreeView.tsx" level={3} icon={<FileText size={16} />} current />
+              <TreeItem href="#" label="SideNav.tsx" level={3} icon={<LayoutPanelTop size={16} />} />
+            </TreeItem>
+          </TreeItem>
+          <TreeItem href="#" label="package.json" level={1} icon={<FileText size={16} />} />
+        </TreeView>
+      }
+    />
   ),
 };
